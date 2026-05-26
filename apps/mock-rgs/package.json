@@ -1,0 +1,21 @@
+{
+	"name": "mock-rgs",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"dev": "tsx watch src/server.ts",
+		"start": "tsx src/server.ts"
+	},
+	"type": "module",
+	"dependencies": {
+		"express": "5.2.1"
+	},
+	"devDependencies": {
+		"@types/express": "5.0.6",
+		"@types/express-serve-static-core": "5.1.1",
+		"@types/node": "24.0.13",
+		"config-ts": "workspace:*",
+		"tsx": "4.22.3"
+	}
+}
