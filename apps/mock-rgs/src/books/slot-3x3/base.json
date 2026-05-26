@@ -7,6 +7,7 @@
 				"index": 0,
 				"type": "reveal",
 				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
 				"board": [
 					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
 					[{ "name": "H2" }, { "name": "L2" }, { "name": "H4" }],
@@ -33,12 +34,13 @@
 	},
 	{
 		"id": 2,
-		"payoutMultiplier": 25,
+		"payoutMultiplier": 50,
 		"events": [
 			{
 				"index": 0,
 				"type": "reveal",
 				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
 				"board": [
 					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
 					[{ "name": "H1" }, { "name": "L2" }, { "name": "H4" }],
@@ -48,12 +50,12 @@
 			{
 				"index": 1,
 				"type": "winInfo",
-				"totalWin": 25,
+				"totalWin": 50,
 				"wins": [
 					{
 						"symbol": "H1",
 						"kind": 3,
-						"win": 25,
+						"win": 50,
 						"positions": [
 							{ "reel": 0, "row": 0 },
 							{ "reel": 1, "row": 0 },
@@ -62,7 +64,7 @@
 						"meta": {
 							"lineIndex": 1,
 							"multiplier": 1,
-							"winWithoutMult": 25,
+							"winWithoutMult": 50,
 							"lineMultiplier": 1
 						}
 					}
@@ -71,23 +73,24 @@
 			{
 				"index": 2,
 				"type": "setTotalWin",
-				"amount": 25
+				"amount": 50
 			},
 			{
 				"index": 3,
 				"type": "finalWin",
-				"amount": 25
+				"amount": 50
 			}
 		]
 	},
 	{
 		"id": 3,
-		"payoutMultiplier": 10,
+		"payoutMultiplier": 20,
 		"events": [
 			{
 				"index": 0,
 				"type": "reveal",
 				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
 				"board": [
 					[{ "name": "L2" }, { "name": "H3" }, { "name": "H2" }],
 					[{ "name": "L1" }, { "name": "H3" }, { "name": "L4" }],
@@ -97,12 +100,12 @@
 			{
 				"index": 1,
 				"type": "winInfo",
-				"totalWin": 10,
+				"totalWin": 20,
 				"wins": [
 					{
 						"symbol": "H3",
 						"kind": 3,
-						"win": 10,
+						"win": 20,
 						"positions": [
 							{ "reel": 0, "row": 1 },
 							{ "reel": 1, "row": 1 },
@@ -111,7 +114,7 @@
 						"meta": {
 							"lineIndex": 2,
 							"multiplier": 1,
-							"winWithoutMult": 10,
+							"winWithoutMult": 20,
 							"lineMultiplier": 1
 						}
 					}
@@ -120,12 +123,12 @@
 			{
 				"index": 2,
 				"type": "setTotalWin",
-				"amount": 10
+				"amount": 20
 			},
 			{
 				"index": 3,
 				"type": "finalWin",
-				"amount": 10
+				"amount": 20
 			}
 		]
 	}
