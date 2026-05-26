@@ -6,11 +6,11 @@ import {
 	INITIAL_SYMBOL_STATE,
 	SPIN_OPTIONS_DEFAULT,
 	SPIN_OPTIONS_FAST,
-	SYMBOL_SIZE,
+	SYMBOL_HEIGHT,
 } from './constants';
 import type { GameType, LineWin, RawSymbol, SymbolState } from './types';
 
-const symbolHeight = SYMBOL_SIZE + BOARD_GAP;
+const symbolHeight = SYMBOL_HEIGHT + BOARD_GAP;
 
 const board = INITIAL_BOARD.map((initialSymbols, reelIndex) => {
 	const reel = createReelForSpinning<RawSymbol, SymbolState>({
@@ -61,7 +61,7 @@ const clear = () => {
 const isSpinning = () => stateGame.board.some((reel) => reel.reelState.motion !== 'stopped');
 
 const visibleSymbolY = (reelSymbol: ReelSymbol) =>
-	reelSymbol.symbolY() + SYMBOL_SIZE + BOARD_GAP * 0.5;
+	reelSymbol.symbolY() + SYMBOL_HEIGHT + BOARD_GAP * 0.5;
 
 export const stateGameDerived = {
 	enhancedBoard,

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Container, Rectangle, Sprite } from 'pixi-svelte';
 
-	import { SYMBOL_SIZE, SYMBOL_TEXTURE_MAP } from '../game/constants';
+	import { SYMBOL_HEIGHT, SYMBOL_TEXTURE_MAP, SYMBOL_WIDTH } from '../game/constants';
 	import type { RawSymbol, SymbolState } from '../game/types';
 
 	type Props = {
@@ -10,19 +10,21 @@
 		rawSymbol: RawSymbol;
 		symbolState: SymbolState;
 		highlight?: boolean;
+		dimmed?: boolean;
 	};
 
 	const props: Props = $props();
 
-	const textureKey = $derived(SYMBOL_TEXTURE_MAP[props.rawSymbol.name]);
+	const texture = $derived(SYMBOL_TEXTURE_MAP[props.rawSymbol.name]);
+	const textureKey = $derived(props.dimmed ? texture.dark : texture.normal);
 	const tileAlpha = $derived(props.highlight ? 0.34 : 0.18);
 </script>
 
 <Container x={props.x} y={props.y}>
 	<Rectangle
 		anchor={0.5}
-		width={SYMBOL_SIZE}
-		height={SYMBOL_SIZE}
+		width={SYMBOL_WIDTH}
+		height={SYMBOL_HEIGHT}
 		borderRadius={8}
 		backgroundColor={props.highlight ? 0x2dd4bf : 0x150f24}
 		backgroundAlpha={tileAlpha}
@@ -33,8 +35,8 @@
 	<Sprite
 		anchor={0.5}
 		key={textureKey}
-		width={SYMBOL_SIZE * 0.9}
-		height={SYMBOL_SIZE * 0.9}
+		width={SYMBOL_HEIGHT * texture.sizeRatios.width}
+		height={SYMBOL_HEIGHT * texture.sizeRatios.height}
 		alpha={props.symbolState === 'spin' ? 0.72 : 1}
 	/>
 </Container>

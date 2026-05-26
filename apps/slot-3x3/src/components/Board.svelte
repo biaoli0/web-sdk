@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Container, Rectangle, Text } from 'pixi-svelte';
 
-	import { BOARD_GAP, BOARD_ROWS, BOARD_SIZES, SYMBOL_SIZE } from '../game/constants';
+	import { BOARD_GAP, BOARD_ROWS, BOARD_SIZES, SYMBOL_HEIGHT, SYMBOL_WIDTH } from '../game/constants';
 	import { getContext } from '../game/context';
 	import type { Position } from '../game/types';
 	import RoundWin from './RoundWin.svelte';
@@ -9,7 +9,7 @@
 
 	const context = getContext();
 
-	const cellCenter = (index: number) => index * (SYMBOL_SIZE + BOARD_GAP) + SYMBOL_SIZE * 0.5;
+	const cellCenter = (index: number) => index * (SYMBOL_WIDTH + BOARD_GAP) + SYMBOL_WIDTH * 0.5;
 
 	const isWinningPosition = (position: Position) =>
 		context.stateGame.wins.some((win) =>
@@ -17,6 +17,9 @@
 				(winPosition) => winPosition.reel === position.reel && winPosition.row === position.row,
 			),
 		);
+
+	const isDimmedPosition = (position: Position) =>
+		context.stateGame.wins.length > 0 && !isWinningPosition(position);
 
 	const getMessage = () => {
 		if (context.stateGameDerived.isSpinning()) return 'SPINNING';
@@ -69,6 +72,7 @@
 					rawSymbol={reelSymbol.rawSymbol}
 					symbolState={reelSymbol.symbolState}
 					highlight={isWinningPosition({ reel: reelIndex, row: rowIndex })}
+					dimmed={isDimmedPosition({ reel: reelIndex, row: rowIndex })}
 				/>
 			{/each}
 		{/each}
@@ -76,7 +80,7 @@
 		{#each Array(BOARD_ROWS - 1) as _, rowIndex}
 			<Rectangle
 				x={0}
-				y={(rowIndex + 1) * SYMBOL_SIZE + rowIndex * BOARD_GAP + BOARD_GAP * 0.5 - 1}
+				y={(rowIndex + 1) * SYMBOL_HEIGHT + rowIndex * BOARD_GAP + BOARD_GAP * 0.5 - 1}
 				width={BOARD_SIZES.width}
 				height={2}
 				backgroundColor={0xffffff}

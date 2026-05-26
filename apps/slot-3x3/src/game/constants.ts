@@ -1,13 +1,14 @@
 import type { Position, RawSymbol, SymbolName, SymbolState } from './types';
 
-export const SYMBOL_SIZE = 130;
+export const SYMBOL_WIDTH = 240;
+export const SYMBOL_HEIGHT = 130;
 export const BOARD_REELS = 3;
 export const BOARD_ROWS = 3;
 export const BOARD_GAP = 12;
 
 export const BOARD_SIZES = {
-	width: BOARD_REELS * SYMBOL_SIZE + (BOARD_REELS - 1) * BOARD_GAP,
-	height: BOARD_ROWS * SYMBOL_SIZE + (BOARD_ROWS - 1) * BOARD_GAP,
+	width: BOARD_REELS * SYMBOL_WIDTH + (BOARD_REELS - 1) * BOARD_GAP,
+	height: BOARD_ROWS * SYMBOL_HEIGHT + (BOARD_ROWS - 1) * BOARD_GAP,
 };
 
 export const BOARD_DIMENSIONS = {
@@ -19,15 +20,50 @@ export const SYMBOL_NAMES: SymbolName[] = ['H1', 'H2', 'H3', 'H4', 'L1', 'L2', '
 
 export const INITIAL_SYMBOL_STATE: SymbolState = 'static';
 
-export const SYMBOL_TEXTURE_MAP: Record<SymbolName, string> = {
-	H1: 'h1.webp',
-	H2: 'h2.webp',
-	H3: 'h3.webp',
-	H4: 'h4.webp',
-	L1: 'l1.webp',
-	L2: 'l2.webp',
-	L3: 'l3.webp',
-	L4: 'l4.webp',
+export const SYMBOL_TEXTURE_MAP: Record<
+	SymbolName,
+	{ normal: string; dark: string; sizeRatios: { width: number; height: number } }
+> = {
+	H1: {
+		normal: 'seven.webp',
+		dark: 'seven_dark.webp',
+		sizeRatios: { width: 1.55, height: 0.94 },
+	},
+	H2: {
+		normal: 'star.webp',
+		dark: 'star_dark.webp',
+		sizeRatios: { width: 1.58, height: 0.94 },
+	},
+	H3: {
+		normal: 'bell.webp',
+		dark: 'bell_dark.webp',
+		sizeRatios: { width: 1.49, height: 0.94 },
+	},
+	H4: {
+		normal: 'watermelon.webp',
+		dark: 'watermelon_dark.webp',
+		sizeRatios: { width: 1.7, height: 0.94 },
+	},
+	L1: {
+		normal: 'grapes.webp',
+		dark: 'grapes_dark.webp',
+		sizeRatios: { width: 1.57, height: 0.94 },
+	},
+	L2: {
+		normal: 'plum.webp',
+		dark: 'plum_dark.webp',
+		sizeRatios: { width: 1.59, height: 0.94 },
+	},
+	L3: {
+		normal: 'orange.webp',
+		dark: 'orange_dark.webp',
+		sizeRatios: { width: 1.63, height: 0.94 },
+	},
+	L4: {
+		normal: 'bar_bar.webp',
+		dark: 'bar_bar_dark.webp',
+		sizeRatios: { width: 1.5, height: 0.94 },
+	},
 };
 
 export const INITIAL_BOARD: RawSymbol[][] = [
