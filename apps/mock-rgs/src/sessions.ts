@@ -59,7 +59,7 @@ export function getSession(sessionID: string, currency = DEFAULT_CURRENCY) {
 }
 
 function nextBook(session: Session, mode: string): RawBook {
-	const books = getBooks(mode);
+	const books = getBooks(mode, { sessionID: session.sessionID });
 	if (books.length === 0) {
 		throw new Error(`No mock books configured for mode ${mode}. Add books to apps/mock-rgs/src/books.`);
 	}

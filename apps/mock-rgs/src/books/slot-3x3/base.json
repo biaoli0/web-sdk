@@ -1,0 +1,132 @@
+[
+	{
+		"id": 1,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"board": [
+					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
+					[{ "name": "H2" }, { "name": "L2" }, { "name": "H4" }],
+					[{ "name": "L1" }, { "name": "L3" }, { "name": "L4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 2,
+		"payoutMultiplier": 25,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"board": [
+					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
+					[{ "name": "H1" }, { "name": "L2" }, { "name": "H4" }],
+					[{ "name": "H1" }, { "name": "L3" }, { "name": "L4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 25,
+				"wins": [
+					{
+						"symbol": "H1",
+						"kind": 3,
+						"win": 25,
+						"positions": [
+							{ "reel": 0, "row": 0 },
+							{ "reel": 1, "row": 0 },
+							{ "reel": 2, "row": 0 }
+						],
+						"meta": {
+							"lineIndex": 1,
+							"multiplier": 1,
+							"winWithoutMult": 25,
+							"lineMultiplier": 1
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 25
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 25
+			}
+		]
+	},
+	{
+		"id": 3,
+		"payoutMultiplier": 10,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"board": [
+					[{ "name": "L2" }, { "name": "H3" }, { "name": "H2" }],
+					[{ "name": "L1" }, { "name": "H3" }, { "name": "L4" }],
+					[{ "name": "H4" }, { "name": "H3" }, { "name": "L3" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 10,
+				"wins": [
+					{
+						"symbol": "H3",
+						"kind": 3,
+						"win": 10,
+						"positions": [
+							{ "reel": 0, "row": 1 },
+							{ "reel": 1, "row": 1 },
+							{ "reel": 2, "row": 1 }
+						],
+						"meta": {
+							"lineIndex": 2,
+							"multiplier": 1,
+							"winWithoutMult": 10,
+							"lineMultiplier": 1
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 10
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 10
+			}
+		]
+	}
+]

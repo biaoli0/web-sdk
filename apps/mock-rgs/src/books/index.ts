@@ -16,17 +16,24 @@ export type RawBook = {
 };
 
 const booksDirectory = dirname(fileURLToPath(import.meta.url));
-const BOOK_FILES = {
+const DEFAULT_BOOK_FILES = {
 	BASE: 'base.json',
 	BONUS: 'bonus.json',
+} as const;
+
+const BOOK_FILES_BY_SESSION_ID = {
+	'slot-3x3-local': {
+		BASE: 'slot-3x3/base.json',
+		BONUS: 'slot-3x3/base.json',
+	},
 } as const;
 
 function readBooks(fileName: string) {
 	return JSON.parse(readFileSync(join(booksDirectory, fileName), 'utf8')) as RawBook[];
 }
 
-function loadBooksByMode() {
-	const missingFiles = Object.values(BOOK_FILES).filter(
+function loadBooksByMode(bookFiles: Record<string, string>) {
+	const missingFiles = Object.values(bookFiles).filter(
 		(fileName) => !existsSync(join(booksDirectory, fileName)),
 	);
 
@@ -37,19 +44,27 @@ function loadBooksByMode() {
 	}
 
 	return {
-		BASE: readBooks(BOOK_FILES.BASE),
-		BONUS: readBooks(BOOK_FILES.BONUS),
+		BASE: readBooks(bookFiles.BASE),
+		BONUS: readBooks(bookFiles.BONUS),
 	};
 }
 
-const booksByMode = loadBooksByMode();
+const defaultBooksByMode = loadBooksByMode(DEFAULT_BOOK_FILES);
+const booksBySessionID = Object.fromEntries(
+	Object.entries(BOOK_FILES_BY_SESSION_ID).map(([sessionID, bookFiles]) => [
+		sessionID,
+		loadBooksByMode(bookFiles),
+	]),
+) as Record<string, typeof defaultBooksByMode>;
 
-export type BookMode = keyof typeof booksByMode;
+export type BookMode = keyof typeof defaultBooksByMode;
 
 export function getBookMode(mode: string): BookMode {
 	return mode.toUpperCase() === 'BONUS' ? 'BONUS' : 'BASE';
 }
 
-export function getBooks(mode: string) {
-	return booksByMode[getBookMode(mode)];
+export function getBooks(mode: string, options?: { sessionID?: string }) {
+	const booksByMode = options?.sessionID ? booksBySessionID[options.sessionID] : undefined;
+
+	return (booksByMode ?? defaultBooksByMode)[getBookMode(mode)];
 }
