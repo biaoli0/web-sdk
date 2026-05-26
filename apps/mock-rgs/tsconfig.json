@@ -1,0 +1,15 @@
+{
+	"extends": "config-ts/base.json",
+	"compilerOptions": {
+		"target": "es2022",
+		"lib": ["es2022"],
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"noEmit": true,
+		"baseUrl": ".",
+		"types": ["node"]
+	},
+	"include": ["src"],
+	"exclude": ["node_modules"]
+}
