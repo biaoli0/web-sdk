@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { Container, Rectangle, Text } from 'pixi-svelte';
-	import { bookEventAmountToCurrencyString } from 'utils-shared/amount';
 
 	import { BOARD_GAP, BOARD_ROWS, BOARD_SIZES, SYMBOL_SIZE } from '../game/constants';
 	import { getContext } from '../game/context';
 	import type { Position } from '../game/types';
+	import RoundWin from './RoundWin.svelte';
 	import Symbol from './Symbol.svelte';
 
 	const context = getContext();
@@ -20,11 +20,10 @@
 
 	const getMessage = () => {
 		if (context.stateGameDerived.isSpinning()) return 'SPINNING';
-		if (context.stateGame.totalWin > 0) {
-			return `WIN ${bookEventAmountToCurrencyString(context.stateGame.totalWin)}`;
-		}
 		return 'READY';
 	};
+
+	const showRoundWin = () => context.stateGame.totalWin > 0 && context.stateGame.wins.length > 0;
 
 	context.stateGameDerived.enhancedBoard.readyToSpinEffect();
 </script>
@@ -85,4 +84,10 @@
 			/>
 		{/each}
 	</Container>
+
+	{#if showRoundWin()}
+		<Container x={BOARD_SIZES.width * 0.5} y={BOARD_SIZES.height * 0.5}>
+			<RoundWin />
+		</Container>
+	{/if}
 </Container>
