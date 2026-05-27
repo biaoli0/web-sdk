@@ -1,6 +1,6 @@
 import type { BetType } from 'rgs-requests';
 
-import type { GameType, LineWin, RawSymbol } from './types';
+import type { GameType, LineWin, Position, RawSymbol } from './types';
 
 type BookEventReveal = {
 	index: number;
@@ -8,6 +8,29 @@ type BookEventReveal = {
 	board: RawSymbol[][];
 	gameType: GameType;
 	paddingPositions: number[];
+};
+
+type BookEventBonusTrigger = {
+	index: number;
+	type: 'bonusTrigger';
+	positions: Position[];
+	respins: number;
+};
+
+type BookEventBonusReveal = {
+	index: number;
+	type: 'bonusReveal';
+	board: RawSymbol[][];
+	paddingPositions: number[];
+	respins: number;
+	coinsAdded: Position[];
+	totalWin: number;
+};
+
+type BookEventBonusEnd = {
+	index: number;
+	type: 'bonusEnd';
+	amount: number;
 };
 
 type BookEventWinInfo = {
@@ -31,6 +54,9 @@ type BookEventFinalWin = {
 
 export type BookEvent =
 	| BookEventReveal
+	| BookEventBonusTrigger
+	| BookEventBonusReveal
+	| BookEventBonusEnd
 	| BookEventWinInfo
 	| BookEventSetTotalWin
 	| BookEventFinalWin;

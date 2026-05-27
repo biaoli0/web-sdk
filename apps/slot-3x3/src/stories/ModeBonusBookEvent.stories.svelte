@@ -19,7 +19,8 @@
 	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
 	import { stateGameDerived } from '../game/stateGame.svelte';
-	import { playBookEvent } from '../game/utils';
+	import { playBookEvent, playBookEvents } from '../game/utils';
+	import type { BookEvent, BookEventOfType } from '../game/typesBookEvent';
 	import events from './data/bonus_events';
 
 	const resetBookEventStory = () => {
@@ -45,11 +46,41 @@
 {/snippet}
 
 <Story
-	name="reveal"
+	name="bonus sequence"
 	args={templateArgs({
 		skipLoadingScreen: true,
-		data: events.reveal,
-		action: async (data) => await playBookEvent(data, { bookEvents: [] }),
+		data: events.sequence,
+		action: async (data: BookEvent[]) => await playBookEvents(data),
+	})}
+	{template}
+/>
+
+<Story
+	name="bonusTrigger"
+	args={templateArgs({
+		skipLoadingScreen: true,
+		data: events.bonusTrigger,
+		action: async (data: BookEventOfType<'bonusTrigger'>) => {
+			stateGameDerived.settle(events.reveal.board);
+			await playBookEvent(data, { bookEvents: events.sequence });
+		},
+	})}
+	{template}
+/>
+
+<Story
+	name="bonusReveal"
+	args={templateArgs({
+		skipLoadingScreen: true,
+		data: events.bonusReveal1,
+		action: async (data: BookEventOfType<'bonusReveal'>) => {
+			stateGameDerived.settle(events.reveal.board);
+			stateGameDerived.startBonus({
+				positions: events.bonusTrigger.positions,
+				respins: events.bonusTrigger.respins,
+			});
+			await playBookEvent(data, { bookEvents: events.sequence });
+		},
 	})}
 	{template}
 />

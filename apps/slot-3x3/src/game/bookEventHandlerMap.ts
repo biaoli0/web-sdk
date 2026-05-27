@@ -10,6 +10,7 @@ import type { BookEvent, BookEventContext, BookEventOfType } from './typesBookEv
 export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContext> = {
 	reveal: async (bookEvent: BookEventOfType<'reveal'>) => {
 		stateGame.gameType = bookEvent.gameType;
+		stateGame.bonus.coinsAdded = [];
 		await stateGameDerived.enhancedBoard.spin({
 			revealEvent: {
 				...bookEvent,
@@ -17,6 +18,34 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			},
 			paddingBoard: config.paddingReels[bookEvent.gameType],
 		});
+	},
+	bonusTrigger: async (bookEvent: BookEventOfType<'bonusTrigger'>) => {
+		stateGame.bonus.introVisible = true;
+		await waitForTimeout(1500);
+		stateGame.bonus.introVisible = false;
+		stateGameDerived.startBonus({
+			positions: bookEvent.positions,
+			respins: bookEvent.respins,
+		});
+		stateBet.winBookEventAmount = stateGame.bonus.totalWin;
+	},
+	bonusReveal: async (bookEvent: BookEventOfType<'bonusReveal'>) => {
+		await stateGameDerived.spinBonusReveal({
+			rawBoard: bookEvent.board,
+			paddingBoard: config.paddingReels.bonusgame,
+			paddingPositions: bookEvent.paddingPositions,
+		});
+		stateGameDerived.updateBonus({
+			respins: bookEvent.respins,
+			coinsAdded: bookEvent.coinsAdded,
+			totalWin: bookEvent.totalWin,
+		});
+		stateBet.winBookEventAmount = bookEvent.totalWin;
+		await waitForTimeout(bookEvent.coinsAdded.length > 0 ? 450 : 180);
+	},
+	bonusEnd: async (bookEvent: BookEventOfType<'bonusEnd'>) => {
+		stateGameDerived.completeBonus({ amount: bookEvent.amount });
+		await waitForTimeout(600);
 	},
 	winInfo: async (bookEvent: BookEventOfType<'winInfo'>) => {
 		stateGameDerived.setWinInfo(bookEvent);

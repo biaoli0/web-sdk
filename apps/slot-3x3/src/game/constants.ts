@@ -4,6 +4,8 @@ export const SYMBOL_WIDTH = 240;
 export const SYMBOL_HEIGHT = 130;
 export const BOARD_REELS = 3;
 export const BOARD_ROWS = 3;
+export const CENTRAL_REEL_INDEX = 1;
+export const BONUS_RESPINS_DEFAULT = 3;
 export const BOARD_GAP = 12;
 
 export const BOARD_SIZES = {
