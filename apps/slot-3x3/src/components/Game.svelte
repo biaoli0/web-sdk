@@ -4,11 +4,13 @@
 
 	import { getContext } from '../game/context';
 	import Board from './Board.svelte';
+	import EnableGameActor from './EnableGameActor.svelte';
 
 	const context = getContext();
 </script>
 
 <App>
+	<EnableGameActor />
 	{#if context.stateApp.loaded}
 		<MainContainer>
 			<Board />
