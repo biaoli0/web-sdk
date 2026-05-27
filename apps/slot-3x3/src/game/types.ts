@@ -21,6 +21,8 @@ export type Position = {
 
 export type GameType = 'basegame' | 'bonusgame';
 
+export type BonusStatus = 'inactive' | 'active' | 'complete';
+
 export type LineWin = {
 	symbol: SymbolName;
 	kind: 3;
@@ -32,4 +34,12 @@ export type LineWin = {
 		winWithoutMult: number;
 		lineMultiplier: number;
 	};
+};
+
+export type BonusState = {
+	status: BonusStatus;
+	introVisible: boolean;
+	respins: number;
+	totalWin: number;
+	coinsAdded: Position[];
 };

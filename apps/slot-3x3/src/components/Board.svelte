@@ -28,6 +28,9 @@
 	const isDimmedPosition = (position: Position) =>
 		context.stateGame.wins.length > 0 && !isWinningPosition(position);
 
+	const isBonusCoin = (rawSymbolName: string) =>
+		context.stateGame.bonus.status !== 'inactive' && rawSymbolName === 'COIN';
+
 	const getMessage = () => {
 		if (context.stateGameDerived.isSpinning()) return 'SPINNING';
 		if (context.stateGame.bonus.status === 'complete') return 'BONUS COMPLETE';
@@ -89,7 +92,7 @@
 					rawSymbol={reelSymbol.rawSymbol}
 					symbolState={reelSymbol.symbolState}
 					highlight={isWinningPosition({ reel: reelIndex, row: rowIndex }) ||
-						context.stateGameDerived.isBonusCoinPosition({ reel: reelIndex, row: rowIndex })}
+						isBonusCoin(reelSymbol.rawSymbol.name)}
 					newCoin={context.stateGameDerived.isBonusNewCoinPosition({
 						reel: reelIndex,
 						row: rowIndex,

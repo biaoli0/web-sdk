@@ -34,9 +34,7 @@ const primaryMachines = createPrimaryMachines<Bet>({
 		stateGame.bonus.introVisible = false;
 		stateGame.bonus.respins = 0;
 		stateGame.bonus.totalWin = 0;
-		stateGame.bonus.coinPositions = [];
 		stateGame.bonus.coinsAdded = [];
-		stateGame.bonus.triggerPositions = [];
 
 		if ((stateBet.isTurbo && stateXstateDerived.isAutoBetting()) || stateBet.isSpaceHold) return;
 
