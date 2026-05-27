@@ -28,7 +28,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -137,7 +137,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -268,7 +268,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -377,7 +377,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -486,7 +486,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -591,11 +591,111 @@ importers:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
 
+  apps/slot-3x3:
+    dependencies:
+      '@lingui/core':
+        specifier: 5.2.0
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
+      '@sveltejs/kit':
+        specifier: 2.17.3
+        version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
+      components-layout:
+        specifier: workspace:*
+        version: link:../../packages/components-layout
+      components-pixi:
+        specifier: workspace:*
+        version: link:../../packages/components-pixi
+      components-shared:
+        specifier: workspace:*
+        version: link:../../packages/components-shared
+      components-storybook:
+        specifier: workspace:*
+        version: link:../../packages/components-storybook
+      components-ui-html:
+        specifier: workspace:*
+        version: link:../../packages/components-ui-html
+      components-ui-pixi:
+        specifier: workspace:*
+        version: link:../../packages/components-ui-pixi
+      constants-shared:
+        specifier: workspace:*
+        version: link:../../packages/constants-shared
+      envs:
+        specifier: workspace:*
+        version: link:../../packages/envs
+      pixi-svelte:
+        specifier: workspace:*
+        version: link:../../packages/pixi-svelte
+      rgs-requests:
+        specifier: workspace:*
+        version: link:../../packages/rgs-requests
+      state-shared:
+        specifier: workspace:*
+        version: link:../../packages/state-shared
+      svelte:
+        specifier: 5.20.5
+        version: 5.20.5
+      utils-book:
+        specifier: workspace:*
+        version: link:../../packages/utils-book
+      utils-event-emitter:
+        specifier: workspace:*
+        version: link:../../packages/utils-event-emitter
+      utils-layout:
+        specifier: workspace:*
+        version: link:../../packages/utils-layout
+      utils-shared:
+        specifier: workspace:*
+        version: link:../../packages/utils-shared
+      utils-slots:
+        specifier: workspace:*
+        version: link:../../packages/utils-slots
+      utils-sound:
+        specifier: workspace:*
+        version: link:../../packages/utils-sound
+      utils-xstate:
+        specifier: workspace:*
+        version: link:../../packages/utils-xstate
+      vite:
+        specifier: 6.2.0
+        version: 6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)
+    devDependencies:
+      '@storybook/addon-svelte-csf':
+        specifier: 5.0.5
+        version: 5.0.5(@storybook/svelte@9.0.15(storybook@9.0.15(@testing-library/dom@10.4.0)(prettier@3.6.2))(svelte@5.20.5))(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(babel-plugin-macros@3.1.0)(storybook@9.0.15(@testing-library/dom@10.4.0)(prettier@3.6.2))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
+      '@sveltejs/vite-plugin-svelte':
+        specifier: 5.0.3
+        version: 5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
+      chromatic:
+        specifier: 11.26.1
+        version: 11.26.1
+      config-lingui:
+        specifier: workspace:*
+        version: link:../../packages/config-lingui
+      config-storybook:
+        specifier: workspace:*
+        version: link:../../packages/config-storybook
+      config-svelte:
+        specifier: workspace:*
+        version: link:../../packages/config-svelte
+      config-ts:
+        specifier: workspace:*
+        version: link:../../packages/config-ts
+      config-vite:
+        specifier: workspace:*
+        version: link:../../packages/config-vite
+      eslint:
+        specifier: 9.21.0
+        version: 9.21.0(jiti@1.21.7)
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+
   apps/ways:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -845,7 +945,7 @@ importers:
     devDependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@storybook/addon-svelte-csf':
         specifier: 5.0.5
         version: 5.0.5(@storybook/svelte@9.0.15(storybook@9.0.15(@testing-library/dom@10.4.0)(prettier@3.6.2))(svelte@5.20.5))(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(babel-plugin-macros@3.1.0)(storybook@9.0.15(@testing-library/dom@10.4.0)(prettier@3.6.2))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -884,7 +984,7 @@ importers:
         version: 3.2.5(react@19.1.0)(storybook@9.0.15(@testing-library/dom@10.4.0)(prettier@3.6.2))
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@storybook/addon-docs':
         specifier: 9.0.15
         version: 9.0.15(@types/react@19.1.8)(storybook@9.0.15(@testing-library/dom@10.4.0)(prettier@3.6.2))
@@ -960,7 +1060,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -1033,7 +1133,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -1184,7 +1284,7 @@ importers:
     dependencies:
       '@lingui/vite-plugin':
         specifier: 5.2.0
-        version: 5.2.0(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
+        version: 5.2.0(typescript@5.8.3)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.1.0(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -1434,7 +1534,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@sveltejs/kit':
         specifier: 2.17.3
         version: 2.17.3(@sveltejs/vite-plugin-svelte@5.1.0(svelte@5.20.5)(vite@7.0.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@7.0.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
@@ -1632,7 +1732,7 @@ importers:
     dependencies:
       '@lingui/core':
         specifier: 5.2.0
-        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+        version: 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@types/lodash':
         specifier: 4.17.16
         version: 4.17.16
@@ -2305,10 +2405,6 @@ packages:
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
 
-  '@eslint-community/regexpp@4.12.1':
-    resolution: {integrity: sha512-CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ==}
-    engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
-
   '@eslint-community/regexpp@4.12.2':
     resolution: {integrity: sha512-EriSTlt5OC9/7SXkRSCAhfSxxoSUgBm33OH+IkwbdpgoqsSsUg7y3uh+IICI/Qg4BBWr3U2i39RpmycbxMq4ew==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
@@ -2392,14 +2488,6 @@ packages:
   '@humanwhocodes/retry@0.4.3':
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
-
-  '@isaacs/balanced-match@4.0.1':
-    resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
-    engines: {node: 20 || >=22}
-
-  '@isaacs/brace-expansion@5.0.0':
-    resolution: {integrity: sha512-ZT55BDLV0yv0RBm2czMiZ+SqCGO7AvmOM3G/w2xhVPH+te0aKgFjmBvGlL1dH+ql2tgGO3MVrbb3jCKyvpgnxA==}
-    engines: {node: 20 || >=22}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -3859,10 +3947,6 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  minimatch@10.0.3:
-    resolution: {integrity: sha512-IPZ167aShDZZUMdRk66cyQAW3qr0WzbHkPdMYa8bzZhlHhO3jALbKdxcaak7W9FfT2rZNpQuUu4Od7ILEpXSaw==}
-    engines: {node: 20 || >=22}
-
   minimatch@10.2.5:
     resolution: {integrity: sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==}
     engines: {node: 18 || 20 || >=22}
@@ -4982,7 +5066,7 @@ snapshots:
       '@babel/traverse': 7.28.0
       '@babel/types': 7.28.0
       convert-source-map: 2.0.0
-      debug: 4.4.1
+      debug: 4.4.3
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -5054,7 +5138,7 @@ snapshots:
       '@babel/parser': 7.28.0
       '@babel/template': 7.27.2
       '@babel/types': 7.28.0
-      debug: 4.4.1
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -5304,14 +5388,14 @@ snapshots:
   '@esbuild/win32-x64@0.28.0':
     optional: true
 
-  '@eslint-community/eslint-utils@4.7.0(eslint@9.21.0(jiti@1.21.7))':
-    dependencies:
-      eslint: 9.21.0(jiti@1.21.7)
-      eslint-visitor-keys: 3.4.3
-
   '@eslint-community/eslint-utils@4.7.0(eslint@9.30.1(jiti@1.21.7))':
     dependencies:
       eslint: 9.30.1(jiti@1.21.7)
+      eslint-visitor-keys: 3.4.3
+
+  '@eslint-community/eslint-utils@4.9.1(eslint@9.21.0(jiti@1.21.7))':
+    dependencies:
+      eslint: 9.21.0(jiti@1.21.7)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/eslint-utils@4.9.1(eslint@9.30.1(jiti@1.21.7))':
@@ -5319,14 +5403,12 @@ snapshots:
       eslint: 9.30.1(jiti@1.21.7)
       eslint-visitor-keys: 3.4.3
 
-  '@eslint-community/regexpp@4.12.1': {}
-
   '@eslint-community/regexpp@4.12.2': {}
 
   '@eslint/config-array@0.19.2':
     dependencies:
       '@eslint/object-schema': 2.1.6
-      debug: 4.4.1
+      debug: 4.4.3
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -5360,7 +5442,7 @@ snapshots:
   '@eslint/eslintrc@3.3.1':
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.1
+      debug: 4.4.3
       espree: 10.4.0
       globals: 14.0.0
       ignore: 5.3.2
@@ -5407,12 +5489,6 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@isaacs/balanced-match@4.0.1': {}
-
-  '@isaacs/brace-expansion@5.0.0':
-    dependencies:
-      '@isaacs/balanced-match': 4.0.1
-
   '@isaacs/cliui@8.0.2':
     dependencies:
       string-width: 5.1.2
@@ -5451,13 +5527,13 @@ snapshots:
 
   '@lingui/babel-plugin-extract-messages@5.2.0': {}
 
-  '@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)':
+  '@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3)':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/runtime': 7.27.6
       '@babel/types': 7.28.0
       '@lingui/conf': 5.2.0(typescript@5.8.3)
-      '@lingui/core': 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
+      '@lingui/core': 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
       '@lingui/message-utils': 5.2.0
     optionalDependencies:
       babel-plugin-macros: 3.1.0
@@ -5465,7 +5541,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@lingui/cli@5.2.0':
+  '@lingui/cli@5.2.0(typescript@5.8.3)':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/generator': 7.28.0
@@ -5473,10 +5549,10 @@ snapshots:
       '@babel/runtime': 7.27.6
       '@babel/types': 7.28.0
       '@lingui/babel-plugin-extract-messages': 5.2.0
-      '@lingui/babel-plugin-lingui-macro': 5.2.0(babel-plugin-macros@3.1.0)
+      '@lingui/babel-plugin-lingui-macro': 5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3)
       '@lingui/conf': 5.2.0(typescript@5.8.3)
-      '@lingui/core': 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)
-      '@lingui/format-po': 5.2.0
+      '@lingui/core': 5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)
+      '@lingui/format-po': 5.2.0(typescript@5.8.3)
       '@lingui/message-utils': 5.2.0
       babel-plugin-macros: 3.1.0
       chalk: 4.1.2
@@ -5511,16 +5587,16 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@lingui/core@5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0))(babel-plugin-macros@3.1.0)':
+  '@lingui/core@5.2.0(@lingui/babel-plugin-lingui-macro@5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3))(babel-plugin-macros@3.1.0)':
     dependencies:
       '@babel/runtime': 7.27.6
       '@lingui/message-utils': 5.2.0
       unraw: 3.0.0
     optionalDependencies:
-      '@lingui/babel-plugin-lingui-macro': 5.2.0(babel-plugin-macros@3.1.0)
+      '@lingui/babel-plugin-lingui-macro': 5.2.0(babel-plugin-macros@3.1.0)(typescript@5.8.3)
       babel-plugin-macros: 3.1.0
 
-  '@lingui/format-po@5.2.0':
+  '@lingui/format-po@5.2.0(typescript@5.8.3)':
     dependencies:
       '@lingui/conf': 5.2.0(typescript@5.8.3)
       '@lingui/message-utils': 5.2.0
@@ -5534,9 +5610,9 @@ snapshots:
       '@messageformat/parser': 5.1.1
       js-sha256: 0.10.1
 
-  '@lingui/vite-plugin@5.2.0(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))':
+  '@lingui/vite-plugin@5.2.0(typescript@5.8.3)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))':
     dependencies:
-      '@lingui/cli': 5.2.0
+      '@lingui/cli': 5.2.0(typescript@5.8.3)
       '@lingui/conf': 5.2.0(typescript@5.8.3)
       vite: 6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)
     transitivePeerDependencies:
@@ -5893,7 +5969,7 @@ snapshots:
   '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.85.1)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.85.1)(tsx@4.22.3))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.85.1)(tsx@4.22.3))
-      debug: 4.4.1
+      debug: 4.4.3
       svelte: 5.20.5
       vite: 6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.85.1)(tsx@4.22.3)
     transitivePeerDependencies:
@@ -5902,7 +5978,7 @@ snapshots:
   '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
-      debug: 4.4.1
+      debug: 4.4.3
       svelte: 5.20.5
       vite: 6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)
     transitivePeerDependencies:
@@ -5911,7 +5987,7 @@ snapshots:
   '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.1.0(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 5.1.0(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
-      debug: 4.4.1
+      debug: 4.4.3
       svelte: 5.20.5
       vite: 6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)
     transitivePeerDependencies:
@@ -5920,7 +5996,7 @@ snapshots:
   '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.1.0(svelte@5.20.5)(vite@7.0.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@7.0.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 5.1.0(svelte@5.20.5)(vite@7.0.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
-      debug: 4.4.1
+      debug: 4.4.3
       svelte: 5.20.5
       vite: 7.0.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)
     transitivePeerDependencies:
@@ -5929,7 +6005,7 @@ snapshots:
   '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.1.0(svelte@5.35.1)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.35.1)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 5.1.0(svelte@5.35.1)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
-      debug: 4.4.1
+      debug: 4.4.3
       svelte: 5.35.1
       vite: 6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)
     transitivePeerDependencies:
@@ -5938,7 +6014,7 @@ snapshots:
   '@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.85.1)(tsx@4.22.3))':
     dependencies:
       '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.85.1)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.85.1)(tsx@4.22.3))
-      debug: 4.4.1
+      debug: 4.4.3
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.17
@@ -5951,7 +6027,7 @@ snapshots:
   '@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))':
     dependencies:
       '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)))(svelte@5.20.5)(vite@6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3))
-      debug: 4.4.1
+      debug: 4.4.3
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.17
@@ -6711,8 +6787,8 @@ snapshots:
 
   eslint@9.21.0(jiti@1.21.7):
     dependencies:
-      '@eslint-community/eslint-utils': 4.7.0(eslint@9.21.0(jiti@1.21.7))
-      '@eslint-community/regexpp': 4.12.1
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.21.0(jiti@1.21.7))
+      '@eslint-community/regexpp': 4.12.2
       '@eslint/config-array': 0.19.2
       '@eslint/core': 0.12.0
       '@eslint/eslintrc': 3.3.1
@@ -6726,7 +6802,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.4.1
+      debug: 4.4.3
       escape-string-regexp: 4.0.0
       eslint-scope: 8.4.0
       eslint-visitor-keys: 4.2.1
@@ -6971,7 +7047,7 @@ snapshots:
     dependencies:
       foreground-child: 3.3.1
       jackspeak: 4.1.1
-      minimatch: 10.0.3
+      minimatch: 10.2.5
       minipass: 7.1.2
       package-json-from-dist: 1.0.1
       path-scurry: 2.0.0
@@ -7218,10 +7294,6 @@ snapshots:
   mimic-fn@2.1.0: {}
 
   min-indent@1.0.1: {}
-
-  minimatch@10.0.3:
-    dependencies:
-      '@isaacs/brace-expansion': 5.0.0
 
   minimatch@10.2.5:
     dependencies:

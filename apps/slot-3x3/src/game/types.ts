@@ -1,10 +1,16 @@
 import { type SpinningReelSymbolState } from 'utils-slots';
 
-export type SymbolName = 'H1' | 'H2' | 'H3' | 'H4' | 'L1' | 'L2' | 'L3' | 'L4';
+export type RegularSymbolName = 'H1' | 'H2' | 'H3' | 'H4' | 'L1' | 'L2' | 'L3' | 'L4';
+export type SymbolName = RegularSymbolName | 'COIN';
 
-export type RawSymbol = {
-	name: SymbolName;
-};
+export type RawSymbol =
+	| {
+			name: RegularSymbolName;
+	  }
+	| {
+			name: 'COIN';
+			value: number;
+	  };
 
 export type SymbolState = SpinningReelSymbolState;
 
@@ -13,7 +19,7 @@ export type Position = {
 	row: number;
 };
 
-export type GameType = 'basegame';
+export type GameType = 'basegame' | 'bonusgame';
 
 export type LineWin = {
 	symbol: SymbolName;

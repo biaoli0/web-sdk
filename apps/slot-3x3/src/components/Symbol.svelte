@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Rectangle, Sprite } from 'pixi-svelte';
+	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
 
 	import { SYMBOL_HEIGHT, SYMBOL_TEXTURE_MAP, SYMBOL_WIDTH } from '../game/constants';
 	import type { RawSymbol, SymbolState } from '../game/types';
@@ -18,6 +18,7 @@
 	const texture = $derived(SYMBOL_TEXTURE_MAP[props.rawSymbol.name]);
 	const textureKey = $derived(props.dimmed ? texture.dark : texture.normal);
 	const tileAlpha = $derived(props.highlight ? 0.34 : 0.18);
+	const coinValue = $derived(props.rawSymbol.name === 'COIN' ? props.rawSymbol.value : undefined);
 </script>
 
 <Container x={props.x} y={props.y}>
@@ -39,4 +40,18 @@
 		height={SYMBOL_HEIGHT * texture.sizeRatios.height}
 		alpha={props.symbolState === 'spin' ? 0.72 : 1}
 	/>
+	{#if coinValue !== undefined}
+		<Text
+			anchor={0.5}
+			text={String(coinValue)}
+			style={{
+				align: 'center',
+				fontFamily: 'proxima-nova',
+				fontSize: 34,
+				fontWeight: '900',
+				fill: 0xffffff,
+				stroke: { color: 0x5f3000, width: 5 },
+			}}
+		/>
+	{/if}
 </Container>

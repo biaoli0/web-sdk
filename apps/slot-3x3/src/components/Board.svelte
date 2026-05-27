@@ -1,9 +1,15 @@
 <script lang="ts">
 	import { Container, Rectangle, Text } from 'pixi-svelte';
 
-	import { BOARD_GAP, BOARD_ROWS, BOARD_SIZES, SYMBOL_HEIGHT, SYMBOL_WIDTH } from '../game/constants';
+	import {
+		BOARD_GAP,
+		BOARD_ROWS,
+		BOARD_SIZES,
+		SYMBOL_HEIGHT,
+		SYMBOL_WIDTH,
+	} from '../game/constants';
 	import { getContext } from '../game/context';
-	import type { Position } from '../game/types';
+	import type { LineWin, Position } from '../game/types';
 	import RoundWin from './RoundWin.svelte';
 	import Symbol from './Symbol.svelte';
 
@@ -12,7 +18,7 @@
 	const cellCenter = (index: number) => index * (SYMBOL_WIDTH + BOARD_GAP) + SYMBOL_WIDTH * 0.5;
 
 	const isWinningPosition = (position: Position) =>
-		context.stateGame.wins.some((win) =>
+		context.stateGame.wins.some((win: LineWin) =>
 			win.positions.some(
 				(winPosition) => winPosition.reel === position.reel && winPosition.row === position.row,
 			),
@@ -23,6 +29,7 @@
 
 	const getMessage = () => {
 		if (context.stateGameDerived.isSpinning()) return 'SPINNING';
+		if (context.stateGame.gameType === 'bonusgame') return 'BONUS GAME';
 		return 'READY';
 	};
 

@@ -1,6 +1,6 @@
-import { PAYLINES, SYMBOL_NAMES } from './constants';
+import { PAYLINES, REGULAR_SYMBOL_NAMES } from './constants';
 
-const paddingReel = SYMBOL_NAMES.map((name) => ({ name }));
+const paddingReel = REGULAR_SYMBOL_NAMES.map((name) => ({ name }));
 
 export default {
 	providerName: 'x_provider',
@@ -31,5 +31,6 @@ export default {
 	},
 	paddingReels: {
 		basegame: [paddingReel, paddingReel, paddingReel],
+		bonusgame: [paddingReel, paddingReel, paddingReel],
 	},
 };

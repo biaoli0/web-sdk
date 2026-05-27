@@ -1,4 +1,4 @@
-import type { Position, RawSymbol, SymbolName, SymbolState } from './types';
+import type { Position, RawSymbol, RegularSymbolName, SymbolName, SymbolState } from './types';
 
 export const SYMBOL_WIDTH = 240;
 export const SYMBOL_HEIGHT = 130;
@@ -16,7 +16,17 @@ export const BOARD_DIMENSIONS = {
 	y: BOARD_ROWS,
 };
 
-export const SYMBOL_NAMES: SymbolName[] = ['H1', 'H2', 'H3', 'H4', 'L1', 'L2', 'L3', 'L4'];
+export const REGULAR_SYMBOL_NAMES: RegularSymbolName[] = [
+	'H1',
+	'H2',
+	'H3',
+	'H4',
+	'L1',
+	'L2',
+	'L3',
+	'L4',
+];
+export const SYMBOL_NAMES: SymbolName[] = [...REGULAR_SYMBOL_NAMES, 'COIN'];
 
 export const INITIAL_SYMBOL_STATE: SymbolState = 'static';
 
@@ -63,6 +73,11 @@ export const SYMBOL_TEXTURE_MAP: Record<
 		normal: 'bar_bar.webp',
 		dark: 'bar_bar_dark.webp',
 		sizeRatios: { width: 1.5, height: 0.94 },
+	},
+	COIN: {
+		normal: 'feature_coin.webp',
+		dark: 'feature_coin.webp',
+		sizeRatios: { width: 1.1, height: 1.1 },
 	},
 };
 
