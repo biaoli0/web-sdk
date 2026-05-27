@@ -10,6 +10,7 @@
 	} from '../game/constants';
 	import { getContext } from '../game/context';
 	import type { LineWin, Position } from '../game/types';
+	import BonusIntro from './BonusIntro.svelte';
 	import RoundWin from './RoundWin.svelte';
 	import Symbol from './Symbol.svelte';
 
@@ -29,8 +30,17 @@
 
 	const getMessage = () => {
 		if (context.stateGameDerived.isSpinning()) return 'SPINNING';
-		if (context.stateGame.gameType === 'bonusgame') return 'BONUS GAME';
+		if (context.stateGame.bonus.status === 'complete') return 'BONUS COMPLETE';
+		if (context.stateGame.bonus.status === 'active') return 'BONUS GAME';
 		return 'READY';
+	};
+
+	const getBonusMessage = () => {
+		if (context.stateGame.bonus.status === 'inactive') return '';
+		if (context.stateGame.bonus.status === 'complete') {
+			return `BONUS WIN ${context.stateGame.bonus.totalWin}`;
+		}
+		return `RESPINS ${context.stateGame.bonus.respins} | COINS ${context.stateGame.bonus.totalWin}`;
 	};
 
 	const showRoundWin = () => context.stateGame.totalWin > 0 && context.stateGame.wins.length > 0;
@@ -78,7 +88,12 @@
 					y={context.stateGameDerived.visibleSymbolY(reelSymbol)}
 					rawSymbol={reelSymbol.rawSymbol}
 					symbolState={reelSymbol.symbolState}
-					highlight={isWinningPosition({ reel: reelIndex, row: rowIndex })}
+					highlight={isWinningPosition({ reel: reelIndex, row: rowIndex }) ||
+						context.stateGameDerived.isBonusCoinPosition({ reel: reelIndex, row: rowIndex })}
+					newCoin={context.stateGameDerived.isBonusNewCoinPosition({
+						reel: reelIndex,
+						row: rowIndex,
+					})}
 					dimmed={isDimmedPosition({ reel: reelIndex, row: rowIndex })}
 				/>
 			{/each}
@@ -96,9 +111,27 @@
 		{/each}
 	</Container>
 
+	<BonusIntro />
+
 	{#if showRoundWin()}
 		<Container x={BOARD_SIZES.width * 0.5} y={BOARD_SIZES.height * 0.5}>
 			<RoundWin />
 		</Container>
+	{/if}
+
+	{#if context.stateGame.bonus.status !== 'inactive'}
+		<Text
+			x={BOARD_SIZES.width * 0.5}
+			y={BOARD_SIZES.height + 48}
+			anchor={0.5}
+			text={getBonusMessage()}
+			style={{
+				align: 'center',
+				fontFamily: 'proxima-nova',
+				fontSize: 24,
+				fontWeight: '800',
+				fill: 0xfef08a,
+			}}
+		/>
 	{/if}
 </Container>

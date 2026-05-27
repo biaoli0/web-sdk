@@ -10,6 +10,7 @@
 		rawSymbol: RawSymbol;
 		symbolState: SymbolState;
 		highlight?: boolean;
+		newCoin?: boolean;
 		dimmed?: boolean;
 	};
 
@@ -17,7 +18,7 @@
 
 	const texture = $derived(SYMBOL_TEXTURE_MAP[props.rawSymbol.name]);
 	const textureKey = $derived(props.dimmed ? texture.dark : texture.normal);
-	const tileAlpha = $derived(props.highlight ? 0.34 : 0.18);
+	const tileAlpha = $derived(props.highlight ? 0.38 : 0.18);
 	const coinValue = $derived(props.rawSymbol.name === 'COIN' ? props.rawSymbol.value : undefined);
 </script>
 
@@ -29,8 +30,8 @@
 		borderRadius={8}
 		backgroundColor={props.highlight ? 0x2dd4bf : 0x150f24}
 		backgroundAlpha={tileAlpha}
-		borderColor={props.highlight ? 0xfef08a : 0x6b4c9a}
-		borderWidth={props.highlight ? 4 : 2}
+		borderColor={props.newCoin ? 0xffffff : props.highlight ? 0xfef08a : 0x6b4c9a}
+		borderWidth={props.newCoin ? 6 : props.highlight ? 4 : 2}
 		borderAlpha={props.highlight ? 1 : 0.55}
 	/>
 	<Sprite
