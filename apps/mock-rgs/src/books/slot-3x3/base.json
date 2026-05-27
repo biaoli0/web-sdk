@@ -131,5 +131,153 @@
 				"amount": 20
 			}
 		]
+	},
+	{
+		"id": 4,
+		"payoutMultiplier": 1250,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
+					[
+						{ "name": "COIN", "value": 100 },
+						{ "name": "COIN", "value": 200 },
+						{ "name": "COIN", "value": 300 }
+					],
+					[{ "name": "H2" }, { "name": "L3" }, { "name": "L4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "bonusTrigger",
+				"respins": 3,
+				"positions": [
+					{ "reel": 1, "row": 0 },
+					{ "reel": 1, "row": 1 },
+					{ "reel": 1, "row": 2 }
+				]
+			},
+			{
+				"index": 2,
+				"type": "bonusReveal",
+				"paddingPositions": [0, 0, 0],
+				"respins": 3,
+				"coinsAdded": [{ "reel": 0, "row": 0 }],
+				"totalWin": 850,
+				"board": [
+					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
+					[
+						{ "name": "COIN", "value": 100 },
+						{ "name": "COIN", "value": 200 },
+						{ "name": "COIN", "value": 300 }
+					],
+					[{ "name": "H2" }, { "name": "L3" }, { "name": "L4" }]
+				]
+			},
+			{
+				"index": 3,
+				"type": "bonusReveal",
+				"paddingPositions": [0, 0, 0],
+				"respins": 2,
+				"coinsAdded": [],
+				"totalWin": 850,
+				"board": [
+					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
+					[
+						{ "name": "COIN", "value": 100 },
+						{ "name": "COIN", "value": 200 },
+						{ "name": "COIN", "value": 300 }
+					],
+					[{ "name": "H2" }, { "name": "L3" }, { "name": "L4" }]
+				]
+			},
+			{
+				"index": 4,
+				"type": "bonusReveal",
+				"paddingPositions": [0, 0, 0],
+				"respins": 3,
+				"coinsAdded": [{ "reel": 2, "row": 2 }],
+				"totalWin": 1250,
+				"board": [
+					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
+					[
+						{ "name": "COIN", "value": 100 },
+						{ "name": "COIN", "value": 200 },
+						{ "name": "COIN", "value": 300 }
+					],
+					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+				]
+			},
+			{
+				"index": 5,
+				"type": "bonusReveal",
+				"paddingPositions": [0, 0, 0],
+				"respins": 2,
+				"coinsAdded": [],
+				"totalWin": 1250,
+				"board": [
+					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
+					[
+						{ "name": "COIN", "value": 100 },
+						{ "name": "COIN", "value": 200 },
+						{ "name": "COIN", "value": 300 }
+					],
+					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+				]
+			},
+			{
+				"index": 6,
+				"type": "bonusReveal",
+				"paddingPositions": [0, 0, 0],
+				"respins": 1,
+				"coinsAdded": [],
+				"totalWin": 1250,
+				"board": [
+					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
+					[
+						{ "name": "COIN", "value": 100 },
+						{ "name": "COIN", "value": 200 },
+						{ "name": "COIN", "value": 300 }
+					],
+					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+				]
+			},
+			{
+				"index": 7,
+				"type": "bonusReveal",
+				"paddingPositions": [0, 0, 0],
+				"respins": 0,
+				"coinsAdded": [],
+				"totalWin": 1250,
+				"board": [
+					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
+					[
+						{ "name": "COIN", "value": 100 },
+						{ "name": "COIN", "value": 200 },
+						{ "name": "COIN", "value": 300 }
+					],
+					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+				]
+			},
+			{
+				"index": 8,
+				"type": "bonusEnd",
+				"amount": 1250
+			},
+			{
+				"index": 9,
+				"type": "setTotalWin",
+				"amount": 1250
+			},
+			{
+				"index": 10,
+				"type": "finalWin",
+				"amount": 1250
+			}
+		]
 	}
 ]
