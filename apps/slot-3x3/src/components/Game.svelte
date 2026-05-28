@@ -9,7 +9,7 @@
 	import EnableSound from './EnableSound.svelte';
 	import EnableGameActor from './EnableGameActor.svelte';
 	import Sound from './Sound.svelte';
-	import Slot3x3UI from './Slot3x3UI.svelte';
+	import GameInterface from './GameInterface.svelte';
 
 	const context = getContext();
 	const layout = $derived(context.stateLayoutDerived.mainLayoutStandard());
@@ -41,7 +41,7 @@
 			<Board />
 		</MainContainer>
 
-		<Slot3x3UI />
+		<GameInterface />
 	{:else}
 		<Text
 			x={40}
