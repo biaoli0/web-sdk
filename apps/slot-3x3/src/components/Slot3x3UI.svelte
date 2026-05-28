@@ -1,18 +1,12 @@
 <script lang="ts">
-	import { Container, Sprite, Text } from 'pixi-svelte';
+	import { Container, Text } from 'pixi-svelte';
 	import { MainContainer } from 'components-layout';
 	import { EnableSpaceHold } from 'components-shared';
-	import {
-		ButtonAutoSpin,
-		ButtonBet,
-		ButtonSettings,
-		ButtonSoundSwitch,
-	} from 'components-ui-pixi';
-	import { stateModal } from 'state-shared';
 
 	import { BOARD_SIZES } from '../game/constants';
 	import { getContext } from '../game/context';
-	import Slot3x3AmountLabel from './Slot3x3AmountLabel.svelte';
+	import ActorControls from './ActorControls.svelte';
+	import OverallBetInfo from './OverallBetInfo.svelte';
 
 	const context = getContext();
 	const BOARD_OFFSET_Y = -28;
@@ -28,6 +22,16 @@
 	const ACTION_TO_AMOUNT_GAP = 92;
 	const ACTION_BUTTON_GAP = 120;
 	const SWITCH_BET_ICON_SIZE = 150;
+	const ACTION_SCALE_RIGHT_RAIL = {
+		side: 0.6,
+		action: 0.78,
+		switchBet: 0.6,
+	};
+	const ACTION_SCALE_BOTTOM_ROW = {
+		side: 0.48,
+		action: 0.62,
+		switchBet: 0.48,
+	};
 
 	const gameLayout = $derived(context.stateLayoutDerived.mainLayout());
 	const layout = $derived(context.stateLayoutDerived.mainLayoutStandard());
@@ -67,14 +71,13 @@
 		),
 	);
 	const portraitAmountPanelY = $derived(portraitActionPanelYStandard + ACTION_TO_AMOUNT_GAP);
-	const betMenuDisabled = $derived(!context.stateXstateDerived.isIdle());
-
-	const openBetMenu = () => {
-		if (betMenuDisabled) return;
-
-		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
-		stateModal.modal = { name: 'betAmountMenu' };
-	};
+	const actionPanelX = $derived(useRightRail ? rightRailX : gameLayout.width * 0.5);
+	const actionPanelY = $derived(useRightRail ? rightRailY : portraitActionPanelY);
+	const actionDirection = $derived(useRightRail ? 'vertical' : 'horizontal');
+	const actionScales = $derived(useRightRail ? ACTION_SCALE_RIGHT_RAIL : ACTION_SCALE_BOTTOM_ROW);
+	const amountPanelYTarget = $derived(useRightRail ? amountPanelY : portraitAmountPanelY);
+	const amountPanelGap = $derived(useRightRail ? 300 : 220);
+	const amountPanelScale = $derived(useRightRail ? 0.78 : 0.68);
 </script>
 
 <EnableSpaceHold />
@@ -92,105 +95,20 @@
 </Container>
 
 <MainContainer>
-	{#if useRightRail}
-		<Container x={rightRailX} y={rightRailY} scale={uiScale}>
-			<Container y={-ACTION_BUTTON_GAP * 2} scale={0.6}>
-				<ButtonSoundSwitch anchor={0.5} />
-			</Container>
-
-			<Container y={-ACTION_BUTTON_GAP} scale={0.78}>
-				<ButtonAutoSpin anchor={0.5} />
-			</Container>
-
-			<Container scale={0.78}>
-				<ButtonBet anchor={0.5} />
-			</Container>
-
-			<Container
-				y={ACTION_BUTTON_GAP}
-				scale={0.6}
-				eventMode="static"
-				cursor={betMenuDisabled ? 'not-allowed' : 'pointer'}
-				onpointerup={openBetMenu}
-			>
-				<Sprite
-					key="switchBet"
-					anchor={0.5}
-					width={SWITCH_BET_ICON_SIZE}
-					height={SWITCH_BET_ICON_SIZE}
-					alpha={betMenuDisabled ? 0.5 : 1}
-				/>
-			</Container>
-
-			<Container y={ACTION_BUTTON_GAP * 2} scale={0.6}>
-				<ButtonSettings anchor={0.5} />
-			</Container>
-		</Container>
-	{:else}
-		<Container x={gameLayout.width * 0.5} y={portraitActionPanelY} scale={uiScale}>
-			<Container x={-ACTION_BUTTON_GAP * 2} scale={0.48}>
-				<ButtonSoundSwitch anchor={0.5} />
-			</Container>
-
-			<Container x={-ACTION_BUTTON_GAP} scale={0.62}>
-				<ButtonAutoSpin anchor={0.5} />
-			</Container>
-
-			<Container scale={0.62}>
-				<ButtonBet anchor={0.5} />
-			</Container>
-
-			<Container
-				x={ACTION_BUTTON_GAP}
-				scale={0.48}
-				eventMode="static"
-				cursor={betMenuDisabled ? 'not-allowed' : 'pointer'}
-				onpointerup={openBetMenu}
-			>
-				<Sprite
-					key="switchBet"
-					anchor={0.5}
-					width={SWITCH_BET_ICON_SIZE}
-					height={SWITCH_BET_ICON_SIZE}
-					alpha={betMenuDisabled ? 0.5 : 1}
-				/>
-			</Container>
-
-			<Container x={ACTION_BUTTON_GAP * 2} scale={0.48}>
-				<ButtonSettings anchor={0.5} />
-			</Container>
-		</Container>
-	{/if}
+	<Container x={actionPanelX} y={actionPanelY} scale={uiScale}>
+		<ActorControls
+			direction={actionDirection}
+			gap={ACTION_BUTTON_GAP}
+			sideScale={actionScales.side}
+			actionScale={actionScales.action}
+			switchBetScale={actionScales.switchBet}
+			switchBetIconSize={SWITCH_BET_ICON_SIZE}
+		/>
+	</Container>
 </MainContainer>
 
 <MainContainer standard>
-	{#if useRightRail}
-		<Container x={layout.width * 0.5} y={amountPanelY}>
-			<Container x={-300} scale={0.78}>
-				<Slot3x3AmountLabel kind="win" stacked />
-			</Container>
-
-			<Container scale={0.78}>
-				<Slot3x3AmountLabel kind="bet" stacked />
-			</Container>
-
-			<Container x={300} scale={0.78}>
-				<Slot3x3AmountLabel kind="balance" stacked />
-			</Container>
-		</Container>
-	{:else}
-		<Container x={layout.width * 0.5} y={portraitAmountPanelY}>
-			<Container x={-220} scale={0.68}>
-				<Slot3x3AmountLabel kind="win" stacked />
-			</Container>
-
-			<Container scale={0.68}>
-				<Slot3x3AmountLabel kind="bet" stacked />
-			</Container>
-
-			<Container x={220} scale={0.68}>
-				<Slot3x3AmountLabel kind="balance" stacked />
-			</Container>
-		</Container>
-	{/if}
+	<Container x={layout.width * 0.5} y={amountPanelYTarget}>
+		<OverallBetInfo gap={amountPanelGap} itemScale={amountPanelScale} />
+	</Container>
 </MainContainer>
