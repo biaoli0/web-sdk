@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { App, Text } from 'pixi-svelte';
+	import { App, Sprite, Text } from 'pixi-svelte';
 	import { MainContainer } from 'components-layout';
 	import { EnableHotkey } from 'components-shared';
 	import { GameVersion, Modals } from 'components-ui-html';
@@ -12,6 +12,7 @@
 	import Slot3x3UI from './Slot3x3UI.svelte';
 
 	const context = getContext();
+	const layout = $derived(context.stateLayoutDerived.mainLayoutStandard());
 	let soundStarted = $state(false);
 </script>
 
@@ -24,6 +25,17 @@
 		{#if soundStarted}
 			<Sound />
 		{/if}
+
+		<MainContainer standard>
+			<Sprite
+				key="menuBackgroundLandscape"
+				anchor={{ x: 0.5, y: 1 }}
+				x={layout.width * 0.5}
+				y={layout.height}
+				width={layout.width}
+				height={layout.height}
+			/>
+		</MainContainer>
 
 		<MainContainer>
 			<Board />

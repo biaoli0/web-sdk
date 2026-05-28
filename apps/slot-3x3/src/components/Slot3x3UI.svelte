@@ -21,7 +21,8 @@
 	const PORTRAIT_ACTION_BOARD_GAP = 190;
 	const ACTION_TO_AMOUNT_GAP = 92;
 	const ACTION_BUTTON_GAP = 120;
-	const SWITCH_BET_ICON_SIZE = 150;
+	const SWITCH_BET_ICON_SIZE = 120;
+	const SETTINGS_ICON_SIZE = 120;
 	const ACTION_SCALE_RIGHT_RAIL = {
 		side: 0.6,
 		action: 0.78,
@@ -103,6 +104,7 @@
 			actionScale={actionScales.action}
 			switchBetScale={actionScales.switchBet}
 			switchBetIconSize={SWITCH_BET_ICON_SIZE}
+			settingsIconSize={SETTINGS_ICON_SIZE}
 		/>
 	</Container>
 </MainContainer>

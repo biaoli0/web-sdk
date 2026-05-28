@@ -1,0 +1,20 @@
+{
+	"frames": {
+		"autoPlay": {
+			"frame": { "x": 0, "y": 0, "w": 149, "h": 149 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 149, "h": 149 },
+			"sourceSize": { "w": 149, "h": 149 },
+			"pivot": { "x": 0.5, "y": 0.5 }
+		}
+	},
+	"meta": {
+		"app": "manual",
+		"version": "1.0",
+		"image": "autoPlay.png",
+		"format": "RGBA8888",
+		"size": { "w": 367, "h": 149 },
+		"scale": "1"
+	}
+}

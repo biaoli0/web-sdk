@@ -1,0 +1,20 @@
+{
+	"frames": {
+		"settingsMenu": {
+			"frame": { "x": 535, "y": 535, "w": 150, "h": 150 },
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": { "x": 0, "y": 0, "w": 150, "h": 150 },
+			"sourceSize": { "w": 150, "h": 150 },
+			"pivot": { "x": 0.5, "y": 0.5 }
+		}
+	},
+	"meta": {
+		"app": "manual",
+		"version": "1.0",
+		"image": "ui.png",
+		"format": "RGBA8888",
+		"size": { "w": 1046, "h": 1046 },
+		"scale": "1"
+	}
+}
