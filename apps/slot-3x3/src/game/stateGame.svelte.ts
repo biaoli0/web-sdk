@@ -11,7 +11,15 @@ import {
 	SPIN_OPTIONS_FAST,
 	SYMBOL_HEIGHT,
 } from './constants';
-import type { BonusState, GameType, LineWin, Position, RawSymbol, SymbolState } from './types';
+import { SYMBOL_NAME } from './symbols';
+import {
+	type BonusState,
+	type GameType,
+	type LineWin,
+	type Position,
+	type RawSymbol,
+	type SymbolState,
+} from './types';
 
 const symbolHeight = SYMBOL_HEIGHT + BOARD_GAP;
 
@@ -89,7 +97,8 @@ const sumCoinValues = (rawBoard: RawSymbol[][]) =>
 		(total, reel) =>
 			total +
 			reel.reduce(
-				(reelTotal, rawSymbol) => reelTotal + (rawSymbol.name === 'COIN' ? rawSymbol.value : 0),
+				(reelTotal, rawSymbol) =>
+					reelTotal + (rawSymbol.name === SYMBOL_NAME.VALUE_COIN ? rawSymbol.value : 0),
 				0,
 			),
 		0,

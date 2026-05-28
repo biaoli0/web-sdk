@@ -1,13 +1,14 @@
+import { SYMBOL_NAME } from '../../game/symbols';
 import type { BookEvent, BookEventOfType } from '../../game/typesBookEvent';
 
 const triggerBoard: BookEventOfType<'reveal'>['board'] = [
-	[{ name: 'H1' }, { name: 'L1' }, { name: 'H3' }],
+	[{ name: SYMBOL_NAME.HIGH_1 }, { name: SYMBOL_NAME.LOW_1 }, { name: SYMBOL_NAME.HIGH_3 }],
 	[
-		{ name: 'COIN', value: 100 },
-		{ name: 'COIN', value: 200 },
-		{ name: 'COIN', value: 300 },
+		{ name: SYMBOL_NAME.VALUE_COIN, value: 100 },
+		{ name: SYMBOL_NAME.VALUE_COIN, value: 200 },
+		{ name: SYMBOL_NAME.VALUE_COIN, value: 300 },
 	],
-	[{ name: 'H2' }, { name: 'L3' }, { name: 'L4' }],
+	[{ name: SYMBOL_NAME.HIGH_2 }, { name: SYMBOL_NAME.LOW_3 }, { name: SYMBOL_NAME.LOW_4 }],
 ];
 
 const reveal: BookEventOfType<'reveal'> = {
@@ -37,9 +38,17 @@ const bonusReveal1: BookEventOfType<'bonusReveal'> = {
 	coinsAdded: [{ reel: 0, row: 0 }],
 	totalWin: 850,
 	board: [
-		[{ name: 'COIN', value: 250 }, { name: 'L1' }, { name: 'H3' }],
+		[
+			{ name: SYMBOL_NAME.VALUE_COIN, value: 250 },
+			{ name: SYMBOL_NAME.EMPTY_COIN },
+			{ name: SYMBOL_NAME.EMPTY_COIN },
+		],
 		triggerBoard[1],
-		[{ name: 'H2' }, { name: 'L3' }, { name: 'L4' }],
+		[
+			{ name: SYMBOL_NAME.EMPTY_COIN },
+			{ name: SYMBOL_NAME.EMPTY_COIN },
+			{ name: SYMBOL_NAME.EMPTY_COIN },
+		],
 	],
 };
 
@@ -63,7 +72,11 @@ const bonusReveal3: BookEventOfType<'bonusReveal'> = {
 	board: [
 		bonusReveal1.board[0],
 		triggerBoard[1],
-		[{ name: 'H2' }, { name: 'L3' }, { name: 'COIN', value: 400 }],
+		[
+			{ name: SYMBOL_NAME.EMPTY_COIN },
+			{ name: SYMBOL_NAME.EMPTY_COIN },
+			{ name: SYMBOL_NAME.VALUE_COIN, value: 400 },
+		],
 	],
 };
 

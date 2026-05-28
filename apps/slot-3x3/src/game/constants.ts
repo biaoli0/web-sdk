@@ -1,3 +1,4 @@
+import { COIN_SYMBOL_NAME_VALUES, REGULAR_SYMBOL_NAME_VALUES, SYMBOL_NAME } from './symbols';
 import type { Position, RawSymbol, RegularSymbolName, SymbolName, SymbolState } from './types';
 
 export const SYMBOL_WIDTH = 240;
@@ -18,17 +19,8 @@ export const BOARD_DIMENSIONS = {
 	y: BOARD_ROWS,
 };
 
-export const REGULAR_SYMBOL_NAMES: RegularSymbolName[] = [
-	'H1',
-	'H2',
-	'H3',
-	'H4',
-	'L1',
-	'L2',
-	'L3',
-	'L4',
-];
-export const SYMBOL_NAMES: SymbolName[] = [...REGULAR_SYMBOL_NAMES, 'COIN'];
+export const REGULAR_SYMBOL_NAMES: RegularSymbolName[] = [...REGULAR_SYMBOL_NAME_VALUES];
+export const SYMBOL_NAMES: SymbolName[] = [...REGULAR_SYMBOL_NAMES, ...COIN_SYMBOL_NAME_VALUES];
 
 export const INITIAL_SYMBOL_STATE: SymbolState = 'static';
 
@@ -36,57 +28,62 @@ export const SYMBOL_TEXTURE_MAP: Record<
 	SymbolName,
 	{ normal: string; dark: string; sizeRatios: { width: number; height: number } }
 > = {
-	H1: {
+	[SYMBOL_NAME.HIGH_1]: {
 		normal: 'seven.webp',
 		dark: 'seven_dark.webp',
 		sizeRatios: { width: 1.55, height: 0.94 },
 	},
-	H2: {
+	[SYMBOL_NAME.HIGH_2]: {
 		normal: 'star.webp',
 		dark: 'star_dark.webp',
 		sizeRatios: { width: 1.58, height: 0.94 },
 	},
-	H3: {
+	[SYMBOL_NAME.HIGH_3]: {
 		normal: 'bell.webp',
 		dark: 'bell_dark.webp',
 		sizeRatios: { width: 1.49, height: 0.94 },
 	},
-	H4: {
+	[SYMBOL_NAME.HIGH_4]: {
 		normal: 'watermelon.webp',
 		dark: 'watermelon_dark.webp',
 		sizeRatios: { width: 1.7, height: 0.94 },
 	},
-	L1: {
+	[SYMBOL_NAME.LOW_1]: {
 		normal: 'grapes.webp',
 		dark: 'grapes_dark.webp',
 		sizeRatios: { width: 1.57, height: 0.94 },
 	},
-	L2: {
+	[SYMBOL_NAME.LOW_2]: {
 		normal: 'plum.webp',
 		dark: 'plum_dark.webp',
 		sizeRatios: { width: 1.59, height: 0.94 },
 	},
-	L3: {
+	[SYMBOL_NAME.LOW_3]: {
 		normal: 'orange.webp',
 		dark: 'orange_dark.webp',
 		sizeRatios: { width: 1.63, height: 0.94 },
 	},
-	L4: {
+	[SYMBOL_NAME.LOW_4]: {
 		normal: 'bar_bar.webp',
 		dark: 'bar_bar_dark.webp',
 		sizeRatios: { width: 1.5, height: 0.94 },
 	},
-	COIN: {
+	[SYMBOL_NAME.VALUE_COIN]: {
 		normal: 'feature_coin.webp',
 		dark: 'feature_coin.webp',
 		sizeRatios: { width: 1.1, height: 1.1 },
 	},
+	[SYMBOL_NAME.EMPTY_COIN]: {
+		normal: 'coin.webp',
+		dark: 'coin.webp',
+		sizeRatios: { width: 1, height: 1 },
+	},
 };
 
 export const INITIAL_BOARD: RawSymbol[][] = [
-	[{ name: 'H1' }, { name: 'L1' }, { name: 'H3' }],
-	[{ name: 'H2' }, { name: 'L2' }, { name: 'H4' }],
-	[{ name: 'H1' }, { name: 'L3' }, { name: 'L4' }],
+	[{ name: SYMBOL_NAME.HIGH_1 }, { name: SYMBOL_NAME.LOW_1 }, { name: SYMBOL_NAME.HIGH_3 }],
+	[{ name: SYMBOL_NAME.HIGH_2 }, { name: SYMBOL_NAME.LOW_2 }, { name: SYMBOL_NAME.HIGH_4 }],
+	[{ name: SYMBOL_NAME.HIGH_1 }, { name: SYMBOL_NAME.LOW_3 }, { name: SYMBOL_NAME.LOW_4 }],
 ];
 
 export const PAYLINES: Record<string, [number, number, number]> = {

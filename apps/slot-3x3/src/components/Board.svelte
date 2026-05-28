@@ -9,6 +9,7 @@
 		SYMBOL_WIDTH,
 	} from '../game/constants';
 	import { getContext } from '../game/context';
+	import { SYMBOL_NAME } from '../game/symbols';
 	import type { LineWin, Position } from '../game/types';
 	import BonusIntro from './BonusIntro.svelte';
 	import RoundWin from './RoundWin.svelte';
@@ -29,7 +30,8 @@
 		context.stateGame.wins.length > 0 && !isWinningPosition(position);
 
 	const isBonusCoin = (rawSymbolName: string) =>
-		context.stateGame.bonus.status !== 'inactive' && rawSymbolName === 'COIN';
+		context.stateGame.bonus.status !== 'inactive' &&
+		(rawSymbolName === SYMBOL_NAME.VALUE_COIN || rawSymbolName === SYMBOL_NAME.EMPTY_COIN);
 
 	const getMessage = () => {
 		if (context.stateGameDerived.isSpinning()) return 'SPINNING';

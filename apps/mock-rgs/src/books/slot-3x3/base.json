@@ -9,9 +9,9 @@
 				"gameType": "basegame",
 				"paddingPositions": [0, 0, 0],
 				"board": [
-					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
-					[{ "name": "H2" }, { "name": "L2" }, { "name": "H4" }],
-					[{ "name": "L1" }, { "name": "L3" }, { "name": "L4" }]
+					[{ "name": "HIGH_1" }, { "name": "LOW_1" }, { "name": "HIGH_3" }],
+					[{ "name": "HIGH_2" }, { "name": "LOW_2" }, { "name": "HIGH_4" }],
+					[{ "name": "LOW_1" }, { "name": "LOW_3" }, { "name": "LOW_4" }]
 				]
 			},
 			{
@@ -42,9 +42,9 @@
 				"gameType": "basegame",
 				"paddingPositions": [0, 0, 0],
 				"board": [
-					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
-					[{ "name": "H1" }, { "name": "L2" }, { "name": "H4" }],
-					[{ "name": "H1" }, { "name": "L3" }, { "name": "L4" }]
+					[{ "name": "HIGH_1" }, { "name": "LOW_1" }, { "name": "HIGH_3" }],
+					[{ "name": "HIGH_1" }, { "name": "LOW_2" }, { "name": "HIGH_4" }],
+					[{ "name": "HIGH_1" }, { "name": "LOW_3" }, { "name": "LOW_4" }]
 				]
 			},
 			{
@@ -53,7 +53,7 @@
 				"totalWin": 50,
 				"wins": [
 					{
-						"symbol": "H1",
+						"symbol": "HIGH_1",
 						"kind": 3,
 						"win": 50,
 						"positions": [
@@ -92,9 +92,9 @@
 				"gameType": "basegame",
 				"paddingPositions": [0, 0, 0],
 				"board": [
-					[{ "name": "L2" }, { "name": "H3" }, { "name": "H2" }],
-					[{ "name": "L1" }, { "name": "H3" }, { "name": "L4" }],
-					[{ "name": "H4" }, { "name": "H3" }, { "name": "L3" }]
+					[{ "name": "LOW_2" }, { "name": "HIGH_3" }, { "name": "HIGH_2" }],
+					[{ "name": "LOW_1" }, { "name": "HIGH_3" }, { "name": "LOW_4" }],
+					[{ "name": "HIGH_4" }, { "name": "HIGH_3" }, { "name": "LOW_3" }]
 				]
 			},
 			{
@@ -103,7 +103,7 @@
 				"totalWin": 20,
 				"wins": [
 					{
-						"symbol": "H3",
+						"symbol": "HIGH_3",
 						"kind": 3,
 						"win": 20,
 						"positions": [
@@ -142,13 +142,13 @@
 				"gameType": "basegame",
 				"paddingPositions": [0, 0, 0],
 				"board": [
-					[{ "name": "H1" }, { "name": "L1" }, { "name": "H3" }],
+					[{ "name": "HIGH_1" }, { "name": "LOW_1" }, { "name": "HIGH_3" }],
 					[
-						{ "name": "COIN", "value": 100 },
-						{ "name": "COIN", "value": 200 },
-						{ "name": "COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "value": 100 },
+						{ "name": "VALUE_COIN", "value": 200 },
+						{ "name": "VALUE_COIN", "value": 300 }
 					],
-					[{ "name": "H2" }, { "name": "L3" }, { "name": "L4" }]
+					[{ "name": "HIGH_2" }, { "name": "LOW_3" }, { "name": "LOW_4" }]
 				]
 			},
 			{
@@ -169,13 +169,17 @@
 				"coinsAdded": [{ "reel": 0, "row": 0 }],
 				"totalWin": 850,
 				"board": [
-					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
 					[
-						{ "name": "COIN", "value": 100 },
-						{ "name": "COIN", "value": 200 },
-						{ "name": "COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" }
 					],
-					[{ "name": "H2" }, { "name": "L3" }, { "name": "L4" }]
+					[
+						{ "name": "VALUE_COIN", "value": 100 },
+						{ "name": "VALUE_COIN", "value": 200 },
+						{ "name": "VALUE_COIN", "value": 300 }
+					],
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }]
 				]
 			},
 			{
@@ -186,13 +190,17 @@
 				"coinsAdded": [],
 				"totalWin": 850,
 				"board": [
-					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
 					[
-						{ "name": "COIN", "value": 100 },
-						{ "name": "COIN", "value": 200 },
-						{ "name": "COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" }
 					],
-					[{ "name": "H2" }, { "name": "L3" }, { "name": "L4" }]
+					[
+						{ "name": "VALUE_COIN", "value": 100 },
+						{ "name": "VALUE_COIN", "value": 200 },
+						{ "name": "VALUE_COIN", "value": 300 }
+					],
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }]
 				]
 			},
 			{
@@ -203,13 +211,21 @@
 				"coinsAdded": [{ "reel": 2, "row": 2 }],
 				"totalWin": 1250,
 				"board": [
-					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
 					[
-						{ "name": "COIN", "value": 100 },
-						{ "name": "COIN", "value": 200 },
-						{ "name": "COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" }
 					],
-					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+					[
+						{ "name": "VALUE_COIN", "value": 100 },
+						{ "name": "VALUE_COIN", "value": 200 },
+						{ "name": "VALUE_COIN", "value": 300 }
+					],
+					[
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "VALUE_COIN", "value": 400 }
+					]
 				]
 			},
 			{
@@ -220,13 +236,21 @@
 				"coinsAdded": [],
 				"totalWin": 1250,
 				"board": [
-					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
 					[
-						{ "name": "COIN", "value": 100 },
-						{ "name": "COIN", "value": 200 },
-						{ "name": "COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" }
 					],
-					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+					[
+						{ "name": "VALUE_COIN", "value": 100 },
+						{ "name": "VALUE_COIN", "value": 200 },
+						{ "name": "VALUE_COIN", "value": 300 }
+					],
+					[
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "VALUE_COIN", "value": 400 }
+					]
 				]
 			},
 			{
@@ -237,13 +261,21 @@
 				"coinsAdded": [],
 				"totalWin": 1250,
 				"board": [
-					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
 					[
-						{ "name": "COIN", "value": 100 },
-						{ "name": "COIN", "value": 200 },
-						{ "name": "COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" }
 					],
-					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+					[
+						{ "name": "VALUE_COIN", "value": 100 },
+						{ "name": "VALUE_COIN", "value": 200 },
+						{ "name": "VALUE_COIN", "value": 300 }
+					],
+					[
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "VALUE_COIN", "value": 400 }
+					]
 				]
 			},
 			{
@@ -254,13 +286,21 @@
 				"coinsAdded": [],
 				"totalWin": 1250,
 				"board": [
-					[{ "name": "COIN", "value": 250 }, { "name": "L1" }, { "name": "H3" }],
 					[
-						{ "name": "COIN", "value": 100 },
-						{ "name": "COIN", "value": 200 },
-						{ "name": "COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" }
 					],
-					[{ "name": "H2" }, { "name": "L3" }, { "name": "COIN", "value": 400 }]
+					[
+						{ "name": "VALUE_COIN", "value": 100 },
+						{ "name": "VALUE_COIN", "value": 200 },
+						{ "name": "VALUE_COIN", "value": 300 }
+					],
+					[
+						{ "name": "EMPTY_COIN" },
+						{ "name": "EMPTY_COIN" },
+						{ "name": "VALUE_COIN", "value": 400 }
+					]
 				]
 			},
 			{

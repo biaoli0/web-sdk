@@ -1,15 +1,22 @@
 import { type SpinningReelSymbolState } from 'utils-slots';
 
-export type RegularSymbolName = 'H1' | 'H2' | 'H3' | 'H4' | 'L1' | 'L2' | 'L3' | 'L4';
-export type SymbolName = RegularSymbolName | 'COIN';
+import { COIN_SYMBOL_NAME_VALUES, REGULAR_SYMBOL_NAME_VALUES, SYMBOL_NAME } from './symbols';
+
+export type RegularSymbolName = (typeof REGULAR_SYMBOL_NAME_VALUES)[number];
+export type ValueCoinSymbolName = typeof SYMBOL_NAME.VALUE_COIN;
+export type CoinSymbolName = (typeof COIN_SYMBOL_NAME_VALUES)[number];
+export type SymbolName = RegularSymbolName | CoinSymbolName;
 
 export type RawSymbol =
 	| {
 			name: RegularSymbolName;
 	  }
 	| {
-			name: 'COIN';
+			name: ValueCoinSymbolName;
 			value: number;
+	  }
+	| {
+			name: typeof SYMBOL_NAME.EMPTY_COIN;
 	  };
 
 export type SymbolState = SpinningReelSymbolState;

@@ -2,6 +2,7 @@
 	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
 
 	import { SYMBOL_HEIGHT, SYMBOL_TEXTURE_MAP, SYMBOL_WIDTH } from '../game/constants';
+	import { SYMBOL_NAME } from '../game/symbols';
 	import type { RawSymbol, SymbolState } from '../game/types';
 
 	type Props = {
@@ -19,7 +20,9 @@
 	const texture = $derived(SYMBOL_TEXTURE_MAP[props.rawSymbol.name]);
 	const textureKey = $derived(props.dimmed ? texture.dark : texture.normal);
 	const tileAlpha = $derived(props.highlight ? 0.38 : 0.18);
-	const coinValue = $derived(props.rawSymbol.name === 'COIN' ? props.rawSymbol.value : undefined);
+	const coinValue = $derived(
+		props.rawSymbol.name === SYMBOL_NAME.VALUE_COIN ? props.rawSymbol.value : undefined,
+	);
 </script>
 
 <Container x={props.x} y={props.y}>

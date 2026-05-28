@@ -1,6 +1,8 @@
 import { PAYLINES, REGULAR_SYMBOL_NAMES } from './constants';
+import { SYMBOL_NAME } from './symbols';
 
 const paddingReel = REGULAR_SYMBOL_NAMES.map((name) => ({ name }));
+const bonusPaddingReel = REGULAR_SYMBOL_NAMES.map(() => ({ name: SYMBOL_NAME.EMPTY_COIN }));
 
 export default {
 	providerName: 'x_provider',
@@ -20,17 +22,17 @@ export default {
 	},
 	paylines: PAYLINES,
 	symbols: {
-		H1: { paytable: [{ '3': 50 }] },
-		H2: { paytable: [{ '3': 30 }] },
-		H3: { paytable: [{ '3': 20 }] },
-		H4: { paytable: [{ '3': 16 }] },
-		L1: { paytable: [{ '3': 16 }] },
-		L2: { paytable: [{ '3': 4 }] },
-		L3: { paytable: [{ '3': 4 }] },
-		L4: { paytable: [{ '3': 1 }] },
+		[SYMBOL_NAME.HIGH_1]: { paytable: [{ '3': 50 }] },
+		[SYMBOL_NAME.HIGH_2]: { paytable: [{ '3': 30 }] },
+		[SYMBOL_NAME.HIGH_3]: { paytable: [{ '3': 20 }] },
+		[SYMBOL_NAME.HIGH_4]: { paytable: [{ '3': 16 }] },
+		[SYMBOL_NAME.LOW_1]: { paytable: [{ '3': 16 }] },
+		[SYMBOL_NAME.LOW_2]: { paytable: [{ '3': 4 }] },
+		[SYMBOL_NAME.LOW_3]: { paytable: [{ '3': 4 }] },
+		[SYMBOL_NAME.LOW_4]: { paytable: [{ '3': 1 }] },
 	},
 	paddingReels: {
 		basegame: [paddingReel, paddingReel, paddingReel],
-		bonusgame: [paddingReel, paddingReel, paddingReel],
+		bonusgame: [bonusPaddingReel, bonusPaddingReel, bonusPaddingReel],
 	},
 };

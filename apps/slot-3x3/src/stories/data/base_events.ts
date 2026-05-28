@@ -1,3 +1,4 @@
+import { SYMBOL_NAME } from '../../game/symbols';
 import type { BookEventOfType } from '../../game/typesBookEvent';
 
 const reveal: BookEventOfType<'reveal'> = {
@@ -6,9 +7,9 @@ const reveal: BookEventOfType<'reveal'> = {
 	gameType: 'basegame',
 	paddingPositions: [0, 0, 0],
 	board: [
-		[{ name: 'H1' }, { name: 'L1' }, { name: 'H3' }],
-		[{ name: 'H1' }, { name: 'L2' }, { name: 'H4' }],
-		[{ name: 'H1' }, { name: 'L3' }, { name: 'L4' }],
+		[{ name: SYMBOL_NAME.HIGH_1 }, { name: SYMBOL_NAME.LOW_1 }, { name: SYMBOL_NAME.HIGH_3 }],
+		[{ name: SYMBOL_NAME.HIGH_1 }, { name: SYMBOL_NAME.LOW_2 }, { name: SYMBOL_NAME.HIGH_4 }],
+		[{ name: SYMBOL_NAME.HIGH_1 }, { name: SYMBOL_NAME.LOW_3 }, { name: SYMBOL_NAME.LOW_4 }],
 	],
 };
 
@@ -18,7 +19,7 @@ const winInfo: BookEventOfType<'winInfo'> = {
 	totalWin: 25,
 	wins: [
 		{
-			symbol: 'H1',
+			symbol: SYMBOL_NAME.HIGH_1,
 			kind: 3,
 			win: 25,
 			positions: [
