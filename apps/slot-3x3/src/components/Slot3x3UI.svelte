@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Text } from 'pixi-svelte';
+	import { Container, Sprite, Text } from 'pixi-svelte';
 	import { MainContainer } from 'components-layout';
 	import { EnableSpaceHold } from 'components-shared';
 	import {
@@ -7,8 +7,8 @@
 		ButtonBet,
 		ButtonSettings,
 		ButtonSoundSwitch,
-		LabelBet,
 	} from 'components-ui-pixi';
+	import { stateModal } from 'state-shared';
 
 	import { BOARD_SIZES } from '../game/constants';
 	import { getContext } from '../game/context';
@@ -27,6 +27,7 @@
 	const PORTRAIT_ACTION_BOARD_GAP = 190;
 	const ACTION_TO_AMOUNT_GAP = 92;
 	const ACTION_BUTTON_GAP = 120;
+	const SWITCH_BET_ICON_SIZE = 150;
 
 	const gameLayout = $derived(context.stateLayoutDerived.mainLayout());
 	const layout = $derived(context.stateLayoutDerived.mainLayoutStandard());
@@ -66,6 +67,14 @@
 		),
 	);
 	const portraitAmountPanelY = $derived(portraitActionPanelYStandard + ACTION_TO_AMOUNT_GAP);
+	const betMenuDisabled = $derived(!context.stateXstateDerived.isIdle());
+
+	const openBetMenu = () => {
+		if (betMenuDisabled) return;
+
+		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
+		stateModal.modal = { name: 'betAmountMenu' };
+	};
 </script>
 
 <EnableSpaceHold />
@@ -97,8 +106,20 @@
 				<ButtonBet anchor={0.5} />
 			</Container>
 
-			<Container y={ACTION_BUTTON_GAP} scale={0.32}>
-				<LabelBet stacked />
+			<Container
+				y={ACTION_BUTTON_GAP}
+				scale={0.6}
+				eventMode="static"
+				cursor={betMenuDisabled ? 'not-allowed' : 'pointer'}
+				onpointerup={openBetMenu}
+			>
+				<Sprite
+					key="switchBet"
+					anchor={0.5}
+					width={SWITCH_BET_ICON_SIZE}
+					height={SWITCH_BET_ICON_SIZE}
+					alpha={betMenuDisabled ? 0.5 : 1}
+				/>
 			</Container>
 
 			<Container y={ACTION_BUTTON_GAP * 2} scale={0.6}>
@@ -119,8 +140,20 @@
 				<ButtonBet anchor={0.5} />
 			</Container>
 
-			<Container x={ACTION_BUTTON_GAP} scale={0.24}>
-				<LabelBet stacked />
+			<Container
+				x={ACTION_BUTTON_GAP}
+				scale={0.48}
+				eventMode="static"
+				cursor={betMenuDisabled ? 'not-allowed' : 'pointer'}
+				onpointerup={openBetMenu}
+			>
+				<Sprite
+					key="switchBet"
+					anchor={0.5}
+					width={SWITCH_BET_ICON_SIZE}
+					height={SWITCH_BET_ICON_SIZE}
+					alpha={betMenuDisabled ? 0.5 : 1}
+				/>
 			</Container>
 
 			<Container x={ACTION_BUTTON_GAP * 2} scale={0.48}>
