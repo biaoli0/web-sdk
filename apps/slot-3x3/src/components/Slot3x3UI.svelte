@@ -2,12 +2,17 @@
 	import { Container, Text } from 'pixi-svelte';
 	import { MainContainer } from 'components-layout';
 	import { EnableSpaceHold } from 'components-shared';
-	import { ButtonBet } from 'components-ui-pixi';
+	import {
+		ButtonAutoSpin,
+		ButtonBet,
+		ButtonSettings,
+		ButtonSoundSwitch,
+		LabelBet,
+	} from 'components-ui-pixi';
 
 	import { BOARD_SIZES } from '../game/constants';
 	import { getContext } from '../game/context';
 	import Slot3x3AmountLabel from './Slot3x3AmountLabel.svelte';
-	import Slot3x3PlaceholderButton from './Slot3x3PlaceholderButton.svelte';
 
 	const context = getContext();
 	const BOARD_OFFSET_Y = -28;
@@ -80,46 +85,46 @@
 <MainContainer>
 	{#if useRightRail}
 		<Container x={rightRailX} y={rightRailY} scale={uiScale}>
-			<Container y={-ACTION_BUTTON_GAP * 2}>
-				<Slot3x3PlaceholderButton label="SOUND" anchor={0.5} />
+			<Container y={-ACTION_BUTTON_GAP * 2} scale={0.6}>
+				<ButtonSoundSwitch anchor={0.5} />
 			</Container>
 
-			<Container y={-ACTION_BUTTON_GAP}>
-				<Slot3x3PlaceholderButton label="AUTOSPIN" anchor={0.5} />
+			<Container y={-ACTION_BUTTON_GAP} scale={0.78}>
+				<ButtonAutoSpin anchor={0.5} />
 			</Container>
 
-			<Container scale={0.84}>
+			<Container scale={0.78}>
 				<ButtonBet anchor={0.5} />
 			</Container>
 
-			<Container y={ACTION_BUTTON_GAP}>
-				<Slot3x3PlaceholderButton label="BET" anchor={0.5} />
+			<Container y={ACTION_BUTTON_GAP} scale={0.32}>
+				<LabelBet stacked />
 			</Container>
 
-			<Container y={ACTION_BUTTON_GAP * 2}>
-				<Slot3x3PlaceholderButton label="SETTINGS" anchor={0.5} />
+			<Container y={ACTION_BUTTON_GAP * 2} scale={0.6}>
+				<ButtonSettings anchor={0.5} />
 			</Container>
 		</Container>
 	{:else}
 		<Container x={gameLayout.width * 0.5} y={portraitActionPanelY} scale={uiScale}>
-			<Container x={-ACTION_BUTTON_GAP * 2} scale={0.74}>
-				<Slot3x3PlaceholderButton label="SOUND" anchor={0.5} />
+			<Container x={-ACTION_BUTTON_GAP * 2} scale={0.48}>
+				<ButtonSoundSwitch anchor={0.5} />
 			</Container>
 
-			<Container x={-ACTION_BUTTON_GAP} scale={0.74}>
-				<Slot3x3PlaceholderButton label="AUTOSPIN" anchor={0.5} />
+			<Container x={-ACTION_BUTTON_GAP} scale={0.62}>
+				<ButtonAutoSpin anchor={0.5} />
 			</Container>
 
 			<Container scale={0.62}>
 				<ButtonBet anchor={0.5} />
 			</Container>
 
-			<Container x={ACTION_BUTTON_GAP} scale={0.74}>
-				<Slot3x3PlaceholderButton label="BET" anchor={0.5} />
+			<Container x={ACTION_BUTTON_GAP} scale={0.24}>
+				<LabelBet stacked />
 			</Container>
 
-			<Container x={ACTION_BUTTON_GAP * 2} scale={0.74}>
-				<Slot3x3PlaceholderButton label="SETTINGS" anchor={0.5} />
+			<Container x={ACTION_BUTTON_GAP * 2} scale={0.48}>
+				<ButtonSettings anchor={0.5} />
 			</Container>
 		</Container>
 	{/if}
