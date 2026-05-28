@@ -51,7 +51,7 @@
 					Open Bet Menu
 				</button>
 				<button type="button" onclick={() => (stateModal.modal = { name: 'settings' })}>
-					Open Settings
+					Open Sound Settings
 				</button>
 				<button type="button" onclick={() => (stateModal.modal = null)}>Close Modal</button>
 				<button type="button" onclick={resetSession}>Reset Session</button>

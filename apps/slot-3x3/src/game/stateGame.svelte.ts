@@ -20,6 +20,7 @@ import {
 	type RawSymbol,
 	type SymbolState,
 } from './types';
+import { eventEmitter } from './eventEmitter';
 
 const symbolHeight = SYMBOL_HEIGHT + BOARD_GAP;
 
@@ -37,7 +38,13 @@ const board = INITIAL_BOARD.map((initialSymbols, reelIndex) => {
 		symbolHeight,
 		initialSymbols,
 		initialSymbolState: INITIAL_SYMBOL_STATE,
-		onReelStopping: () => {},
+		onReelStopping: () => {
+			eventEmitter.broadcast({
+				type: 'soundOnce',
+				name: 'sfx_reel_stop_1',
+				forcePlay: !stateBet.isTurbo,
+			});
+		},
 		onSymbolLand: () => {},
 	});
 

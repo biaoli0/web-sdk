@@ -4,6 +4,7 @@ import { waitForTimeout } from 'utils-shared/wait';
 
 import { BOARD_REELS } from './constants';
 import config from './config';
+import { eventEmitter } from './eventEmitter';
 import { stateGame, stateGameDerived } from './stateGame.svelte';
 import type { BookEvent, BookEventContext, BookEventOfType } from './typesBookEvent';
 
@@ -20,6 +21,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		});
 	},
 	bonusTrigger: async (bookEvent: BookEventOfType<'bonusTrigger'>) => {
+		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_superfreespin' });
 		stateGame.bonus.introVisible = true;
 		await waitForTimeout(1500);
 		stateGame.bonus.introVisible = false;
@@ -27,6 +29,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			positions: bookEvent.positions,
 			respins: bookEvent.respins,
 		});
+		eventEmitter.broadcast({ type: 'soundMusic', name: 'bgm_freespin' });
 		stateBet.winBookEventAmount = stateGame.bonus.totalWin;
 	},
 	bonusReveal: async (bookEvent: BookEventOfType<'bonusReveal'>) => {
@@ -40,15 +43,23 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 			coinsAdded: bookEvent.coinsAdded,
 			totalWin: bookEvent.totalWin,
 		});
+		if (bookEvent.coinsAdded.length > 0) {
+			eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_symbols_landing' });
+		}
 		stateBet.winBookEventAmount = bookEvent.totalWin;
 		await waitForTimeout(bookEvent.coinsAdded.length > 0 ? 450 : 180);
 	},
 	bonusEnd: async (bookEvent: BookEventOfType<'bonusEnd'>) => {
 		stateGameDerived.completeBonus({ amount: bookEvent.amount });
+		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_youwon_panel' });
+		eventEmitter.broadcast({ type: 'soundMusic', name: 'bgm_main' });
 		await waitForTimeout(600);
 	},
 	winInfo: async (bookEvent: BookEventOfType<'winInfo'>) => {
 		stateGameDerived.setWinInfo(bookEvent);
+		if (bookEvent.wins.length > 0) {
+			eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_winlevel_small' });
+		}
 		stateBet.winBookEventAmount = bookEvent.totalWin;
 		await waitForTimeout(bookEvent.wins.length > 0 ? 450 : 120);
 	},
