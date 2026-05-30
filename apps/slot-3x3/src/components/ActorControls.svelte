@@ -14,22 +14,22 @@
 		sideScale: number;
 		actionScale: number;
 		switchBetScale: number;
-		soundButtonIconSize: number;
-		autoSpinIconSize: number;
-		switchBetIconSize: number;
-		settingsIconSize?: number;
 	};
+
+	const SOUND_BUTTON_ICON_SIZE = 110;
+	const AUTO_SPIN_ICON_SIZE = 80;
+	const SWITCH_BET_ICON_SIZE = 130;
+	const SETTINGS_ICON_SIZE = 120;
 
 	const props: Props = $props();
 	const context = getContext();
-	const settingsIconSize = $derived(props.settingsIconSize ?? props.switchBetIconSize);
 	const soundButtonSizes = $derived({
-		width: props.soundButtonIconSize,
-		height: props.soundButtonIconSize,
+		width: SOUND_BUTTON_ICON_SIZE,
+		height: SOUND_BUTTON_ICON_SIZE,
 	});
 	const autoSpinSizes = $derived({
-		width: props.autoSpinIconSize,
-		height: props.autoSpinIconSize,
+		width: AUTO_SPIN_ICON_SIZE,
+		height: AUTO_SPIN_ICON_SIZE,
 	});
 	const soundButtonKey = $derived(
 		stateSound.volumeValueMaster === 0 ? 'soundButtonMuted' : 'soundButton',
@@ -45,10 +45,10 @@
 		stateBet.autoSpinsCounter === Infinity ? '\u221e' : String(stateBet.autoSpinsCounter),
 	);
 	const autoSpinCounterFontSize = $derived.by(() => {
-		if (stateBet.autoSpinsCounter === Infinity) return props.autoSpinIconSize * 0.75;
-		if (stateBet.autoSpinsCounter > 99) return props.autoSpinIconSize * 0.375;
-		if (stateBet.autoSpinsCounter > 9) return props.autoSpinIconSize * 0.5;
-		return props.autoSpinIconSize * 0.625;
+		if (stateBet.autoSpinsCounter === Infinity) return AUTO_SPIN_ICON_SIZE * 0.75;
+		if (stateBet.autoSpinsCounter > 99) return AUTO_SPIN_ICON_SIZE * 0.375;
+		if (stateBet.autoSpinsCounter > 9) return AUTO_SPIN_ICON_SIZE * 0.5;
+		return AUTO_SPIN_ICON_SIZE * 0.625;
 	});
 	const betMenuDisabled = $derived(!context.stateXstateDerived.isIdle());
 	const controlPosition = (index: number) =>
@@ -85,8 +85,8 @@
 				{...center}
 				key={soundButtonKey}
 				anchor={0.5}
-				width={props.soundButtonIconSize}
-				height={props.soundButtonIconSize}
+				width={SOUND_BUTTON_ICON_SIZE}
+				height={SOUND_BUTTON_ICON_SIZE}
 				alpha={pressed ? 0.82 : hovered ? 1 : 0.95}
 			/>
 		{/snippet}
@@ -100,8 +100,8 @@
 				{...center}
 				key="autoPlay"
 				anchor={0.5}
-				width={props.autoSpinIconSize}
-				height={props.autoSpinIconSize}
+				width={AUTO_SPIN_ICON_SIZE}
+				height={AUTO_SPIN_ICON_SIZE}
 				alpha={autoSpinDisabled ? 0.5 : pressed ? 0.82 : hovered ? 1 : 0.95}
 			/>
 
@@ -109,9 +109,9 @@
 				<Rectangle
 					{...center}
 					anchor={0.5}
-					width={props.autoSpinIconSize * 0.62}
-					height={props.autoSpinIconSize * 0.62}
-					borderRadius={props.autoSpinIconSize}
+					width={AUTO_SPIN_ICON_SIZE * 0.62}
+					height={AUTO_SPIN_ICON_SIZE * 0.62}
+					borderRadius={AUTO_SPIN_ICON_SIZE}
 					backgroundColor={0x000000}
 					backgroundAlpha={0.78}
 				/>
@@ -145,8 +145,8 @@
 	<Sprite
 		key="switchBet"
 		anchor={0.5}
-		width={props.switchBetIconSize}
-		height={props.switchBetIconSize}
+		width={SWITCH_BET_ICON_SIZE}
+		height={SWITCH_BET_ICON_SIZE}
 		alpha={betMenuDisabled ? 0.5 : 1}
 	/>
 </Container>
@@ -158,5 +158,5 @@
 	cursor="pointer"
 	onpointerup={openSettings}
 >
-	<Sprite key="settingsMenu" anchor={0.5} width={settingsIconSize} height={settingsIconSize} />
+	<Sprite key="settingsMenu" anchor={0.5} width={SETTINGS_ICON_SIZE} height={SETTINGS_ICON_SIZE} />
 </Container>
