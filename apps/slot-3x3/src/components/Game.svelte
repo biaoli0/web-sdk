@@ -2,7 +2,7 @@
 	import { App, Sprite, Text } from 'pixi-svelte';
 	import { MainContainer } from 'components-layout';
 	import { EnableHotkey } from 'components-shared';
-	import { GameVersion, Modals } from 'components-ui-html';
+	import { GameVersion } from 'components-ui-html';
 
 	import { getContext } from '../game/context';
 	import Board from './Board.svelte';
@@ -10,6 +10,7 @@
 	import EnableGameActor from './EnableGameActor.svelte';
 	import Sound from './Sound.svelte';
 	import GameInterface from './GameInterface.svelte';
+	import Modals from './Modals.svelte';
 
 	const context = getContext();
 	const layout = $derived(context.stateLayoutDerived.mainLayoutStandard());
