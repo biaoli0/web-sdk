@@ -13,14 +13,15 @@
 	const BOARD_FRAME_RIGHT = 22;
 	const BOARD_FRAME_BOTTOM = 52;
 	const RAIL_RIGHT_MARGIN = 110;
-	const RAIL_BOARD_GAP = 104;
-	const RAIL_CENTER_FROM_BOARD_BOTTOM = 255;
+	const RAIL_BOARD_GAP = 154;
+	const RAIL_CENTER_FROM_BOARD_BOTTOM = 280;
 	const AMOUNT_PANEL_BOTTOM_MARGIN = 118;
 	const AMOUNT_PANEL_BOARD_GAP = 75;
 	const PORTRAIT_ACTION_BOTTOM_MARGIN = 170;
 	const PORTRAIT_ACTION_BOARD_GAP = 190;
-	const ACTION_TO_AMOUNT_GAP = 92;
+	const ACTION_TO_AMOUNT_GAP = 140;
 	const ACTION_BUTTON_GAP = 120;
+	const AUTO_SPIN_ICON_SIZE = 80;
 	const SWITCH_BET_ICON_SIZE = 120;
 	const SETTINGS_ICON_SIZE = 120;
 	const ACTION_SCALE_RIGHT_RAIL = {
@@ -103,6 +104,7 @@
 			sideScale={actionScales.side}
 			actionScale={actionScales.action}
 			switchBetScale={actionScales.switchBet}
+			autoSpinIconSize={AUTO_SPIN_ICON_SIZE}
 			switchBetIconSize={SWITCH_BET_ICON_SIZE}
 			settingsIconSize={SETTINGS_ICON_SIZE}
 		/>

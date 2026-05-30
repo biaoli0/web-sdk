@@ -1,5 +1,47 @@
 {
 	"frames": {
+		"spinButtonArrow": {
+			"frame": {
+				"x": 315,
+				"y": 0,
+				"w": 220,
+				"h": 190
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"spinButtonLightning": {
+			"frame": {
+				"x": 267,
+				"y": 740,
+				"w": 305,
+				"h": 264
+			},
+			"rotated": true,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"spinButtonLightningActive": {
+			"frame": {
+				"x": 530,
+				"y": 3,
+				"w": 305,
+				"h": 263
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
 		"settingsMenu": {
 			"frame": { "x": 535, "y": 535, "w": 150, "h": 150 },
 			"rotated": false,

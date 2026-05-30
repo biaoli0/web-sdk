@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
 	import { Button } from 'components-pixi';
-	import { ButtonBet, ButtonSoundSwitch } from 'components-ui-pixi';
+	import { ButtonSoundSwitch } from 'components-ui-pixi';
 	import { stateBet, stateBetDerived, stateModal } from 'state-shared';
 
 	import { getContext } from '../game/context';
+	import SpinButton from './SpinButton.svelte';
 
 	type Direction = 'horizontal' | 'vertical';
 
@@ -14,6 +15,7 @@
 		sideScale: number;
 		actionScale: number;
 		switchBetScale: number;
+		autoSpinIconSize: number;
 		switchBetIconSize: number;
 		settingsIconSize?: number;
 	};
@@ -22,8 +24,8 @@
 	const context = getContext();
 	const settingsIconSize = $derived(props.settingsIconSize ?? props.switchBetIconSize);
 	const autoSpinSizes = $derived({
-		width: props.switchBetIconSize,
-		height: props.switchBetIconSize,
+		width: props.autoSpinIconSize,
+		height: props.autoSpinIconSize,
 	});
 	const autoSpinActive = $derived(stateBetDerived.hasAutoBetCounter());
 	const autoSpinDisabled = $derived.by(() => {
@@ -36,10 +38,10 @@
 		stateBet.autoSpinsCounter === Infinity ? '\u221e' : String(stateBet.autoSpinsCounter),
 	);
 	const autoSpinCounterFontSize = $derived.by(() => {
-		if (stateBet.autoSpinsCounter === Infinity) return 90;
-		if (stateBet.autoSpinsCounter > 99) return 45;
-		if (stateBet.autoSpinsCounter > 9) return 60;
-		return 75;
+		if (stateBet.autoSpinsCounter === Infinity) return props.autoSpinIconSize * 0.75;
+		if (stateBet.autoSpinsCounter > 99) return props.autoSpinIconSize * 0.375;
+		if (stateBet.autoSpinsCounter > 9) return props.autoSpinIconSize * 0.5;
+		return props.autoSpinIconSize * 0.625;
 	});
 	const betMenuDisabled = $derived(!context.stateXstateDerived.isIdle());
 	const controlPosition = (index: number) =>
@@ -65,19 +67,19 @@
 	};
 </script>
 
-<Container {...controlPosition(-2)} scale={props.sideScale}>
+<Container {...controlPosition(-3)} scale={props.sideScale}>
 	<ButtonSoundSwitch anchor={0.5} />
 </Container>
 
-<Container {...controlPosition(-1)} scale={props.actionScale}>
+<Container {...controlPosition(-2)} scale={props.actionScale}>
 	<Button anchor={0.5} sizes={autoSpinSizes} onpress={pressAutoSpin} disabled={autoSpinDisabled}>
 		{#snippet children({ center, hovered, pressed })}
 			<Sprite
 				{...center}
 				key="autoPlay"
 				anchor={0.5}
-				width={props.switchBetIconSize}
-				height={props.switchBetIconSize}
+				width={props.autoSpinIconSize}
+				height={props.autoSpinIconSize}
 				alpha={autoSpinDisabled ? 0.5 : pressed ? 0.82 : hovered ? 1 : 0.95}
 			/>
 
@@ -85,9 +87,9 @@
 				<Rectangle
 					{...center}
 					anchor={0.5}
-					width={props.switchBetIconSize * 0.62}
-					height={props.switchBetIconSize * 0.62}
-					borderRadius={props.switchBetIconSize}
+					width={props.autoSpinIconSize * 0.62}
+					height={props.autoSpinIconSize * 0.62}
+					borderRadius={props.autoSpinIconSize}
 					backgroundColor={0x000000}
 					backgroundAlpha={0.78}
 				/>
@@ -107,8 +109,8 @@
 	</Button>
 </Container>
 
-<Container scale={props.actionScale}>
-	<ButtonBet anchor={0.5} />
+<Container {...controlPosition(-0.5)} scale={props.actionScale * 2}>
+	<SpinButton anchor={0.5} />
 </Container>
 
 <Container
@@ -134,10 +136,5 @@
 	cursor="pointer"
 	onpointerup={openSettings}
 >
-	<Sprite
-		key="settingsMenu"
-		anchor={0.5}
-		width={settingsIconSize}
-		height={settingsIconSize}
-	/>
+	<Sprite key="settingsMenu" anchor={0.5} width={settingsIconSize} height={settingsIconSize} />
 </Container>

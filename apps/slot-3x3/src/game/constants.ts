@@ -118,6 +118,7 @@ export const SPIN_OPTIONS_DEFAULT = {
 
 export const SPIN_OPTIONS_FAST = {
 	...SPIN_OPTIONS_SHARED,
+	reelSpinDelay: 0,
 	reelPreSpinSpeed: 5,
 	reelSpinSpeed: 5,
 	reelBounceSizeMulti: 0.05,

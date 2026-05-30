@@ -32,6 +32,36 @@ const createInitialBonusState = (): BonusState => ({
 	coinsAdded: [],
 });
 
+const lerp = (start: number, end: number, amount: number) => start + (end - start) * amount;
+const clampReelSpeed = (value: number) => Math.min(1, Math.max(0, value));
+const normalSpinOptions = () => {
+	const reelSpeed = clampReelSpeed(stateGame.reelSpeed);
+
+	return {
+		...SPIN_OPTIONS_DEFAULT,
+		reelPreSpinSpeed: lerp(
+			SPIN_OPTIONS_DEFAULT.reelPreSpinSpeed,
+			SPIN_OPTIONS_FAST.reelPreSpinSpeed,
+			reelSpeed,
+		),
+		reelSpinSpeed: lerp(
+			SPIN_OPTIONS_DEFAULT.reelSpinSpeed,
+			SPIN_OPTIONS_FAST.reelSpinSpeed,
+			reelSpeed,
+		),
+		reelBounceSizeMulti: lerp(
+			SPIN_OPTIONS_DEFAULT.reelBounceSizeMulti,
+			SPIN_OPTIONS_FAST.reelBounceSizeMulti,
+			reelSpeed,
+		),
+		reelSpinDelay: lerp(
+			SPIN_OPTIONS_DEFAULT.reelSpinDelay,
+			SPIN_OPTIONS_FAST.reelSpinDelay,
+			reelSpeed,
+		),
+	};
+};
+
 const board = INITIAL_BOARD.map((initialSymbols, reelIndex) => {
 	const reel = createReelForSpinning<RawSymbol, SymbolState>({
 		reelIndex,
@@ -49,7 +79,7 @@ const board = INITIAL_BOARD.map((initialSymbols, reelIndex) => {
 	});
 
 	reel.reelState.spinOptions = () =>
-		reel.reelState.spinType === 'fast' ? SPIN_OPTIONS_FAST : SPIN_OPTIONS_DEFAULT;
+		reel.reelState.spinType === 'fast' ? SPIN_OPTIONS_FAST : normalSpinOptions();
 
 	return reel;
 });
@@ -63,6 +93,7 @@ export const stateGame = $state({
 	totalWin: 0,
 	finalWin: 0,
 	wins: [] as LineWin[],
+	reelSpeed: 0,
 	bonus: createInitialBonusState(),
 });
 
@@ -206,6 +237,7 @@ export const stateGameDerived = {
 	visibleSymbolY,
 	boardRaw,
 	sumCoinValues,
+	normalSpinOptions,
 	isBonusNewCoinPosition,
 	startBonus,
 	updateBonus,
