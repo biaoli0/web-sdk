@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
 	import { Button } from 'components-pixi';
-	import { ButtonSoundSwitch } from 'components-ui-pixi';
-	import { stateBet, stateBetDerived, stateModal } from 'state-shared';
+	import { stateBet, stateBetDerived, stateModal, stateSound } from 'state-shared';
 
 	import { getContext } from '../game/context';
 	import SpinButton from './SpinButton.svelte';
@@ -15,6 +14,7 @@
 		sideScale: number;
 		actionScale: number;
 		switchBetScale: number;
+		soundButtonIconSize: number;
 		autoSpinIconSize: number;
 		switchBetIconSize: number;
 		settingsIconSize?: number;
@@ -23,10 +23,17 @@
 	const props: Props = $props();
 	const context = getContext();
 	const settingsIconSize = $derived(props.settingsIconSize ?? props.switchBetIconSize);
+	const soundButtonSizes = $derived({
+		width: props.soundButtonIconSize,
+		height: props.soundButtonIconSize,
+	});
 	const autoSpinSizes = $derived({
 		width: props.autoSpinIconSize,
 		height: props.autoSpinIconSize,
 	});
+	const soundButtonKey = $derived(
+		stateSound.volumeValueMaster === 0 ? 'soundButtonMuted' : 'soundButton',
+	);
 	const autoSpinActive = $derived(stateBetDerived.hasAutoBetCounter());
 	const autoSpinDisabled = $derived.by(() => {
 		if (stateBet.isSpaceHold) return true;
@@ -49,6 +56,10 @@
 
 	const stopAutoSpin = () => (stateBet.autoSpinsCounter = 0);
 	const openAutoSpinModal = () => (stateModal.modal = { name: 'autoSpin' });
+	const toggleSound = () => {
+		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
+		stateSound.volumeValueMaster = stateSound.volumeValueMaster === 0 ? 50 : 0;
+	};
 	const pressAutoSpin = () => {
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
 		stateBetDerived.hasAutoBetCounter() ? stopAutoSpin() : openAutoSpinModal();
@@ -68,7 +79,18 @@
 </script>
 
 <Container {...controlPosition(-3)} scale={props.sideScale}>
-	<ButtonSoundSwitch anchor={0.5} />
+	<Button anchor={0.5} sizes={soundButtonSizes} onpress={toggleSound}>
+		{#snippet children({ center, hovered, pressed })}
+			<Sprite
+				{...center}
+				key={soundButtonKey}
+				anchor={0.5}
+				width={props.soundButtonIconSize}
+				height={props.soundButtonIconSize}
+				alpha={pressed ? 0.82 : hovered ? 1 : 0.95}
+			/>
+		{/snippet}
+	</Button>
 </Container>
 
 <Container {...controlPosition(-2)} scale={props.actionScale}>

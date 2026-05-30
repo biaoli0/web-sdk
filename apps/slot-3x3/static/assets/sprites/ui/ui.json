@@ -42,6 +42,34 @@
 				"y": 0.5
 			}
 		},
+		"soundButton": {
+			"frame": {
+				"x": 700,
+				"y": 491,
+				"w": 135,
+				"h": 135
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"soundButtonMuted": {
+			"frame": {
+				"x": 308,
+				"y": 482,
+				"w": 135,
+				"h": 135
+			},
+			"rotated": true,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
 		"settingsMenu": {
 			"frame": { "x": 535, "y": 535, "w": 150, "h": 150 },
 			"rotated": false,

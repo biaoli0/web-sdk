@@ -21,8 +21,9 @@
 	const PORTRAIT_ACTION_BOARD_GAP = 190;
 	const ACTION_TO_AMOUNT_GAP = 140;
 	const ACTION_BUTTON_GAP = 120;
+	const SOUND_BUTTON_ICON_SIZE = 110;
 	const AUTO_SPIN_ICON_SIZE = 80;
-	const SWITCH_BET_ICON_SIZE = 120;
+	const SWITCH_BET_ICON_SIZE = 130;
 	const SETTINGS_ICON_SIZE = 120;
 	const ACTION_SCALE_RIGHT_RAIL = {
 		side: 0.6,
@@ -104,6 +105,7 @@
 			sideScale={actionScales.side}
 			actionScale={actionScales.action}
 			switchBetScale={actionScales.switchBet}
+			soundButtonIconSize={SOUND_BUTTON_ICON_SIZE}
 			autoSpinIconSize={AUTO_SPIN_ICON_SIZE}
 			switchBetIconSize={SWITCH_BET_ICON_SIZE}
 			settingsIconSize={SETTINGS_ICON_SIZE}
