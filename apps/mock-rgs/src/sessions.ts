@@ -1,4 +1,9 @@
-import { API_AMOUNT_MULTIPLIER, DEFAULT_CURRENCY, STARTING_BALANCE } from './config';
+import {
+	API_AMOUNT_MULTIPLIER,
+	BOOK_AMOUNT_MULTIPLIER,
+	DEFAULT_CURRENCY,
+	STARTING_BALANCE,
+} from './config';
 import { getBooks, type RawBook, type RawBookEvent } from './books';
 
 type Balance = {
@@ -38,6 +43,7 @@ const sessions = new Map<string, Session>();
 const MANUAL_BONUS_SESSION_ID = 'slot-3x3-local';
 const VALUE_COIN_SYMBOL_NAME = 'VALUE_COIN';
 const BONUS_TOTAL_EVENT_TYPES = new Set(['bonusEnd', 'setTotalWin', 'finalWin']);
+const ROUND_PAYOUT_EVENT_TYPES = ['finalWin', 'freeSpinEnd', 'bonusEnd', 'setTotalWin'] as const;
 
 function clone<T>(value: T): T {
 	return structuredClone(value);
@@ -89,6 +95,37 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const roundMoney = (value: number) => Math.round(value * 100) / 100;
 const apiAmountToMoney = (value: number) => roundMoney(value / API_AMOUNT_MULTIPLIER);
 const moneyToApiAmount = (value: number) => Math.round(value * API_AMOUNT_MULTIPLIER);
+const bookEventAmountToPayoutMultiplier = (value: number) => value / BOOK_AMOUNT_MULTIPLIER;
+
+function findLatestAmountEvent(events: RawBookEvent[], type: string) {
+	const event = [...events]
+		.reverse()
+		.find((bookEvent) => bookEvent.type === type && typeof bookEvent.amount === 'number');
+
+	return typeof event?.amount === 'number' ? event.amount : null;
+}
+
+function findRoundBookEventAmount(events: RawBookEvent[]) {
+	for (const type of ROUND_PAYOUT_EVENT_TYPES) {
+		const amount = findLatestAmountEvent(events, type);
+		if (amount !== null) return amount;
+	}
+
+	const winInfoEvent = [...events]
+		.reverse()
+		.find((event) => event.type === 'winInfo' && typeof event.totalWin === 'number');
+
+	return typeof winInfoEvent?.totalWin === 'number' ? winInfoEvent.totalWin : null;
+}
+
+function calculateBookPayoutMultiplier(book: RawBook) {
+	const roundBookEventAmount = findRoundBookEventAmount(book.events ?? []);
+	if (roundBookEventAmount !== null) {
+		return bookEventAmountToPayoutMultiplier(roundBookEventAmount);
+	}
+
+	return book.payoutMultiplier ?? 0;
+}
 
 function hydrateCoinSymbol(symbol: unknown, betAmount: number) {
 	if (!isRecord(symbol) || symbol.name !== VALUE_COIN_SYMBOL_NAME) return symbol;
@@ -168,6 +205,7 @@ function hydrateManualBonusBook(book: RawBook, apiBetAmount: number) {
 	);
 
 	return {
+		payoutMultiplier,
 		book: {
 			...book,
 			payoutMultiplier,
@@ -293,7 +331,7 @@ export function play(options: {
 		? hydrateManualBonusBook(rawBook, options.amount)
 		: null;
 	const book = manualBonusBook?.book ?? rawBook;
-	const payoutMultiplier = book.payoutMultiplier ?? 0;
+	const payoutMultiplier = manualBonusBook?.payoutMultiplier ?? calculateBookPayoutMultiplier(book);
 	const payout = manualBonusBook
 		? moneyToApiAmount(manualBonusBook.finalBonusAmount)
 		: Math.round(options.amount * payoutMultiplier);
