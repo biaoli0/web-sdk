@@ -25,11 +25,15 @@
 	let lightningHovered = $state(false);
 
 	const isIdle = $derived(context.stateXstateDerived.isIdle());
+	const isSpinning = $derived(context.stateGameDerived.isSpinning());
 	const lightningDisabled = $derived(!isIdle || stateBet.isSpaceHold);
 	const lightningKey = $derived(
 		stateBet.isTurbo ? 'spinButtonLightningActive' : 'spinButtonLightning',
 	);
 	const lightningScale = $derived(lightningHovered && !lightningDisabled ? 1.1 : 1);
+	const autoSpinActive = $derived(stateBetDerived.hasAutoBetCounter());
+	const showAutoSpinStop = $derived(isSpinning && autoSpinActive);
+	const mainIconKey = $derived(showAutoSpinStop ? 'spinButtonStop' : 'spinButtonArrow');
 
 	const key = $derived.by((): ButtonKey => {
 		if (isIdle) {
@@ -37,10 +41,7 @@
 			return 'spin_default';
 		}
 
-		if (stopDisabled) return 'stop_disabled';
-		if (stateBetDerived.hasAutoBetCounter()) return 'stop_default';
-		if (stateBet.isTurbo) return 'stop_disabled';
-		return 'stop_default';
+		return showAutoSpinStop && !stopDisabled ? 'stop_default' : 'stop_disabled';
 	});
 	const mainDisabled = $derived(['spin_disabled', 'stop_disabled'].includes(key));
 
@@ -52,9 +53,8 @@
 	const stop = () => {
 		if (stopDisabled) return;
 
-		if (stateBetDerived.hasAutoBetCounter()) stateBet.autoSpinsCounter = 0;
-		stateBetDerived.updateIsTurbo(true, { persistent: false });
-		context.eventEmitter.broadcast({ type: 'stopButtonClick' });
+		stateBet.autoSpinsCounter = 0;
+		stopDisabled = true;
 	};
 
 	const pressMain = () => {
@@ -87,9 +87,9 @@
 	});
 </script>
 
-<OnHotkey hotkey="Space" disabled={mainDisabled} onpress={pressMain} />
+<OnHotkey hotkey="Space" disabled={!isIdle || mainDisabled} onpress={pressMain} />
 
-<Button {...props} {sizes} onpress={pressMain} disabled={!isIdle && mainDisabled}>
+<Button {...props} {sizes} onpress={pressMain} disabled={mainDisabled}>
 	{#snippet children({ center, hovered, pressed })}
 		<Container {...center} alpha={mainDisabled ? 0.56 : pressed ? 0.84 : hovered ? 1 : 0.96}>
 			<Sprite
@@ -101,13 +101,13 @@
 				alpha={lightningDisabled ? 0.5 : stateBet.isTurbo ? 1 : 0.9}
 			/>
 			<Sprite
-				key="spinButtonArrow"
+				key={mainIconKey}
 				anchor={0.5}
 				eventMode="static"
 				cursor="pointer"
-				rotation={arrowHovered ? (20 * Math.PI) / 180 : 0}
-				width={sizes.width * 0.68}
-				height={sizes.height * 0.6}
+				rotation={arrowHovered && !showAutoSpinStop ? (20 * Math.PI) / 180 : 0}
+				width={showAutoSpinStop ? sizes.height * 0.56 : sizes.width * 0.68}
+				height={showAutoSpinStop ? sizes.height * 0.56 : sizes.height * 0.6}
 				onpointerover={() => {
 					arrowHovered = true;
 				}}

@@ -14,6 +14,20 @@
 				"y": 0.5
 			}
 		},
+		"spinButtonStop": {
+			"frame": {
+				"x": 431,
+				"y": 382,
+				"w": 86,
+				"h": 86
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
 		"spinButtonLightning": {
 			"frame": {
 				"x": 267,
