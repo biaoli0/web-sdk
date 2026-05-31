@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Container, Rectangle, Text } from 'pixi-svelte';
+	import { numberToCurrencyString } from 'utils-shared/amount';
 
 	import {
 		BOARD_GAP,
@@ -43,9 +44,9 @@
 	const getBonusMessage = () => {
 		if (context.stateGame.bonus.status === 'inactive') return '';
 		if (context.stateGame.bonus.status === 'complete') {
-			return `BONUS WIN ${context.stateGame.bonus.totalWin}`;
+			return `BONUS WIN ${numberToCurrencyString(context.stateGame.bonus.totalWin)}`;
 		}
-		return `RESPINS ${context.stateGame.bonus.respins} | COINS ${context.stateGame.bonus.totalWin}`;
+		return `RESPINS ${context.stateGame.bonus.respins} | COINS ${numberToCurrencyString(context.stateGame.bonus.totalWin)}`;
 	};
 
 	const showRoundWin = () => context.stateGame.totalWin > 0 && context.stateGame.wins.length > 0;

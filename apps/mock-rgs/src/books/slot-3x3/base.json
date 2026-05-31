@@ -144,9 +144,9 @@
 				"board": [
 					[{ "name": "HIGH_1" }, { "name": "LOW_1" }, { "name": "HIGH_3" }],
 					[
-						{ "name": "VALUE_COIN", "value": 100 },
-						{ "name": "VALUE_COIN", "value": 200 },
-						{ "name": "VALUE_COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "multiplier": 1 },
+						{ "name": "VALUE_COIN", "multiplier": 2 },
+						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
 					[{ "name": "HIGH_2" }, { "name": "LOW_3" }, { "name": "LOW_4" }]
 				]
@@ -170,14 +170,14 @@
 				"totalWin": 850,
 				"board": [
 					[
-						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "VALUE_COIN", "multiplier": 2.5 },
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" }
 					],
 					[
-						{ "name": "VALUE_COIN", "value": 100 },
-						{ "name": "VALUE_COIN", "value": 200 },
-						{ "name": "VALUE_COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "multiplier": 1 },
+						{ "name": "VALUE_COIN", "multiplier": 2 },
+						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
 					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }]
 				]
@@ -191,14 +191,14 @@
 				"totalWin": 850,
 				"board": [
 					[
-						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "VALUE_COIN", "multiplier": 2.5 },
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" }
 					],
 					[
-						{ "name": "VALUE_COIN", "value": 100 },
-						{ "name": "VALUE_COIN", "value": 200 },
-						{ "name": "VALUE_COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "multiplier": 1 },
+						{ "name": "VALUE_COIN", "multiplier": 2 },
+						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
 					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }]
 				]
@@ -212,19 +212,19 @@
 				"totalWin": 1250,
 				"board": [
 					[
-						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "VALUE_COIN", "multiplier": 2.5 },
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" }
 					],
 					[
-						{ "name": "VALUE_COIN", "value": 100 },
-						{ "name": "VALUE_COIN", "value": 200 },
-						{ "name": "VALUE_COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "multiplier": 1 },
+						{ "name": "VALUE_COIN", "multiplier": 2 },
+						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
 					[
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" },
-						{ "name": "VALUE_COIN", "value": 400 }
+						{ "name": "VALUE_COIN", "multiplier": 4 }
 					]
 				]
 			},
@@ -237,19 +237,19 @@
 				"totalWin": 1250,
 				"board": [
 					[
-						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "VALUE_COIN", "multiplier": 2.5 },
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" }
 					],
 					[
-						{ "name": "VALUE_COIN", "value": 100 },
-						{ "name": "VALUE_COIN", "value": 200 },
-						{ "name": "VALUE_COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "multiplier": 1 },
+						{ "name": "VALUE_COIN", "multiplier": 2 },
+						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
 					[
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" },
-						{ "name": "VALUE_COIN", "value": 400 }
+						{ "name": "VALUE_COIN", "multiplier": 4 }
 					]
 				]
 			},
@@ -262,19 +262,19 @@
 				"totalWin": 1250,
 				"board": [
 					[
-						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "VALUE_COIN", "multiplier": 2.5 },
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" }
 					],
 					[
-						{ "name": "VALUE_COIN", "value": 100 },
-						{ "name": "VALUE_COIN", "value": 200 },
-						{ "name": "VALUE_COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "multiplier": 1 },
+						{ "name": "VALUE_COIN", "multiplier": 2 },
+						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
 					[
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" },
-						{ "name": "VALUE_COIN", "value": 400 }
+						{ "name": "VALUE_COIN", "multiplier": 4 }
 					]
 				]
 			},
@@ -287,19 +287,19 @@
 				"totalWin": 1250,
 				"board": [
 					[
-						{ "name": "VALUE_COIN", "value": 250 },
+						{ "name": "VALUE_COIN", "multiplier": 2.5 },
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" }
 					],
 					[
-						{ "name": "VALUE_COIN", "value": 100 },
-						{ "name": "VALUE_COIN", "value": 200 },
-						{ "name": "VALUE_COIN", "value": 300 }
+						{ "name": "VALUE_COIN", "multiplier": 1 },
+						{ "name": "VALUE_COIN", "multiplier": 2 },
+						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
 					[
 						{ "name": "EMPTY_COIN" },
 						{ "name": "EMPTY_COIN" },
-						{ "name": "VALUE_COIN", "value": 400 }
+						{ "name": "VALUE_COIN", "multiplier": 4 }
 					]
 				]
 			},

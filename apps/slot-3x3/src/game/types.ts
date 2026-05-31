@@ -13,7 +13,8 @@ export type RawSymbol =
 	  }
 	| {
 			name: ValueCoinSymbolName;
-			value: number;
+			multiplier: number;
+			amount: number;
 	  }
 	| {
 			name: typeof SYMBOL_NAME.EMPTY_COIN;
@@ -46,6 +47,7 @@ export type LineWin = {
 export type BonusState = {
 	status: BonusStatus;
 	introVisible: boolean;
+	isSpinning: boolean;
 	respins: number;
 	totalWin: number;
 	coinsAdded: Position[];

@@ -1,5 +1,5 @@
-import { DEFAULT_CURRENCY, STARTING_BALANCE } from './config';
-import { getBooks, type RawBook } from './books';
+import { API_AMOUNT_MULTIPLIER, DEFAULT_CURRENCY, STARTING_BALANCE } from './config';
+import { getBooks, type RawBook, type RawBookEvent } from './books';
 
 type Balance = {
 	amount: number;
@@ -21,6 +21,10 @@ type Session = {
 	sessionID: string;
 	balance: Balance;
 	activeRound: ActiveRound | null;
+	activeBonusSequence: {
+		events: RawBookEvent[];
+		nextEventIndex: number;
+	} | null;
 	nextRoundID: number;
 	nextBookIndexByMode: Record<string, number>;
 };
@@ -31,6 +35,9 @@ export const statusSuccess = {
 } as const;
 
 const sessions = new Map<string, Session>();
+const MANUAL_BONUS_SESSION_ID = 'slot-3x3-local';
+const VALUE_COIN_SYMBOL_NAME = 'VALUE_COIN';
+const BONUS_TOTAL_EVENT_TYPES = new Set(['bonusEnd', 'setTotalWin', 'finalWin']);
 
 function clone<T>(value: T): T {
 	return structuredClone(value);
@@ -44,6 +51,7 @@ function createSession(sessionID: string, currency = DEFAULT_CURRENCY): Session 
 			currency,
 		},
 		activeRound: null,
+		activeBonusSequence: null,
 		nextRoundID: 1,
 		nextBookIndexByMode: {},
 	};
@@ -70,6 +78,152 @@ function nextBook(session: Session, mode: string): RawBook {
 	session.nextBookIndexByMode[modeKey] = nextBookIndex + 1;
 
 	return book;
+}
+
+const isManualBonusSession = (session: Session) => session.sessionID === MANUAL_BONUS_SESSION_ID;
+const isBonusMode = (mode: string) => mode.toUpperCase() === 'BONUS';
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+	typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const roundMoney = (value: number) => Math.round(value * 100) / 100;
+const apiAmountToMoney = (value: number) => roundMoney(value / API_AMOUNT_MULTIPLIER);
+const moneyToApiAmount = (value: number) => Math.round(value * API_AMOUNT_MULTIPLIER);
+
+function hydrateCoinSymbol(symbol: unknown, betAmount: number) {
+	if (!isRecord(symbol) || symbol.name !== VALUE_COIN_SYMBOL_NAME) return symbol;
+
+	const multiplier = typeof symbol.multiplier === 'number' ? symbol.multiplier : 0;
+	const { value: _value, ...symbolWithoutValue } = symbol;
+
+	return {
+		...symbolWithoutValue,
+		amount: roundMoney(betAmount * multiplier),
+	};
+}
+
+function hydrateBoardCoinAmounts(board: unknown, betAmount: number) {
+	if (!Array.isArray(board)) return board;
+
+	return board.map((reel) =>
+		Array.isArray(reel) ? reel.map((symbol) => hydrateCoinSymbol(symbol, betAmount)) : reel,
+	);
+}
+
+function sumBoardCoinAmounts(board: unknown) {
+	if (!Array.isArray(board)) return 0;
+
+	return roundMoney(
+		board.reduce(
+			(total, reel) =>
+				total +
+				(Array.isArray(reel)
+					? reel.reduce(
+							(reelTotal, symbol) =>
+								reelTotal +
+								(isRecord(symbol) &&
+								symbol.name === VALUE_COIN_SYMBOL_NAME &&
+								typeof symbol.amount === 'number'
+									? symbol.amount
+									: 0),
+							0,
+						)
+					: 0),
+			0,
+		),
+	);
+}
+
+function hydrateManualBonusEvent(event: RawBookEvent, betAmount: number): RawBookEvent {
+	const hydratedEvent = { ...event };
+
+	if ('board' in hydratedEvent) {
+		hydratedEvent.board = hydrateBoardCoinAmounts(hydratedEvent.board, betAmount);
+	}
+
+	if (hydratedEvent.type === 'bonusReveal') {
+		hydratedEvent.totalWin = sumBoardCoinAmounts(hydratedEvent.board);
+	}
+
+	return hydratedEvent;
+}
+
+function findFinalBonusAmount(events: RawBookEvent[]) {
+	const lastBonusReveal = [...events]
+		.reverse()
+		.find((event) => event.type === 'bonusReveal' && typeof event.totalWin === 'number');
+
+	return typeof lastBonusReveal?.totalWin === 'number' ? lastBonusReveal.totalWin : 0;
+}
+
+function hydrateManualBonusBook(book: RawBook, apiBetAmount: number) {
+	const betAmount = apiAmountToMoney(apiBetAmount);
+	const hydratedEvents = (book.events ?? []).map((event) =>
+		hydrateManualBonusEvent(event, betAmount),
+	);
+	const finalBonusAmount = findFinalBonusAmount(hydratedEvents);
+	const payoutMultiplier = betAmount > 0 ? roundMoney(finalBonusAmount / betAmount) : 0;
+	const events = hydratedEvents.map((event) =>
+		BONUS_TOTAL_EVENT_TYPES.has(event.type) ? { ...event, amount: finalBonusAmount } : event,
+	);
+
+	return {
+		book: {
+			...book,
+			payoutMultiplier,
+			events,
+		},
+		finalBonusAmount,
+	};
+}
+
+function splitManualBonusEvents(events: RawBookEvent[]) {
+	const bonusTriggerIndex = events.findIndex((event) => event.type === 'bonusTrigger');
+	if (bonusTriggerIndex === -1) return null;
+
+	const bonusEndIndex = events.findIndex(
+		(event, index) => index > bonusTriggerIndex && event.type === 'bonusEnd',
+	);
+
+	if (bonusEndIndex === -1) return null;
+
+	return {
+		baseEvents: events.slice(0, bonusTriggerIndex + 1),
+		bonusEvents: events.slice(bonusTriggerIndex + 1, bonusEndIndex + 1),
+	};
+}
+
+function nextManualBonusSlice(session: Session) {
+	if (!session.activeRound || !session.activeBonusSequence) {
+		throw new Error('No active bonus round for this session.');
+	}
+
+	const { events, nextEventIndex } = session.activeBonusSequence;
+	const event = events[nextEventIndex];
+	if (!event) {
+		throw new Error('No bonus spins remaining for this session.');
+	}
+
+	const nextEvents = [event];
+	let nextIndex = nextEventIndex + 1;
+	const nextEvent = events[nextIndex];
+
+	if (event.type === 'bonusReveal' && nextEvent?.type === 'bonusEnd') {
+		nextEvents.push(nextEvent);
+		nextIndex += 1;
+	}
+
+	session.activeBonusSequence.nextEventIndex = nextIndex;
+	session.activeRound.state = [...session.activeRound.state, ...clone(nextEvents)];
+
+	if (nextEvents.some((bonusEvent) => bonusEvent.type === 'bonusEnd')) {
+		session.activeBonusSequence = null;
+	}
+
+	return {
+		...session.activeRound,
+		state: clone(nextEvents),
+	};
 }
 
 export function authenticateSession(options: { sessionID: string; language?: string }) {
@@ -119,10 +273,35 @@ export function play(options: {
 	mode: string;
 }) {
 	const session = getSession(options.sessionID, options.currency);
-	const book = nextBook(session, options.mode);
+	if (isManualBonusSession(session) && isBonusMode(options.mode)) {
+		return {
+			status: statusSuccess,
+			balance: clone(session.balance),
+			round: clone(nextManualBonusSlice(session)),
+		};
+	}
+
+	if (isManualBonusSession(session) && session.activeRound) {
+		throw new Error('Cannot start a new base spin while a round is active.');
+	}
+
+	const rawBook = nextBook(session, options.mode);
+	const hasManualBonus = isManualBonusSession(session)
+		? splitManualBonusEvents(rawBook.events ?? []) !== null
+		: false;
+	const manualBonusBook = hasManualBonus
+		? hydrateManualBonusBook(rawBook, options.amount)
+		: null;
+	const book = manualBonusBook?.book ?? rawBook;
 	const payoutMultiplier = book.payoutMultiplier ?? 0;
-	const payout = Math.round(options.amount * payoutMultiplier);
-	const active = payout > 0;
+	const payout = manualBonusBook
+		? moneyToApiAmount(manualBonusBook.finalBonusAmount)
+		: Math.round(options.amount * payoutMultiplier);
+	const manualBonus = isManualBonusSession(session)
+		? splitManualBonusEvents(book.events ?? [])
+		: null;
+	const state = manualBonus?.baseEvents ?? book.events ?? [];
+	const active = payout > 0 || manualBonus !== null;
 
 	session.balance.currency = options.currency;
 	session.balance.amount -= options.amount;
@@ -135,11 +314,17 @@ export function play(options: {
 		active,
 		mode: options.mode,
 		event: null,
-		state: clone(book.events ?? []),
+		state: clone(state),
 	};
 
 	session.nextRoundID += 1;
 	session.activeRound = active ? round : null;
+	session.activeBonusSequence = manualBonus
+		? {
+				events: clone(manualBonus.bonusEvents),
+				nextEventIndex: 0,
+			}
+		: null;
 
 	return {
 		status: statusSuccess,
@@ -154,6 +339,7 @@ export function endRound(options: { sessionID: string }) {
 	if (session.activeRound) {
 		session.balance.amount += session.activeRound.payout;
 		session.activeRound = null;
+		session.activeBonusSequence = null;
 	}
 
 	return {
