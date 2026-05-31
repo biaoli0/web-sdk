@@ -5,6 +5,7 @@
 	import { stateBet, stateBetDerived } from 'state-shared';
 
 	import { getContext } from '../game/context';
+	import BonusSpinButton from './BonusSpinButton.svelte';
 
 	type Props = Partial<Omit<ButtonProps, 'children' | 'sizes' | 'onpress' | 'disabled'>>;
 	type PointerEventLike = { stopPropagation: () => void };
@@ -29,7 +30,8 @@
 
 	const isIdle = $derived(context.stateXstateDerived.isIdle());
 	const isSpinning = $derived(context.stateGameDerived.isSpinning());
-	const lightningDisabled = $derived(!isIdle);
+	const isBonusActive = $derived(context.stateGame.bonus.status === 'active');
+	const lightningDisabled = $derived(!isIdle || isBonusActive);
 	const lightningKey = $derived(
 		context.stateGameDerived.isTurbo() ? 'spinButtonLightningActive' : 'spinButtonLightning',
 	);
@@ -79,30 +81,34 @@
 	};
 </script>
 
-<OnHotkey hotkey="Space" disabled={!isIdle || mainDisabled} onpress={pressMain} />
+<OnHotkey hotkey="Space" disabled={isBonusActive || !isIdle || mainDisabled} onpress={pressMain} />
 
 <Container {...containerProps} pivot={anchorToPivot({ sizes, anchor })}>
-	<Button {sizes} onpress={pressMain} disabled={mainDisabled} {debug}>
-		{#snippet children({ center, hovered, pressed })}
-			<Container {...center} alpha={mainDisabled ? 0.56 : pressed ? 0.84 : hovered ? 1 : 0.96}>
-				<Sprite
-					key={mainIconKey}
-					anchor={0.5}
-					eventMode="static"
-					cursor="pointer"
-					rotation={arrowHovered && !showAutoSpinStop ? (20 * Math.PI) / 180 : 0}
-					width={showAutoSpinStop ? sizes.height * 0.56 : sizes.width * 0.68}
-					height={showAutoSpinStop ? sizes.height * 0.56 : sizes.height * 0.6}
-					onpointerover={() => {
-						arrowHovered = true;
-					}}
-					onpointerout={() => {
-						arrowHovered = false;
-					}}
-				/>
-			</Container>
-		{/snippet}
-	</Button>
+	{#if isBonusActive}
+		<BonusSpinButton {sizes} {debug} />
+	{:else}
+		<Button {sizes} onpress={pressMain} disabled={mainDisabled} {debug}>
+			{#snippet children({ center, hovered, pressed })}
+				<Container {...center} alpha={mainDisabled ? 0.56 : pressed ? 0.84 : hovered ? 1 : 0.96}>
+					<Sprite
+						key={mainIconKey}
+						anchor={0.5}
+						eventMode="static"
+						cursor="pointer"
+						rotation={arrowHovered && !showAutoSpinStop ? (20 * Math.PI) / 180 : 0}
+						width={showAutoSpinStop ? sizes.height * 0.56 : sizes.width * 0.68}
+						height={showAutoSpinStop ? sizes.height * 0.56 : sizes.height * 0.6}
+						onpointerover={() => {
+							arrowHovered = true;
+						}}
+						onpointerout={() => {
+							arrowHovered = false;
+						}}
+					/>
+				</Container>
+			{/snippet}
+		</Button>
+	{/if}
 
 	<Container {...center}>
 		<Sprite

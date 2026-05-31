@@ -3,8 +3,9 @@
 
 	import { Text } from 'pixi-svelte';
 
-	import { gameActor } from '../game/actor';
+	import { ACTOR_EVENT_BONUS_SPIN, gameActor, sendGameActorEvent } from '../game/actor';
 	import { getContext } from '../game/context';
+	import { EVENT_BONUS_SPIN } from '../game/typesEmitterEvent';
 
 	type Props = {
 		debug?: boolean;
@@ -30,6 +31,7 @@
 	context.eventEmitter.subscribeOnMount({
 		bet: () => gameActor.send({ type: 'BET' }),
 		autoBet: () => gameActor.send({ type: 'AUTO_BET' }),
+		[EVENT_BONUS_SPIN]: () => sendGameActorEvent({ type: ACTOR_EVENT_BONUS_SPIN }),
 	});
 </script>
 

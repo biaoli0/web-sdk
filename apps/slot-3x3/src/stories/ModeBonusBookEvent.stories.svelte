@@ -18,14 +18,37 @@
 
 	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
-	import { stateGameDerived } from '../game/stateGame.svelte';
+	import { stateGame, stateGameDerived } from '../game/stateGame.svelte';
 	import { playBookEvent, playBookEvents } from '../game/utils';
-	import type { BookEvent, BookEventOfType } from '../game/typesBookEvent';
+	import type { BookEventOfType } from '../game/typesBookEvent';
 	import events from './data/bonus_events';
+
+	let manualBonusSliceIndex = 0;
 
 	const resetBookEventStory = () => {
 		stateGameDerived.clear();
 		stateBet.winBookEventAmount = 0;
+		manualBonusSliceIndex = 0;
+	};
+
+	const playManualBonusStep = async () => {
+		if (stateGame.bonus.status === 'inactive' || stateGame.bonus.status === 'complete') {
+			resetBookEventStory();
+			stateGameDerived.settle(events.reveal.board);
+			await playBookEvent(events.bonusTrigger, { bookEvents: events.sequence });
+			return;
+		}
+
+		const bonusSlice = events.bonusSlices[manualBonusSliceIndex];
+		if (!bonusSlice) return;
+
+		stateGame.bonus.isSpinning = true;
+		try {
+			await playBookEvents(bonusSlice);
+		} finally {
+			stateGame.bonus.isSpinning = false;
+		}
+		manualBonusSliceIndex += 1;
 	};
 
 	setContext();
@@ -46,11 +69,11 @@
 {/snippet}
 
 <Story
-	name="bonus sequence"
+	name="manual bonus flow"
 	args={templateArgs({
 		skipLoadingScreen: true,
-		data: events.sequence,
-		action: async (data: BookEvent[]) => await playBookEvents(data),
+		data: events.bonusSlices,
+		action: playManualBonusStep,
 	})}
 	{template}
 />

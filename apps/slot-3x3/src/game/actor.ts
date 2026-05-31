@@ -3,7 +3,7 @@ import { stateBet } from 'state-shared';
 
 import type { Bet } from './typesBookEvent';
 import { stateXstateDerived } from './stateXstate';
-import { playBet } from './utils';
+import { playBet, playBonusSpin } from './utils';
 import { stateGame, stateGameDerived } from './stateGame.svelte';
 import config from './config';
 import type { RawSymbol } from './types';
@@ -32,6 +32,7 @@ const primaryMachines = createPrimaryMachines<Bet>({
 		stateGameDerived.resetWinInfo();
 		stateGame.bonus.status = 'inactive';
 		stateGame.bonus.introVisible = false;
+		stateGame.bonus.isSpinning = false;
 		stateGame.bonus.respins = 0;
 		stateGame.bonus.totalWin = 0;
 		stateGame.bonus.coinsAdded = [];
@@ -52,3 +53,17 @@ const primaryMachines = createPrimaryMachines<Bet>({
 const intermediateMachines = createIntermediateMachines(primaryMachines);
 
 export const gameActor = createGameActor(intermediateMachines);
+
+export const ACTOR_EVENT_BONUS_SPIN = 'BONUS_SPIN' as const;
+
+type BonusSpinActorEvent = { type: typeof ACTOR_EVENT_BONUS_SPIN };
+type GameActorEvent = Parameters<typeof gameActor.send>[0] | BonusSpinActorEvent;
+
+export const sendGameActorEvent = (event: GameActorEvent) => {
+	if (event.type === ACTOR_EVENT_BONUS_SPIN) {
+		void playBonusSpin();
+		return;
+	}
+
+	gameActor.send(event);
+};

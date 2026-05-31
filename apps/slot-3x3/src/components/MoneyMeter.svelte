@@ -5,6 +5,8 @@
 	import { stateBet, stateBetDerived } from 'state-shared';
 	import { bookEventAmountToCurrencyString, numberToCurrencyString } from 'utils-shared/amount';
 
+	import { stateGame } from '../game/stateGame.svelte';
+
 	type AmountKind = 'win' | 'bet' | 'balance';
 
 	type Props = {
@@ -15,6 +17,7 @@
 	const props: Props = $props();
 	const balanceTween = new Tween(stateBet.balanceAmount);
 	const winBookEventAmountTween = new Tween(stateBet.winBookEventAmount);
+	const bonusWinAmountTween = new Tween(stateGame.bonus.totalWin);
 
 	const label = $derived.by(() => {
 		if (props.kind === 'win') return i18nDerived.win();
@@ -24,6 +27,10 @@
 
 	const value = $derived.by(() => {
 		if (props.kind === 'win') {
+			if (stateGame.bonus.status !== 'inactive') {
+				return numberToCurrencyString(bonusWinAmountTween.current);
+			}
+
 			return bookEventAmountToCurrencyString(winBookEventAmountTween.current);
 		}
 
@@ -40,6 +47,10 @@
 
 	$effect(() => {
 		winBookEventAmountTween.set(stateBet.winBookEventAmount);
+	});
+
+	$effect(() => {
+		bonusWinAmountTween.set(stateGame.bonus.totalWin);
 	});
 </script>
 

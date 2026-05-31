@@ -21,6 +21,7 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		});
 	},
 	bonusTrigger: async (bookEvent: BookEventOfType<'bonusTrigger'>) => {
+		stateBet.autoSpinsCounter = 0;
 		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_superfreespin' });
 		stateGame.bonus.introVisible = true;
 		await waitForTimeout(1500);
