@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Container, Text } from 'pixi-svelte';
 	import { MainContainer } from 'components-layout';
-	import { EnableSpaceHold } from 'components-shared';
 
 	import { BOARD_SIZES } from '../game/constants';
 	import { getContext } from '../game/context';
@@ -78,8 +77,6 @@
 	const amountPanelGap = $derived(useRightRail ? 300 : 220);
 	const amountPanelScale = $derived(useRightRail ? 0.78 : 0.68);
 </script>
-
-<EnableSpaceHold />
 
 <Container x={20} y={20}>
 	<Text

@@ -31,7 +31,7 @@
 	const isSpinning = $derived(context.stateGameDerived.isSpinning());
 	const lightningDisabled = $derived(!isIdle);
 	const lightningKey = $derived(
-		stateBet.isTurbo ? 'spinButtonLightningActive' : 'spinButtonLightning',
+		context.stateGameDerived.isTurbo() ? 'spinButtonLightningActive' : 'spinButtonLightning',
 	);
 	const lightningScale = $derived(lightningHovered && !lightningDisabled ? 1.1 : 1);
 	const autoSpinActive = $derived(stateBetDerived.hasAutoBetCounter());
@@ -44,7 +44,7 @@
 			return 'spin_default';
 		}
 
-		return showAutoSpinStop && !stopDisabled ? 'stop_default' : 'stop_disabled';
+		return showAutoSpinStop ? 'stop_default' : 'stop_disabled';
 	});
 	const mainDisabled = $derived(['spin_disabled', 'stop_disabled'].includes(key));
 
@@ -54,10 +54,7 @@
 	};
 
 	const stop = () => {
-		if (stopDisabled) return;
-
 		stateBet.autoSpinsCounter = 0;
-		stopDisabled = true;
 	};
 
 	const pressMain = () => {
@@ -78,16 +75,8 @@
 		if (lightningDisabled) return;
 
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
-		stateBetDerived.updateIsTurbo(!stateBet.isTurbo, { persistent: true });
+		context.stateGameDerived.toggleTurbo();
 	};
-
-	context.eventEmitter.subscribeOnMount({
-		stopButtonClick: () => (stopDisabled = true),
-		stopButtonEnable: () => {
-			stopDisabled = false;
-			stateBetDerived.updateIsTurbo(false, { persistent: false });
-		},
-	});
 </script>
 
 <OnHotkey hotkey="Space" disabled={!isIdle || mainDisabled} onpress={pressMain} />

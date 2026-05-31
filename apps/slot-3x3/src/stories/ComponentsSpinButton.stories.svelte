@@ -14,6 +14,7 @@
 
 	import SpinButton from '../components/SpinButton.svelte';
 	import { setContext } from '../game/context';
+	import { stateGameDerived } from '../game/stateGame.svelte';
 	import { stateXstate } from '../game/stateXstate';
 
 	const storyStateIdle = 'idle';
@@ -27,7 +28,7 @@
 		stateBet.activeBetModeKey = 'BASE';
 		stateBet.autoSpinsCounter = 0;
 		stateBet.isSpaceHold = false;
-		stateBet.isTurbo = false;
+		stateGameDerived.setReelSpeed(0);
 	});
 </script>
 

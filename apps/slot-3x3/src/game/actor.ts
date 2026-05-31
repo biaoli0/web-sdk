@@ -36,7 +36,9 @@ const primaryMachines = createPrimaryMachines<Bet>({
 		stateGame.bonus.totalWin = 0;
 		stateGame.bonus.coinsAdded = [];
 
-		if ((stateBet.isTurbo && stateXstateDerived.isAutoBetting()) || stateBet.isSpaceHold) return;
+		const isTurbo = stateGameDerived.isTurbo();
+
+		if ((isTurbo && stateXstateDerived.isAutoBetting()) || stateBet.isSpaceHold) return;
 
 		await stateGameDerived.enhancedBoard.preSpin({
 			paddingBoard: config.paddingReels[stateGame.gameType],

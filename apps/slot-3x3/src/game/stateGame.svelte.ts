@@ -34,6 +34,31 @@ const createInitialBonusState = (): BonusState => ({
 
 const lerp = (start: number, end: number, amount: number) => start + (end - start) * amount;
 const clampReelSpeed = (value: number) => Math.min(1, Math.max(0, value));
+const isTurbo = () => clampReelSpeed(stateGame.reelSpeed) >= 1;
+const setReelSpeed = (value: number | string) => {
+	const parsedValue = Number(value);
+	const reelSpeed = clampReelSpeed(Number.isFinite(parsedValue) ? parsedValue : 0);
+	const turbo = reelSpeed >= 1;
+
+	stateGame.reelSpeed = reelSpeed;
+
+	if (!turbo) {
+		stateGame.reelSpeedBeforeTurbo = reelSpeed;
+	}
+};
+const setTurbo = (value: boolean) => {
+	if (value) {
+		if (!isTurbo()) {
+			stateGame.reelSpeedBeforeTurbo = clampReelSpeed(stateGame.reelSpeed);
+		}
+
+		stateGame.reelSpeed = 1;
+		return;
+	}
+
+	stateGame.reelSpeed = clampReelSpeed(stateGame.reelSpeedBeforeTurbo);
+};
+const toggleTurbo = () => setTurbo(!isTurbo());
 const normalSpinOptions = () => {
 	const reelSpeed = clampReelSpeed(stateGame.reelSpeed);
 
@@ -72,7 +97,7 @@ const board = INITIAL_BOARD.map((initialSymbols, reelIndex) => {
 			eventEmitter.broadcast({
 				type: 'soundOnce',
 				name: 'sfx_reel_stop_1',
-				forcePlay: !stateBet.isTurbo,
+				forcePlay: !isTurbo(),
 			});
 		},
 		onSymbolLand: () => {},
@@ -94,6 +119,7 @@ export const stateGame = $state({
 	finalWin: 0,
 	wins: [] as LineWin[],
 	reelSpeed: 0,
+	reelSpeedBeforeTurbo: 0,
 	bonus: createInitialBonusState(),
 });
 
@@ -211,7 +237,7 @@ const spinBonusReveal = async ({
 
 		previousPaddingSize = reel.prepareToSpin({
 			noStop: false,
-			spinType: stateBet.isTurbo ? 'fast' : 'normal',
+			spinType: isTurbo() ? 'fast' : 'normal',
 			symbols: rawBoard[reelIndex],
 			paddingReel: paddingBoard?.[reelIndex] ?? rawBoard[reelIndex],
 			paddingPosition: paddingPositions?.[reelIndex] ?? 0,
@@ -237,6 +263,10 @@ export const stateGameDerived = {
 	visibleSymbolY,
 	boardRaw,
 	sumCoinValues,
+	isTurbo,
+	setReelSpeed,
+	setTurbo,
+	toggleTurbo,
 	normalSpinOptions,
 	isBonusNewCoinPosition,
 	startBonus,
