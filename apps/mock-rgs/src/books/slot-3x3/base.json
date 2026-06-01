@@ -50,12 +50,12 @@
 			{
 				"index": 1,
 				"type": "winInfo",
-				"totalWin": 50,
+				"totalWin": 5000,
 				"wins": [
 					{
 						"symbol": "HIGH_1",
 						"kind": 3,
-						"win": 50,
+						"win": 5000,
 						"positions": [
 							{ "reel": 0, "row": 0 },
 							{ "reel": 1, "row": 0 },
@@ -63,8 +63,8 @@
 						],
 						"meta": {
 							"lineIndex": 1,
-							"multiplier": 1,
-							"winWithoutMult": 50,
+							"multiplier": 50,
+							"winWithoutMult": 5000,
 							"lineMultiplier": 1
 						}
 					}
@@ -73,12 +73,12 @@
 			{
 				"index": 2,
 				"type": "setTotalWin",
-				"amount": 50
+				"amount": 5000
 			},
 			{
 				"index": 3,
 				"type": "finalWin",
-				"amount": 50
+				"amount": 5000
 			}
 		]
 	},
@@ -100,12 +100,12 @@
 			{
 				"index": 1,
 				"type": "winInfo",
-				"totalWin": 20,
+				"totalWin": 2000,
 				"wins": [
 					{
 						"symbol": "HIGH_3",
 						"kind": 3,
-						"win": 20,
+						"win": 2000,
 						"positions": [
 							{ "reel": 0, "row": 1 },
 							{ "reel": 1, "row": 1 },
@@ -113,8 +113,8 @@
 						],
 						"meta": {
 							"lineIndex": 2,
-							"multiplier": 1,
-							"winWithoutMult": 20,
+							"multiplier": 20,
+							"winWithoutMult": 2000,
 							"lineMultiplier": 1
 						}
 					}
@@ -123,12 +123,12 @@
 			{
 				"index": 2,
 				"type": "setTotalWin",
-				"amount": 20
+				"amount": 2000
 			},
 			{
 				"index": 3,
 				"type": "finalWin",
-				"amount": 20
+				"amount": 2000
 			}
 		]
 	},
@@ -285,6 +285,272 @@
 				"index": 10,
 				"type": "finalWin",
 				"amount": 2450
+			}
+		]
+	},
+	{
+		"id": 5,
+		"payoutMultiplier": 1,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_2" }, { "name": "LOW_1" }, { "name": "LOW_4" }],
+					[{ "name": "LOW_2" }, { "name": "HIGH_3" }, { "name": "LOW_4" }],
+					[{ "name": "HIGH_4" }, { "name": "LOW_3" }, { "name": "LOW_4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 100,
+				"wins": [
+					{
+						"symbol": "LOW_4",
+						"kind": 3,
+						"win": 100,
+						"positions": [
+							{ "reel": 0, "row": 2 },
+							{ "reel": 1, "row": 2 },
+							{ "reel": 2, "row": 2 }
+						],
+						"meta": {
+							"lineIndex": 3,
+							"multiplier": 1,
+							"winWithoutMult": 100,
+							"lineMultiplier": 1
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 100
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 100
+			}
+		]
+	},
+	{
+		"id": 6,
+		"payoutMultiplier": 30,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_2" }, { "name": "LOW_1" }, { "name": "HIGH_4" }],
+					[{ "name": "LOW_2" }, { "name": "HIGH_2" }, { "name": "LOW_3" }],
+					[{ "name": "HIGH_1" }, { "name": "LOW_4" }, { "name": "HIGH_2" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 3000,
+				"wins": [
+					{
+						"symbol": "HIGH_2",
+						"kind": 3,
+						"win": 3000,
+						"positions": [
+							{ "reel": 0, "row": 0 },
+							{ "reel": 1, "row": 1 },
+							{ "reel": 2, "row": 2 }
+						],
+						"meta": {
+							"lineIndex": 4,
+							"multiplier": 30,
+							"winWithoutMult": 3000,
+							"lineMultiplier": 1
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 3000
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 3000
+			}
+		]
+	},
+	{
+		"id": 7,
+		"payoutMultiplier": 16,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_3" }, { "name": "LOW_2" }, { "name": "LOW_1" }],
+					[{ "name": "HIGH_4" }, { "name": "LOW_1" }, { "name": "LOW_3" }],
+					[{ "name": "LOW_1" }, { "name": "HIGH_2" }, { "name": "LOW_4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 1600,
+				"wins": [
+					{
+						"symbol": "LOW_1",
+						"kind": 3,
+						"win": 1600,
+						"positions": [
+							{ "reel": 0, "row": 2 },
+							{ "reel": 1, "row": 1 },
+							{ "reel": 2, "row": 0 }
+						],
+						"meta": {
+							"lineIndex": 5,
+							"multiplier": 16,
+							"winWithoutMult": 1600,
+							"lineMultiplier": 1
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 1600
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 1600
+			}
+		]
+	},
+	{
+		"id": 8,
+		"payoutMultiplier": 20,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_4" }, { "name": "HIGH_1" }, { "name": "LOW_2" }],
+					[{ "name": "HIGH_4" }, { "name": "LOW_3" }, { "name": "LOW_2" }],
+					[{ "name": "HIGH_4" }, { "name": "LOW_4" }, { "name": "LOW_2" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 2000,
+				"wins": [
+					{
+						"symbol": "HIGH_4",
+						"kind": 3,
+						"win": 1600,
+						"positions": [
+							{ "reel": 0, "row": 0 },
+							{ "reel": 1, "row": 0 },
+							{ "reel": 2, "row": 0 }
+						],
+						"meta": {
+							"lineIndex": 1,
+							"multiplier": 16,
+							"winWithoutMult": 1600,
+							"lineMultiplier": 1
+						}
+					},
+					{
+						"symbol": "LOW_2",
+						"kind": 3,
+						"win": 400,
+						"positions": [
+							{ "reel": 0, "row": 2 },
+							{ "reel": 1, "row": 2 },
+							{ "reel": 2, "row": 2 }
+						],
+						"meta": {
+							"lineIndex": 3,
+							"multiplier": 4,
+							"winWithoutMult": 400,
+							"lineMultiplier": 1
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 2000
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 2000
+			}
+		]
+	},
+	{
+		"id": 9,
+		"payoutMultiplier": 4,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_1" }, { "name": "LOW_3" }, { "name": "HIGH_4" }],
+					[{ "name": "LOW_1" }, { "name": "LOW_3" }, { "name": "HIGH_2" }],
+					[{ "name": "LOW_2" }, { "name": "LOW_3" }, { "name": "HIGH_3" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 400,
+				"wins": [
+					{
+						"symbol": "LOW_3",
+						"kind": 3,
+						"win": 400,
+						"positions": [
+							{ "reel": 0, "row": 1 },
+							{ "reel": 1, "row": 1 },
+							{ "reel": 2, "row": 1 }
+						],
+						"meta": {
+							"lineIndex": 2,
+							"multiplier": 4,
+							"winWithoutMult": 400,
+							"lineMultiplier": 1
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 400
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 400
 			}
 		]
 	}
