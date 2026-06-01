@@ -41,6 +41,7 @@ export const statusSuccess = {
 
 const sessions = new Map<string, Session>();
 const MANUAL_BONUS_SESSION_ID = 'slot-3x3-local';
+const SIDE_REEL_INDEXES = [0, 2];
 const VALUE_COIN_SYMBOL_NAME = 'VALUE_COIN';
 const BONUS_TOTAL_EVENT_TYPES = new Set(['bonusEnd', 'setTotalWin', 'finalWin']);
 const ROUND_PAYOUT_EVENT_TYPES = ['finalWin', 'freeSpinEnd', 'bonusEnd', 'setTotalWin'] as const;
@@ -75,7 +76,9 @@ export function getSession(sessionID: string, currency = DEFAULT_CURRENCY) {
 function nextBook(session: Session, mode: string): RawBook {
 	const books = getBooks(mode, { sessionID: session.sessionID });
 	if (books.length === 0) {
-		throw new Error(`No mock books configured for mode ${mode}. Add books to apps/mock-rgs/src/books.`);
+		throw new Error(
+			`No mock books configured for mode ${mode}. Add books to apps/mock-rgs/src/books.`,
+		);
 	}
 
 	const modeKey = mode.toUpperCase();
@@ -171,15 +174,48 @@ function sumBoardCoinAmounts(board: unknown) {
 	);
 }
 
-function hydrateManualBonusEvent(event: RawBookEvent, betAmount: number): RawBookEvent {
+function hasSideReelValueCoin(board: unknown) {
+	if (!Array.isArray(board)) return false;
+
+	return SIDE_REEL_INDEXES.some((reelIndex) => {
+		const reel = board[reelIndex];
+
+		return (
+			Array.isArray(reel) &&
+			reel.some((symbol) => isRecord(symbol) && symbol.name === VALUE_COIN_SYMBOL_NAME)
+		);
+	});
+}
+
+type ManualBonusHydrationState = {
+	currentBoard: unknown;
+	totalWin: number;
+};
+
+function hydrateManualBonusEvent(
+	event: RawBookEvent,
+	betAmount: number,
+	bonusState: ManualBonusHydrationState,
+): RawBookEvent {
 	const hydratedEvent = { ...event };
 
 	if ('board' in hydratedEvent) {
 		hydratedEvent.board = hydrateBoardCoinAmounts(hydratedEvent.board, betAmount);
+		bonusState.currentBoard = hydratedEvent.board;
+	}
+
+	if (hydratedEvent.type === 'bonusTrigger') {
+		bonusState.totalWin = sumBoardCoinAmounts(bonusState.currentBoard);
 	}
 
 	if (hydratedEvent.type === 'bonusReveal') {
-		hydratedEvent.totalWin = sumBoardCoinAmounts(hydratedEvent.board);
+		if (hasSideReelValueCoin(hydratedEvent.board)) {
+			bonusState.totalWin = roundMoney(
+				bonusState.totalWin + sumBoardCoinAmounts(hydratedEvent.board),
+			);
+		}
+
+		hydratedEvent.totalWin = bonusState.totalWin;
 	}
 
 	return hydratedEvent;
@@ -195,8 +231,12 @@ function findFinalBonusAmount(events: RawBookEvent[]) {
 
 function hydrateManualBonusBook(book: RawBook, apiBetAmount: number) {
 	const betAmount = apiAmountToMoney(apiBetAmount);
+	const bonusState: ManualBonusHydrationState = {
+		currentBoard: null,
+		totalWin: 0,
+	};
 	const hydratedEvents = (book.events ?? []).map((event) =>
-		hydrateManualBonusEvent(event, betAmount),
+		hydrateManualBonusEvent(event, betAmount, bonusState),
 	);
 	const finalBonusAmount = findFinalBonusAmount(hydratedEvents);
 	const payoutMultiplier = betAmount > 0 ? roundMoney(finalBonusAmount / betAmount) : 0;
@@ -327,9 +367,7 @@ export function play(options: {
 	const hasManualBonus = isManualBonusSession(session)
 		? splitManualBonusEvents(rawBook.events ?? []) !== null
 		: false;
-	const manualBonusBook = hasManualBonus
-		? hydrateManualBonusBook(rawBook, options.amount)
-		: null;
+	const manualBonusBook = hasManualBonus ? hydrateManualBonusBook(rawBook, options.amount) : null;
 	const book = manualBonusBook?.book ?? rawBook;
 	const payoutMultiplier = manualBonusBook?.payoutMultiplier ?? calculateBookPayoutMultiplier(book);
 	const payout = manualBonusBook

@@ -134,7 +134,7 @@
 	},
 	{
 		"id": 4,
-		"payoutMultiplier": 1250,
+		"payoutMultiplier": 2450,
 		"events": [
 			{
 				"index": 0,
@@ -167,7 +167,7 @@
 				"paddingPositions": [0, 0, 0],
 				"respins": 3,
 				"coinsAdded": [{ "reel": 0, "row": 0 }],
-				"totalWin": 850,
+				"totalWin": 1450,
 				"board": [
 					[
 						{ "name": "VALUE_COIN", "multiplier": 2.5 },
@@ -188,13 +188,9 @@
 				"paddingPositions": [0, 0, 0],
 				"respins": 2,
 				"coinsAdded": [],
-				"totalWin": 850,
+				"totalWin": 1450,
 				"board": [
-					[
-						{ "name": "VALUE_COIN", "multiplier": 2.5 },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" }
-					],
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }],
 					[
 						{ "name": "VALUE_COIN", "multiplier": 1 },
 						{ "name": "VALUE_COIN", "multiplier": 2 },
@@ -209,13 +205,9 @@
 				"paddingPositions": [0, 0, 0],
 				"respins": 3,
 				"coinsAdded": [{ "reel": 2, "row": 2 }],
-				"totalWin": 1250,
+				"totalWin": 2450,
 				"board": [
-					[
-						{ "name": "VALUE_COIN", "multiplier": 2.5 },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" }
-					],
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }],
 					[
 						{ "name": "VALUE_COIN", "multiplier": 1 },
 						{ "name": "VALUE_COIN", "multiplier": 2 },
@@ -234,23 +226,15 @@
 				"paddingPositions": [0, 0, 0],
 				"respins": 2,
 				"coinsAdded": [],
-				"totalWin": 1250,
+				"totalWin": 2450,
 				"board": [
-					[
-						{ "name": "VALUE_COIN", "multiplier": 2.5 },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" }
-					],
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }],
 					[
 						{ "name": "VALUE_COIN", "multiplier": 1 },
 						{ "name": "VALUE_COIN", "multiplier": 2 },
 						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
-					[
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "VALUE_COIN", "multiplier": 4 }
-					]
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }]
 				]
 			},
 			{
@@ -259,23 +243,15 @@
 				"paddingPositions": [0, 0, 0],
 				"respins": 1,
 				"coinsAdded": [],
-				"totalWin": 1250,
+				"totalWin": 2450,
 				"board": [
-					[
-						{ "name": "VALUE_COIN", "multiplier": 2.5 },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" }
-					],
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }],
 					[
 						{ "name": "VALUE_COIN", "multiplier": 1 },
 						{ "name": "VALUE_COIN", "multiplier": 2 },
 						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
-					[
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "VALUE_COIN", "multiplier": 4 }
-					]
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }]
 				]
 			},
 			{
@@ -284,39 +260,31 @@
 				"paddingPositions": [0, 0, 0],
 				"respins": 0,
 				"coinsAdded": [],
-				"totalWin": 1250,
+				"totalWin": 2450,
 				"board": [
-					[
-						{ "name": "VALUE_COIN", "multiplier": 2.5 },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" }
-					],
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }],
 					[
 						{ "name": "VALUE_COIN", "multiplier": 1 },
 						{ "name": "VALUE_COIN", "multiplier": 2 },
 						{ "name": "VALUE_COIN", "multiplier": 3 }
 					],
-					[
-						{ "name": "EMPTY_COIN" },
-						{ "name": "EMPTY_COIN" },
-						{ "name": "VALUE_COIN", "multiplier": 4 }
-					]
+					[{ "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }, { "name": "EMPTY_COIN" }]
 				]
 			},
 			{
 				"index": 8,
 				"type": "bonusEnd",
-				"amount": 1250
+				"amount": 2450
 			},
 			{
 				"index": 9,
 				"type": "setTotalWin",
-				"amount": 1250
+				"amount": 2450
 			},
 			{
 				"index": 10,
 				"type": "finalWin",
-				"amount": 1250
+				"amount": 2450
 			}
 		]
 	}

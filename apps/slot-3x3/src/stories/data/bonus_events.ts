@@ -36,7 +36,7 @@ const bonusReveal1: BookEventOfType<'bonusReveal'> = {
 	paddingPositions: [0, 0, 0],
 	respins: 3,
 	coinsAdded: [{ reel: 0, row: 0 }],
-	totalWin: 8.5,
+	totalWin: 14.5,
 	board: [
 		[
 			{ name: SYMBOL_NAME.VALUE_COIN, multiplier: 2.5, amount: 2.5 },
@@ -52,14 +52,26 @@ const bonusReveal1: BookEventOfType<'bonusReveal'> = {
 	],
 };
 
+const createEmptyCoinReel = () => [
+	{ name: SYMBOL_NAME.EMPTY_COIN },
+	{ name: SYMBOL_NAME.EMPTY_COIN },
+	{ name: SYMBOL_NAME.EMPTY_COIN },
+];
+
+const createNoSideCoinsBoard = (): BookEventOfType<'bonusReveal'>['board'] => [
+	createEmptyCoinReel(),
+	triggerBoard[1],
+	createEmptyCoinReel(),
+];
+
 const bonusReveal2: BookEventOfType<'bonusReveal'> = {
 	index: 3,
 	type: 'bonusReveal',
 	paddingPositions: [0, 0, 0],
 	respins: 2,
 	coinsAdded: [],
-	totalWin: 8.5,
-	board: bonusReveal1.board,
+	totalWin: 14.5,
+	board: createNoSideCoinsBoard(),
 };
 
 const bonusReveal3: BookEventOfType<'bonusReveal'> = {
@@ -68,9 +80,9 @@ const bonusReveal3: BookEventOfType<'bonusReveal'> = {
 	paddingPositions: [0, 0, 0],
 	respins: 3,
 	coinsAdded: [{ reel: 2, row: 2 }],
-	totalWin: 12.5,
+	totalWin: 24.5,
 	board: [
-		bonusReveal1.board[0],
+		createEmptyCoinReel(),
 		triggerBoard[1],
 		[
 			{ name: SYMBOL_NAME.EMPTY_COIN },
@@ -86,8 +98,8 @@ const bonusReveal4: BookEventOfType<'bonusReveal'> = {
 	paddingPositions: [0, 0, 0],
 	respins: 2,
 	coinsAdded: [],
-	totalWin: 12.5,
-	board: bonusReveal3.board,
+	totalWin: 24.5,
+	board: createNoSideCoinsBoard(),
 };
 
 const bonusReveal5: BookEventOfType<'bonusReveal'> = {
@@ -96,8 +108,8 @@ const bonusReveal5: BookEventOfType<'bonusReveal'> = {
 	paddingPositions: [0, 0, 0],
 	respins: 1,
 	coinsAdded: [],
-	totalWin: 12.5,
-	board: bonusReveal3.board,
+	totalWin: 24.5,
+	board: createNoSideCoinsBoard(),
 };
 
 const bonusReveal6: BookEventOfType<'bonusReveal'> = {
@@ -106,26 +118,26 @@ const bonusReveal6: BookEventOfType<'bonusReveal'> = {
 	paddingPositions: [0, 0, 0],
 	respins: 0,
 	coinsAdded: [],
-	totalWin: 12.5,
-	board: bonusReveal3.board,
+	totalWin: 24.5,
+	board: createNoSideCoinsBoard(),
 };
 
 const bonusEnd: BookEventOfType<'bonusEnd'> = {
 	index: 8,
 	type: 'bonusEnd',
-	amount: 12.5,
+	amount: 24.5,
 };
 
 const setTotalWin: BookEventOfType<'setTotalWin'> = {
 	index: 9,
 	type: 'setTotalWin',
-	amount: 12.5,
+	amount: 24.5,
 };
 
 const finalWin: BookEventOfType<'finalWin'> = {
 	index: 10,
 	type: 'finalWin',
-	amount: 12.5,
+	amount: 24.5,
 };
 
 const sequence: BookEvent[] = [
