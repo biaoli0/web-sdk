@@ -13,6 +13,7 @@
 	import { SYMBOL_NAME } from '../game/symbols';
 	import type { LineWin, Position } from '../game/types';
 	import BonusIntro from './BonusIntro.svelte';
+	import BonusOutro from './BonusOutro.svelte';
 	import RoundWin from './RoundWin.svelte';
 	import Symbol from './Symbol.svelte';
 
@@ -118,6 +119,7 @@
 	</Container>
 
 	<BonusIntro />
+	<BonusOutro />
 
 	{#if showRoundWin()}
 		<Container x={BOARD_SIZES.width * 0.5} y={BOARD_SIZES.height * 0.5}>
@@ -128,7 +130,7 @@
 	{#if context.stateGame.bonus.status !== 'inactive'}
 		<Text
 			x={BOARD_SIZES.width * 0.5}
-			y={BOARD_SIZES.height + 48}
+			y={BOARD_SIZES.height + 36}
 			anchor={0.5}
 			text={getBonusMessage()}
 			style={{

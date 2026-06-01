@@ -32,6 +32,7 @@ const primaryMachines = createPrimaryMachines<Bet>({
 		stateGameDerived.resetWinInfo();
 		stateGame.bonus.status = 'inactive';
 		stateGame.bonus.introVisible = false;
+		stateGame.bonus.outroVisible = false;
 		stateGame.bonus.isSpinning = false;
 		stateGame.bonus.respins = 0;
 		stateGame.bonus.totalWin = 0;

@@ -47,6 +47,7 @@ export type LineWin = {
 export type BonusState = {
 	status: BonusStatus;
 	introVisible: boolean;
+	outroVisible: boolean;
 	isSpinning: boolean;
 	respins: number;
 	totalWin: number;

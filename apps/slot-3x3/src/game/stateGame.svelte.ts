@@ -27,6 +27,7 @@ const symbolHeight = SYMBOL_HEIGHT + BOARD_GAP;
 const createInitialBonusState = (): BonusState => ({
 	status: 'inactive',
 	introVisible: false,
+	outroVisible: false,
 	isSpinning: false,
 	respins: 0,
 	totalWin: 0,
@@ -187,6 +188,7 @@ const startBonus = ({
 	stateGame.gameType = 'bonusgame';
 	stateGame.bonus.status = 'active';
 	stateGame.bonus.introVisible = false;
+	stateGame.bonus.outroVisible = false;
 	stateGame.bonus.isSpinning = false;
 	stateGame.bonus.respins = respins;
 	stateGame.bonus.coinsAdded = positions;
@@ -205,6 +207,7 @@ const updateBonus = ({
 	stateGame.gameType = 'bonusgame';
 	stateGame.bonus.status = 'active';
 	stateGame.bonus.introVisible = false;
+	stateGame.bonus.outroVisible = false;
 	stateGame.bonus.isSpinning = false;
 	stateGame.bonus.respins = respins;
 	stateGame.bonus.coinsAdded = coinsAdded;
@@ -214,6 +217,7 @@ const updateBonus = ({
 const completeBonus = ({ amount }: { amount: number }) => {
 	stateGame.bonus.status = 'complete';
 	stateGame.bonus.introVisible = false;
+	stateGame.bonus.outroVisible = true;
 	stateGame.bonus.isSpinning = false;
 	stateGame.bonus.respins = 0;
 	stateGame.bonus.coinsAdded = [];

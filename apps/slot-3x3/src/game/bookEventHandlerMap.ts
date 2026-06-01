@@ -54,7 +54,8 @@ export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContex
 		stateGameDerived.completeBonus({ amount: bookEvent.amount });
 		eventEmitter.broadcast({ type: 'soundOnce', name: 'sfx_youwon_panel' });
 		eventEmitter.broadcast({ type: 'soundMusic', name: 'bgm_main' });
-		await waitForTimeout(600);
+		await waitForTimeout(1800);
+		stateGame.bonus.outroVisible = false;
 	},
 	winInfo: async (bookEvent: BookEventOfType<'winInfo'>) => {
 		stateGameDerived.setWinInfo(bookEvent);
