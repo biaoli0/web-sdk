@@ -3,6 +3,7 @@
 
 	const { Story } = defineMeta({
 		title: 'COMPONENTS/Slot 3x3',
+		tags: ['test'],
 	});
 </script>
 
@@ -38,6 +39,12 @@
 	import Slot3x3SoundHarness from './Slot3x3SoundHarness.svelte';
 	import Slot3x3StoryFrame from './Slot3x3StoryFrame.svelte';
 	import {
+		expectBetMenuModal,
+		expectPixiCanvas,
+		expectReelSpeedSetting,
+		expectSettingsModal,
+	} from './storyPlayTests';
+	import {
 		rawSymbolFor,
 		resetSlot3x3StoryState,
 		setupAutoSpinControlsStory,
@@ -62,7 +69,7 @@
 	const BONUS_SPIN_BUTTON_SIZES = { width: 160, height: 150 };
 </script>
 
-<Story name="<Symbol> gallery">
+<Story name="<Symbol> gallery" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={resetSlot3x3StoryState}>
 		<Container x={72} y={82} scale={SYMBOL_GALLERY_SCALE}>
 			{#each SYMBOL_NAMES as symbolName, rowIndex}
@@ -110,7 +117,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<Board> ready">
+<Story name="<Board> ready" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupReadyBoardStory}>
 		<MainContainer>
 			<Board />
@@ -118,7 +125,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<Board> win">
+<Story name="<Board> win" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupWinningBoardStory}>
 		<MainContainer>
 			<Board />
@@ -126,7 +133,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<Board> bonus">
+<Story name="<Board> bonus" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupBonusActiveStory}>
 		<MainContainer>
 			<Board />
@@ -134,7 +141,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<BonusIntro>">
+<Story name="<BonusIntro>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupBonusIntroStory}>
 		<MainContainer>
 			<Container x={BOARD_STORY_ORIGIN.x} y={BOARD_STORY_ORIGIN.y}>
@@ -144,7 +151,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<BonusOutro>">
+<Story name="<BonusOutro>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupBonusOutroStory}>
 		<MainContainer>
 			<Container x={BOARD_STORY_ORIGIN.x} y={BOARD_STORY_ORIGIN.y}>
@@ -154,7 +161,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<RoundWin>">
+<Story name="<RoundWin>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupWinningBoardStory}>
 		<Container x={600} y={300}>
 			<RoundWin />
@@ -162,7 +169,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<MoneyMeter>">
+<Story name="<MoneyMeter>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupMoneyStory}>
 		<Container x={230} y={170} scale={0.82}>
 			<MoneyMeter kind="win" stacked />
@@ -176,7 +183,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<OverallBetInfo>">
+<Story name="<OverallBetInfo>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupMoneyStory}>
 		<Container x={600} y={180}>
 			<OverallBetInfo gap={300} itemScale={0.78} />
@@ -184,7 +191,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<ActorControls>">
+<Story name="<ActorControls>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupAutoSpinControlsStory}>
 		<Container x={500} y={310}>
 			<ActorControls
@@ -208,7 +215,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<BonusSpinButton>">
+<Story name="<BonusSpinButton>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupBonusActiveStory}>
 		<Container x={240} y={180}>
 			<BonusSpinButton sizes={BONUS_SPIN_BUTTON_SIZES} />
@@ -216,7 +223,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<Slot3x3PlaceholderButton>">
+<Story name="<Slot3x3PlaceholderButton>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={resetSlot3x3StoryState}>
 		<Container x={160} y={140}>
 			<Slot3x3PlaceholderButton label="MAX BET" />
@@ -227,13 +234,13 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<GameInterface>">
+<Story name="<GameInterface>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupMoneyStory}>
 		<GameInterface />
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<ReelSpeedSetting>">
+<Story name="<ReelSpeedSetting>" play={expectReelSpeedSetting}>
 	<Slot3x3StoryFrame pixi={false} init={resetSlot3x3StoryState}>
 		<section class="html-panel compact">
 			<ReelSpeedSetting />
@@ -241,13 +248,13 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<ModalSettings>">
+<Story name="<ModalSettings>" play={expectSettingsModal}>
 	<Slot3x3StoryFrame pixi={false} init={setupSettingsModalStory}>
 		<ModalSettings />
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<Modals>">
+<Story name="<Modals>" play={expectBetMenuModal}>
 	<Slot3x3StoryFrame pixi={false} init={setupBetMenuModalStory}>
 		<Modals>
 			{#snippet version()}
@@ -257,7 +264,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<EnableGameActor>">
+<Story name="<EnableGameActor>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={resetSlot3x3StoryState}>
 		<EnableGameActor debug />
 		<Container x={60} y={70}>
@@ -274,7 +281,7 @@
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<EnableSound>">
+<Story name="<EnableSound>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={resetSlot3x3StoryState}>
 		<EnableSound />
 		<Container x={80} y={80}>
@@ -287,18 +294,12 @@
 					fill: 0xffffff,
 				}}
 			/>
-			<Rectangle
-				y={48}
-				width={460}
-				height={4}
-				backgroundColor={0x14b8a6}
-				backgroundAlpha={0.92}
-			/>
+			<Rectangle y={48} width={460} height={4} backgroundColor={0x14b8a6} backgroundAlpha={0.92} />
 		</Container>
 	</Slot3x3StoryFrame>
 </Story>
 
-<Story name="<Sound>">
+<Story name="<Sound>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={resetSlot3x3StoryState}>
 		<Slot3x3SoundHarness />
 	</Slot3x3StoryFrame>
