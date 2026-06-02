@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { SLOT_3X3_SESSION_ID } from './slot-3x3/adapter';
+
 export type RawBookEvent = {
 	index: number;
 	type: string;
@@ -22,7 +24,7 @@ const DEFAULT_BOOK_FILES = {
 } as const;
 
 const BOOK_FILES_BY_SESSION_ID = {
-	'slot-3x3-local': {
+	[SLOT_3X3_SESSION_ID]: {
 		BASE: 'slot-3x3/base.json',
 		BONUS: 'slot-3x3/base.json',
 	},
@@ -38,9 +40,7 @@ function loadBooksByMode(bookFiles: Record<string, string>) {
 	);
 
 	if (missingFiles.length > 0) {
-		throw new Error(
-			`Missing book file(s): ${missingFiles.join(', ')}.`,
-		);
+		throw new Error(`Missing book file(s): ${missingFiles.join(', ')}.`);
 	}
 
 	return {
