@@ -152,6 +152,13 @@ const clear = () => {
 
 const isSpinning = () => stateGame.board.some((reel) => reel.reelState.motion !== 'stopped');
 
+const canBonusSpin = () =>
+	stateGame.bonus.status === 'active' &&
+	!stateGame.bonus.introVisible &&
+	!stateGame.bonus.isSpinning &&
+	stateGame.bonus.respins > 0 &&
+	!isSpinning();
+
 const visibleSymbolY = (reelSymbol: ReelSymbol) =>
 	reelSymbol.symbolY() + SYMBOL_HEIGHT + BOARD_GAP * 0.5;
 
@@ -268,6 +275,7 @@ export const stateGameDerived = {
 	resetWinInfo,
 	clear,
 	isSpinning,
+	canBonusSpin,
 	visibleSymbolY,
 	boardRaw,
 	sumCoinValues,

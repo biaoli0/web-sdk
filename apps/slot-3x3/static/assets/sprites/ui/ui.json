@@ -72,10 +72,10 @@
 		},
 		"soundButtonMuted": {
 			"frame": {
-				"x": 308,
-				"y": 482,
+				"x": 310,
+				"y": 490,
 				"w": 135,
-				"h": 135
+				"h": 148
 			},
 			"rotated": true,
 			"trimmed": false,
