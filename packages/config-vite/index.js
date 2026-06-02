@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 
 const NODE_ENV = process.env.NODE_ENV;
 let dev = NODE_ENV === 'development';
+const SASS_API = process.env.SASS_API || 'modern-compiler';
 
 export default () =>
 	defineConfig({
@@ -20,7 +21,7 @@ export default () =>
 		css: {
 			preprocessorOptions: {
 				scss: {
-					api: 'modern-compiler',
+					api: SASS_API,
 				},
 			},
 		},
