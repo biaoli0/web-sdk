@@ -26,6 +26,7 @@
 	import ReelSpeedSetting from '../components/ReelSpeedSetting.svelte';
 	import RoundWin from '../components/RoundWin.svelte';
 	import Slot3x3PlaceholderButton from '../components/Slot3x3PlaceholderButton.svelte';
+	import SpinButton from '../components/SpinButton.svelte';
 	import Symbol from '../components/Symbol.svelte';
 	import {
 		BOARD_SIZES,
@@ -219,6 +220,14 @@
 	<Slot3x3StoryFrame init={setupBonusActiveStory}>
 		<Container x={240} y={180}>
 			<BonusSpinButton sizes={BONUS_SPIN_BUTTON_SIZES} />
+		</Container>
+	</Slot3x3StoryFrame>
+</Story>
+
+<Story name="<SpinButton>" play={expectPixiCanvas}>
+	<Slot3x3StoryFrame init={resetSlot3x3StoryState}>
+		<Container x={240} y={180}>
+			<SpinButton anchor={0.5} />
 		</Container>
 	</Slot3x3StoryFrame>
 </Story>
