@@ -1,121 +1,21 @@
-import { createEnhanceBoard, createReelForSpinning } from 'utils-slots';
-import { stateBet } from 'state-shared';
+import { INITIAL_BOARD } from './constants';
+import type { GameType, LineWin, RawSymbol } from './types';
+import { createBoardSelectors, type Reel, type ReelSymbol } from './boardSelectors';
+import { createBonusStateController, createInitialBonusState } from './bonusState';
+import { createReelController } from './reelController';
+import { createReelSpeedController, type ReelSpeedState } from './reelSpeed';
 
-import {
-	BOARD_GAP,
-	BONUS_RESPINS_DEFAULT,
-	CENTRAL_REEL_INDEX,
-	INITIAL_BOARD,
-	INITIAL_SYMBOL_STATE,
-	SPIN_OPTIONS_DEFAULT,
-	SPIN_OPTIONS_FAST,
-	SYMBOL_HEIGHT,
-} from './constants';
-import { SYMBOL_NAME } from './symbols';
-import {
-	type BonusState,
-	type GameType,
-	type LineWin,
-	type Position,
-	type RawSymbol,
-	type SymbolState,
-} from './types';
-import { eventEmitter } from './eventEmitter';
-
-const symbolHeight = SYMBOL_HEIGHT + BOARD_GAP;
-
-const createInitialBonusState = (): BonusState => ({
-	status: 'inactive',
-	introVisible: false,
-	outroVisible: false,
-	isSpinning: false,
-	respins: 0,
-	totalWin: 0,
-	coinsAdded: [],
+let reelSpeedState: ReelSpeedState;
+const reelSpeed = createReelSpeedController(() => reelSpeedState);
+const reelController = createReelController({
+	isTurbo: reelSpeed.isTurbo,
+	normalSpinOptions: reelSpeed.normalSpinOptions,
 });
 
-const lerp = (start: number, end: number, amount: number) => start + (end - start) * amount;
-const clampReelSpeed = (value: number) => Math.min(1, Math.max(0, value));
-const isTurbo = () => clampReelSpeed(stateGame.reelSpeed) >= 1;
-const setReelSpeed = (value: number | string) => {
-	const parsedValue = Number(value);
-	const reelSpeed = clampReelSpeed(Number.isFinite(parsedValue) ? parsedValue : 0);
-	const turbo = reelSpeed >= 1;
-
-	stateGame.reelSpeed = reelSpeed;
-
-	if (!turbo) {
-		stateGame.reelSpeedBeforeTurbo = reelSpeed;
-	}
-};
-const setTurbo = (value: boolean) => {
-	if (value) {
-		if (!isTurbo()) {
-			stateGame.reelSpeedBeforeTurbo = clampReelSpeed(stateGame.reelSpeed);
-		}
-
-		stateGame.reelSpeed = 1;
-		return;
-	}
-
-	stateGame.reelSpeed = clampReelSpeed(stateGame.reelSpeedBeforeTurbo);
-};
-const toggleTurbo = () => setTurbo(!isTurbo());
-const normalSpinOptions = () => {
-	const reelSpeed = clampReelSpeed(stateGame.reelSpeed);
-
-	return {
-		...SPIN_OPTIONS_DEFAULT,
-		reelPreSpinSpeed: lerp(
-			SPIN_OPTIONS_DEFAULT.reelPreSpinSpeed,
-			SPIN_OPTIONS_FAST.reelPreSpinSpeed,
-			reelSpeed,
-		),
-		reelSpinSpeed: lerp(
-			SPIN_OPTIONS_DEFAULT.reelSpinSpeed,
-			SPIN_OPTIONS_FAST.reelSpinSpeed,
-			reelSpeed,
-		),
-		reelBounceSizeMulti: lerp(
-			SPIN_OPTIONS_DEFAULT.reelBounceSizeMulti,
-			SPIN_OPTIONS_FAST.reelBounceSizeMulti,
-			reelSpeed,
-		),
-		reelSpinDelay: lerp(
-			SPIN_OPTIONS_DEFAULT.reelSpinDelay,
-			SPIN_OPTIONS_FAST.reelSpinDelay,
-			reelSpeed,
-		),
-	};
-};
-
-const board = INITIAL_BOARD.map((initialSymbols, reelIndex) => {
-	const reel = createReelForSpinning<RawSymbol, SymbolState>({
-		reelIndex,
-		symbolHeight,
-		initialSymbols,
-		initialSymbolState: INITIAL_SYMBOL_STATE,
-		onReelStopping: () => {
-			eventEmitter.broadcast({
-				type: 'soundOnce',
-				name: 'sfx_reel_stop_1',
-				forcePlay: !isTurbo(),
-			});
-		},
-		onSymbolLand: () => {},
-	});
-
-	reel.reelState.spinOptions = () =>
-		reel.reelState.spinType === 'fast' ? SPIN_OPTIONS_FAST : normalSpinOptions();
-
-	return reel;
-});
-
-export type Reel = (typeof board)[number];
-export type ReelSymbol = Reel['reelState']['symbols'][number];
+export type { Reel, ReelSymbol };
 
 export const stateGame = $state({
-	board,
+	board: reelController.board,
 	gameType: 'basegame' as GameType,
 	totalWin: 0,
 	finalWin: 0,
@@ -125,11 +25,17 @@ export const stateGame = $state({
 	bonus: createInitialBonusState(),
 });
 
-const { enhanceBoard } = createEnhanceBoard();
-const enhancedBoard = enhanceBoard({ board: stateGame.board });
+reelSpeedState = stateGame;
+const boardSelectors = createBoardSelectors({ board: stateGame.board });
+const bonusState = createBonusStateController({
+	state: stateGame,
+	isSpinning: boardSelectors.isSpinning,
+	boardRaw: boardSelectors.boardRaw,
+	sumCoinValues: boardSelectors.sumCoinValues,
+});
 
 const settle = (boardToSettle: RawSymbol[][] = INITIAL_BOARD) => {
-	enhancedBoard.settle(boardToSettle);
+	reelController.enhancedBoard.settle(boardToSettle);
 };
 
 const setWinInfo = (bookEvent: { totalWin: number; wins: LineWin[] }) => {
@@ -147,146 +53,28 @@ const clear = () => {
 	settle();
 	resetWinInfo();
 	stateGame.gameType = 'basegame';
-	stateGame.bonus = createInitialBonusState();
-};
-
-const isSpinning = () => stateGame.board.some((reel) => reel.reelState.motion !== 'stopped');
-
-const canBonusSpin = () =>
-	stateGame.bonus.status === 'active' &&
-	!stateGame.bonus.introVisible &&
-	!stateGame.bonus.isSpinning &&
-	stateGame.bonus.respins > 0 &&
-	!isSpinning();
-
-const visibleSymbolY = (reelSymbol: ReelSymbol) =>
-	reelSymbol.symbolY() + SYMBOL_HEIGHT + BOARD_GAP * 0.5;
-
-const boardRaw = () =>
-	stateGame.board.map((reel) => reel.reelState.symbols.map((reelSymbol) => reelSymbol.rawSymbol));
-
-const sumCoinValues = (rawBoard: RawSymbol[][]) =>
-	rawBoard.reduce(
-		(total, reel) =>
-			total +
-			reel.reduce(
-				(reelTotal, rawSymbol) =>
-					reelTotal + (rawSymbol.name === SYMBOL_NAME.VALUE_COIN ? rawSymbol.amount : 0),
-				0,
-			),
-		0,
-	);
-
-const isSamePosition = (left: Position, right: Position) =>
-	left.reel === right.reel && left.row === right.row;
-
-const isBonusNewCoinPosition = (position: Position) =>
-	stateGame.bonus.coinsAdded.some((coinPosition) => isSamePosition(coinPosition, position));
-
-const startBonus = ({
-	positions,
-	respins = BONUS_RESPINS_DEFAULT,
-}: {
-	positions: Position[];
-	respins?: number;
-}) => {
-	const currentBoard = boardRaw();
-
-	stateGame.gameType = 'bonusgame';
-	stateGame.bonus.status = 'active';
-	stateGame.bonus.introVisible = false;
-	stateGame.bonus.outroVisible = false;
-	stateGame.bonus.isSpinning = false;
-	stateGame.bonus.respins = respins;
-	stateGame.bonus.coinsAdded = positions;
-	stateGame.bonus.totalWin = sumCoinValues(currentBoard);
-};
-
-const updateBonus = ({
-	respins,
-	coinsAdded,
-	totalWin,
-}: {
-	respins: number;
-	coinsAdded: Position[];
-	totalWin: number;
-}) => {
-	stateGame.gameType = 'bonusgame';
-	stateGame.bonus.status = 'active';
-	stateGame.bonus.introVisible = false;
-	stateGame.bonus.outroVisible = false;
-	stateGame.bonus.isSpinning = false;
-	stateGame.bonus.respins = respins;
-	stateGame.bonus.coinsAdded = coinsAdded;
-	stateGame.bonus.totalWin = totalWin;
-};
-
-const completeBonus = ({ amount }: { amount: number }) => {
-	stateGame.bonus.status = 'complete';
-	stateGame.bonus.introVisible = false;
-	stateGame.bonus.outroVisible = true;
-	stateGame.bonus.isSpinning = false;
-	stateGame.bonus.respins = 0;
-	stateGame.bonus.coinsAdded = [];
-	stateGame.bonus.totalWin = amount;
-	stateGame.totalWin = amount;
-	stateGame.finalWin = amount;
-	stateBet.winBookEventAmount = amount;
-};
-
-const spinBonusReveal = async ({
-	rawBoard,
-	paddingBoard,
-	paddingPositions,
-}: {
-	rawBoard: RawSymbol[][];
-	paddingBoard?: RawSymbol[][];
-	paddingPositions?: number[];
-}) => {
-	let previousPaddingSize = 0;
-
-	stateGame.board.forEach((reel, reelIndex) => {
-		if (reelIndex === CENTRAL_REEL_INDEX) {
-			return;
-		}
-
-		previousPaddingSize = reel.prepareToSpin({
-			noStop: false,
-			spinType: isTurbo() ? 'fast' : 'normal',
-			symbols: rawBoard[reelIndex],
-			paddingReel: paddingBoard?.[reelIndex] ?? rawBoard[reelIndex],
-			paddingPosition: paddingPositions?.[reelIndex] ?? 0,
-			previousPaddingSize,
-			onSpinFinishing: () => reel.onReelStopping(),
-		});
-	});
-
-	await Promise.all(
-		stateGame.board.map((reel, reelIndex) =>
-			reelIndex === CENTRAL_REEL_INDEX ? Promise.resolve() : reel.spin(),
-		),
-	);
+	bonusState.resetBonus();
 };
 
 export const stateGameDerived = {
-	enhancedBoard,
+	enhancedBoard: reelController.enhancedBoard,
 	settle,
 	setWinInfo,
 	resetWinInfo,
 	clear,
-	isSpinning,
-	canBonusSpin,
-	visibleSymbolY,
-	boardRaw,
-	sumCoinValues,
-	isTurbo,
-	setReelSpeed,
-	setTurbo,
-	toggleTurbo,
-	normalSpinOptions,
-	isBonusNewCoinPosition,
-	startBonus,
-	updateBonus,
-	completeBonus,
-	spinBonusReveal,
+	isSpinning: boardSelectors.isSpinning,
+	canBonusSpin: bonusState.canBonusSpin,
+	visibleSymbolY: boardSelectors.visibleSymbolY,
+	boardRaw: boardSelectors.boardRaw,
+	sumCoinValues: boardSelectors.sumCoinValues,
+	isTurbo: reelSpeed.isTurbo,
+	setReelSpeed: reelSpeed.setReelSpeed,
+	setTurbo: reelSpeed.setTurbo,
+	toggleTurbo: reelSpeed.toggleTurbo,
+	normalSpinOptions: reelSpeed.normalSpinOptions,
+	isBonusNewCoinPosition: bonusState.isBonusNewCoinPosition,
+	startBonus: bonusState.startBonus,
+	updateBonus: bonusState.updateBonus,
+	completeBonus: bonusState.completeBonus,
+	spinBonusReveal: reelController.spinBonusReveal,
 };
