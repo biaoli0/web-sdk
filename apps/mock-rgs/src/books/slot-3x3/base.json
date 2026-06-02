@@ -553,5 +553,335 @@
 				"amount": 400
 			}
 		]
+	},
+	{
+		"id": 10,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_1" }, { "name": "LOW_2" }, { "name": "HIGH_3" }],
+					[{ "name": "LOW_1" }, { "name": "HIGH_2" }, { "name": "LOW_3" }],
+					[{ "name": "HIGH_4" }, { "name": "LOW_4" }, { "name": "LOW_1" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 11,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "LOW_1" }, { "name": "HIGH_3" }, { "name": "LOW_4" }],
+					[{ "name": "HIGH_2" }, { "name": "LOW_2" }, { "name": "HIGH_4" }],
+					[{ "name": "LOW_3" }, { "name": "HIGH_1" }, { "name": "LOW_2" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 12,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_3" }, { "name": "LOW_3" }, { "name": "HIGH_1" }],
+					[{ "name": "HIGH_4" }, { "name": "LOW_1" }, { "name": "LOW_2" }],
+					[{ "name": "LOW_4" }, { "name": "HIGH_2" }, { "name": "HIGH_3" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 13,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "LOW_2" }, { "name": "HIGH_4" }, { "name": "LOW_1" }],
+					[{ "name": "LOW_3" }, { "name": "HIGH_1" }, { "name": "HIGH_2" }],
+					[{ "name": "HIGH_3" }, { "name": "LOW_4" }, { "name": "HIGH_4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 14,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_4" }, { "name": "LOW_1" }, { "name": "LOW_3" }],
+					[{ "name": "HIGH_3" }, { "name": "LOW_4" }, { "name": "HIGH_1" }],
+					[{ "name": "LOW_2" }, { "name": "HIGH_2" }, { "name": "LOW_4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 15,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "LOW_4" }, { "name": "HIGH_2" }, { "name": "LOW_2" }],
+					[{ "name": "HIGH_1" }, { "name": "LOW_3" }, { "name": "HIGH_3" }],
+					[{ "name": "LOW_1" }, { "name": "HIGH_4" }, { "name": "LOW_3" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 16,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_2" }, { "name": "LOW_4" }, { "name": "HIGH_4" }],
+					[{ "name": "LOW_2" }, { "name": "HIGH_3" }, { "name": "LOW_1" }],
+					[{ "name": "HIGH_1" }, { "name": "LOW_3" }, { "name": "HIGH_2" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 17,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "LOW_3" }, { "name": "HIGH_1" }, { "name": "HIGH_2" }],
+					[{ "name": "HIGH_4" }, { "name": "LOW_2" }, { "name": "LOW_4" }],
+					[{ "name": "LOW_1" }, { "name": "HIGH_3" }, { "name": "LOW_2" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 18,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "HIGH_3" }, { "name": "LOW_2" }, { "name": "LOW_4" }],
+					[{ "name": "LOW_4" }, { "name": "HIGH_1" }, { "name": "HIGH_3" }],
+					[{ "name": "HIGH_2" }, { "name": "LOW_1" }, { "name": "LOW_3" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
+	},
+	{
+		"id": 19,
+		"payoutMultiplier": 0,
+		"events": [
+			{
+				"index": 0,
+				"type": "reveal",
+				"gameType": "basegame",
+				"paddingPositions": [0, 0, 0],
+				"board": [
+					[{ "name": "LOW_1" }, { "name": "HIGH_4" }, { "name": "HIGH_1" }],
+					[{ "name": "HIGH_3" }, { "name": "LOW_3" }, { "name": "LOW_2" }],
+					[{ "name": "LOW_4" }, { "name": "HIGH_2" }, { "name": "HIGH_4" }]
+				]
+			},
+			{
+				"index": 1,
+				"type": "winInfo",
+				"totalWin": 0,
+				"wins": []
+			},
+			{
+				"index": 2,
+				"type": "setTotalWin",
+				"amount": 0
+			},
+			{
+				"index": 3,
+				"type": "finalWin",
+				"amount": 0
+			}
+		]
 	}
 ]
