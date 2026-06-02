@@ -52,7 +52,10 @@
 	});
 	const betMenuDisabled = $derived(!context.stateXstateDerived.isIdle());
 	const controlPosition = (index: number) =>
-		props.direction === 'vertical' ? { y: index * props.gap } : { x: index * props.gap };
+		props.direction === 'vertical'
+			? { x: 0, y: index * props.gap }
+			: { x: index * props.gap, y: 0 };
+
 
 	const stopAutoSpin = () => (stateBet.autoSpinsCounter = 0);
 	const openAutoSpinModal = () => (stateModal.modal = { name: 'autoSpin' });
