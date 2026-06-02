@@ -194,23 +194,11 @@
 <Story name="<ActorControls>" play={expectPixiCanvas}>
 	<Slot3x3StoryFrame init={setupAutoSpinControlsStory}>
 		<Container x={500} y={310}>
-			<ActorControls
-				direction="horizontal"
-				gap={120}
-				sideScale={0.5}
-				actionScale={0.68}
-				switchBetScale={0.5}
-			/>
+			<ActorControls direction="horizontal" />
 		</Container>
 
 		<Container x={960} y={210}>
-			<ActorControls
-				direction="vertical"
-				gap={120}
-				sideScale={0.58}
-				actionScale={0.78}
-				switchBetScale={0.58}
-			/>
+			<ActorControls direction="vertical" />
 		</Container>
 	</Slot3x3StoryFrame>
 </Story>

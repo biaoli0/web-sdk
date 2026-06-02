@@ -2,6 +2,7 @@
 	  import './app.css';
 		import { getContext } from '../game/context';
 		import EnableGameActor from './EnableGameActor.svelte';
+		import { EnableHotkey, OnHotkey } from 'components-shared';
 		import { waitForTimeout } from 'utils-shared/wait';
 
 		const context = getContext();
@@ -61,12 +62,12 @@
 			winInfo: ({ data }) => {
 				flickering = false;
 
-			 	eventDict = data
-				currentValue = eventDict.numberRolled;
+			 	eventDict = data;
+				currentValue = data.numberRolled;
 			},
 			finalWin: ({ data }) => {
-				winDict = data
-				won = winDict.amount > 0;
+				winDict = data;
+				won = data.amount > 0;
 
 				gameState = won ? 'won' : 'lost';
         isProcessing = false;
@@ -75,6 +76,8 @@
 </script>
 
 <EnableGameActor />
+<EnableHotkey />
+<OnHotkey hotkey="Space" disabled={isProcessing} onpress={playGame} />
 
 {#if gameState === 'start'}
 	<h1>Number Picker</h1>

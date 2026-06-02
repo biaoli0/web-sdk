@@ -19,17 +19,6 @@
 	const PORTRAIT_ACTION_BOTTOM_MARGIN = 170;
 	const PORTRAIT_ACTION_BOARD_GAP = 190;
 	const ACTION_TO_AMOUNT_GAP = 140;
-	const ACTION_BUTTON_GAP = 120;
-	const ACTION_SCALE_RIGHT_RAIL = {
-		side: 0.6,
-		action: 0.78,
-		switchBet: 0.6,
-	};
-	const ACTION_SCALE_BOTTOM_ROW = {
-		side: 0.48,
-		action: 0.62,
-		switchBet: 0.48,
-	};
 
 	const gameLayout = $derived(context.stateLayoutDerived.mainLayout());
 	const layout = $derived(context.stateLayoutDerived.mainLayoutStandard());
@@ -72,7 +61,6 @@
 	const actionPanelX = $derived(useRightRail ? rightRailX : gameLayout.width * 0.5);
 	const actionPanelY = $derived(useRightRail ? rightRailY : portraitActionPanelY);
 	const actionDirection = $derived(useRightRail ? 'vertical' : 'horizontal');
-	const actionScales = $derived(useRightRail ? ACTION_SCALE_RIGHT_RAIL : ACTION_SCALE_BOTTOM_ROW);
 	const amountPanelYTarget = $derived(useRightRail ? amountPanelY : portraitAmountPanelY);
 	const amountPanelGap = $derived(useRightRail ? 300 : 220);
 	const amountPanelScale = $derived(useRightRail ? 0.78 : 0.68);
@@ -92,13 +80,7 @@
 
 <MainContainer>
 	<Container x={actionPanelX} y={actionPanelY} scale={uiScale}>
-		<ActorControls
-			direction={actionDirection}
-			gap={ACTION_BUTTON_GAP}
-			sideScale={actionScales.side}
-			actionScale={actionScales.action}
-			switchBetScale={actionScales.switchBet}
-		/>
+		<ActorControls direction={actionDirection} />
 	</Container>
 </MainContainer>
 
