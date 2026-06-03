@@ -5,6 +5,11 @@
 	import { stateBet, stateBetDerived } from 'state-shared';
 
 	import { getContext } from '../game/context';
+	import {
+		boardGameDerived,
+		bonusGameDerived,
+		reelSpeedGameDerived,
+	} from '../game/state/stateGame.svelte';
 
 	type Props = Partial<Omit<ButtonProps, 'children' | 'sizes' | 'onpress' | 'disabled'>>;
 	type PointerEventLike = { stopPropagation: () => void };
@@ -39,12 +44,12 @@
 	let lightningHovered = $state(false);
 
 	const isIdle = $derived(context.stateXstateDerived.isIdle());
-	const isSpinning = $derived(context.stateGameDerived.isSpinning());
+	const isSpinning = $derived(boardGameDerived.isSpinning());
 	const isBonusActive = $derived(context.stateGame.bonus.status === 'active');
-	const bonusSpinUnavailable = $derived(!context.stateGameDerived.canBonusSpin());
+	const bonusSpinUnavailable = $derived(!bonusGameDerived.canBonusSpin());
 	const lightningDisabled = $derived(!isIdle || isBonusActive);
 	const lightningKey = $derived(
-		context.stateGameDerived.isTurbo() ? 'spinButtonLightningActive' : 'spinButtonLightning',
+		reelSpeedGameDerived.isTurbo() ? 'spinButtonLightningActive' : 'spinButtonLightning',
 	);
 	const lightningScale = $derived(lightningHovered && !lightningDisabled ? 1.1 : 1);
 	const autoSpinActive = $derived(stateBetDerived.hasAutoBetCounter());
@@ -101,7 +106,7 @@
 		if (lightningDisabled) return;
 
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
-		context.stateGameDerived.toggleTurbo();
+		reelSpeedGameDerived.toggleTurbo();
 	};
 </script>
 
@@ -115,7 +120,7 @@
 			x={iconOffsetX}
 			width={sizes.width * lightningScale}
 			height={sizes.height * lightningScale}
-			alpha={lightningDisabled ? 0.5 : context.stateGameDerived.isTurbo() ? 1 : 0.9}
+			alpha={lightningDisabled ? 0.5 : reelSpeedGameDerived.isTurbo() ? 1 : 0.9}
 		/>
 
 		<Container

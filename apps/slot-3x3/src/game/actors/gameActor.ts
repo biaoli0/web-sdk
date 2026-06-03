@@ -5,7 +5,12 @@ import type { Bet } from '../typesBookEvent';
 import { findLastRevealBoard, isBonusBet, resetBonusFlow, sendBonusSpin } from './bonusFlowActor';
 import { stateXstateDerived } from '../state/stateXstate';
 import { playBet } from '../utils';
-import { stateGame, stateGameDerived } from '../state/stateGame.svelte';
+import {
+	boardGameDerived,
+	reelSpeedGameDerived,
+	stateGame,
+	winGameDerived,
+} from '../state/stateGame.svelte';
 import config from '../config';
 
 const primaryMachines = createPrimaryMachines<Bet>({
@@ -13,11 +18,11 @@ const primaryMachines = createPrimaryMachines<Bet>({
 	onResumeGameInactive: (betToResume) => {
 		const lastRevealBoard = findLastRevealBoard(betToResume);
 
-		if (lastRevealBoard) stateGameDerived.enhancedBoard.settle(lastRevealBoard);
+		if (lastRevealBoard) boardGameDerived.enhancedBoard.settle(lastRevealBoard);
 	},
 	onNewGameStart: async () => {
 		resetBonusFlow();
-		stateGameDerived.resetWinInfo();
+		winGameDerived.resetWinInfo();
 		stateGame.bonus.status = 'inactive';
 		stateGame.bonus.introVisible = false;
 		stateGame.bonus.outroVisible = false;
@@ -26,15 +31,15 @@ const primaryMachines = createPrimaryMachines<Bet>({
 		stateGame.bonus.totalWin = 0;
 		stateGame.bonus.coinsAdded = [];
 
-		const isTurbo = stateGameDerived.isTurbo();
+		const isTurbo = reelSpeedGameDerived.isTurbo();
 
 		if ((isTurbo && stateXstateDerived.isAutoBetting()) || stateBet.isSpaceHold) return;
 
-		await stateGameDerived.enhancedBoard.preSpin({
+		await boardGameDerived.enhancedBoard.preSpin({
 			paddingBoard: config.paddingReels[stateGame.gameType],
 		});
 	},
-	onNewGameError: () => stateGameDerived.enhancedBoard.settle(),
+	onNewGameError: () => boardGameDerived.enhancedBoard.settle(),
 	onPlayGame: async (bet) => await playBet(bet),
 	checkIsBonusGame: isBonusBet,
 });

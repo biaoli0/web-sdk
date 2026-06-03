@@ -18,7 +18,12 @@
 
 	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
-	import { stateGame, stateGameDerived } from '../game/state/stateGame.svelte';
+	import {
+		boardGameDerived,
+		bonusGameDerived,
+		stateGame,
+		winGameDerived,
+	} from '../game/state/stateGame.svelte';
 	import { playBookEvent, playBookEvents } from '../game/utils';
 	import type { BookEventOfType } from '../game/typesBookEvent';
 	import events from './data/bonus_events';
@@ -26,7 +31,7 @@
 	let manualBonusSliceIndex = 0;
 
 	const resetBookEventStory = () => {
-		stateGameDerived.clear();
+		winGameDerived.clear();
 		stateBet.winBookEventAmount = 0;
 		manualBonusSliceIndex = 0;
 	};
@@ -34,7 +39,7 @@
 	const playManualBonusStep = async () => {
 		if (stateGame.bonus.status === 'inactive' || stateGame.bonus.status === 'complete') {
 			resetBookEventStory();
-			stateGameDerived.settle(events.reveal.board);
+			boardGameDerived.settle(events.reveal.board);
 			await playBookEvent(events.bonusTrigger, { bookEvents: events.sequence });
 			return;
 		}
@@ -84,7 +89,7 @@
 		skipLoadingScreen: true,
 		data: events.bonusTrigger,
 		action: async (data: BookEventOfType<'bonusTrigger'>) => {
-			stateGameDerived.settle(events.reveal.board);
+			boardGameDerived.settle(events.reveal.board);
 			await playBookEvent(data, { bookEvents: events.sequence });
 		},
 	})}
@@ -97,8 +102,8 @@
 		skipLoadingScreen: true,
 		data: events.bonusReveal1,
 		action: async (data: BookEventOfType<'bonusReveal'>) => {
-			stateGameDerived.settle(events.reveal.board);
-			stateGameDerived.startBonus({
+			boardGameDerived.settle(events.reveal.board);
+			bonusGameDerived.startBonus({
 				positions: events.bonusTrigger.positions,
 				respins: events.bonusTrigger.respins,
 			});

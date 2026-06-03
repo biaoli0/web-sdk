@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { stateGame, stateGameDerived } from '../game/state/stateGame.svelte';
+	import { reelSpeedGameDerived, stateGame } from '../game/state/stateGame.svelte';
 	import { getContext } from '../game/context';
 
 	const context = getContext();
 	const disabled = $derived(!context.stateXstateDerived.isIdle());
 	const updateReelSpeed = (event: Event) => {
 		const input = event.currentTarget as HTMLInputElement;
-		stateGameDerived.setReelSpeed(input.value);
+		reelSpeedGameDerived.setReelSpeed(input.value);
 	};
 </script>
 

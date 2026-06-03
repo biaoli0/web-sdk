@@ -10,6 +10,7 @@
 		SYMBOL_WIDTH,
 	} from '../game/constants';
 	import { getContext } from '../game/context';
+	import { boardGameDerived, bonusGameDerived } from '../game/state/stateGame.svelte';
 	import { SYMBOL_NAME } from '../game/symbols';
 	import type { LineWin, Position } from '../game/types';
 	import BonusIntro from './BonusIntro.svelte';
@@ -36,7 +37,7 @@
 		(rawSymbolName === SYMBOL_NAME.VALUE_COIN || rawSymbolName === SYMBOL_NAME.EMPTY_COIN);
 
 	const getMessage = () => {
-		if (context.stateGameDerived.isSpinning()) return 'SPINNING';
+		if (boardGameDerived.isSpinning()) return 'SPINNING';
 		if (context.stateGame.bonus.status === 'complete') return 'BONUS COMPLETE';
 		if (context.stateGame.bonus.status === 'active') return 'BONUS GAME';
 		return 'READY';
@@ -52,7 +53,7 @@
 
 	const showRoundWin = () => context.stateGame.totalWin > 0 && context.stateGame.wins.length > 0;
 
-	context.stateGameDerived.enhancedBoard.readyToSpinEffect();
+	boardGameDerived.enhancedBoard.readyToSpinEffect();
 </script>
 
 <Container
@@ -92,12 +93,12 @@
 			{#each reel.reelState.symbols as reelSymbol, rowIndex (reelSymbol.id)}
 				<Symbol
 					x={cellCenter(reelIndex)}
-					y={context.stateGameDerived.visibleSymbolY(reelSymbol)}
+					y={boardGameDerived.visibleSymbolY(reelSymbol)}
 					rawSymbol={reelSymbol.rawSymbol}
 					symbolState={reelSymbol.symbolState}
 					highlight={isWinningPosition({ reel: reelIndex, row: rowIndex }) ||
 						isBonusCoin(reelSymbol.rawSymbol.name)}
-					newCoin={context.stateGameDerived.isBonusNewCoinPosition({
+					newCoin={bonusGameDerived.isBonusNewCoinPosition({
 						reel: reelIndex,
 						row: rowIndex,
 					})}

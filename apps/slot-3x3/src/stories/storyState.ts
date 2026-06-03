@@ -2,13 +2,19 @@ import { stateBet, stateModal, stateSound } from 'state-shared';
 
 import { INITIAL_BOARD, PAYLINE_POSITIONS } from '../game/constants';
 import { SYMBOL_NAME } from '../game/symbols';
-import { stateGame, stateGameDerived } from '../game/state/stateGame.svelte';
+import {
+	boardGameDerived,
+	bonusGameDerived,
+	reelSpeedGameDerived,
+	stateGame,
+	winGameDerived,
+} from '../game/state/stateGame.svelte';
 import { stateXstate } from '../game/state/stateXstate';
 import type { LineWin, RawSymbol, SymbolName } from '../game/types';
 
 export const resetSlot3x3StoryState = () => {
-	stateGameDerived.clear();
-	stateGameDerived.setReelSpeed(0);
+	winGameDerived.clear();
+	reelSpeedGameDerived.setReelSpeed(0);
 	stateXstate.value = 'idle';
 
 	stateBet.currency = 'USD';
@@ -90,13 +96,13 @@ export const BONUS_BOARD: RawSymbol[][] = [
 
 export const setupReadyBoardStory = () => {
 	resetSlot3x3StoryState();
-	stateGameDerived.settle(INITIAL_BOARD);
+	boardGameDerived.settle(INITIAL_BOARD);
 };
 
 export const setupWinningBoardStory = () => {
 	resetSlot3x3StoryState();
-	stateGameDerived.settle(WIN_BOARD);
-	stateGameDerived.setWinInfo({
+	boardGameDerived.settle(WIN_BOARD);
+	winGameDerived.setWinInfo({
 		totalWin: 500,
 		wins: [
 			createLineWin({
@@ -119,8 +125,8 @@ export const setupMoneyStory = () => {
 
 export const setupBonusActiveStory = () => {
 	resetSlot3x3StoryState();
-	stateGameDerived.settle(BONUS_BOARD);
-	stateGameDerived.startBonus({
+	boardGameDerived.settle(BONUS_BOARD);
+	bonusGameDerived.startBonus({
 		positions: [
 			{ reel: 0, row: 0 },
 			{ reel: 1, row: 1 },
@@ -137,9 +143,9 @@ export const setupBonusIntroStory = () => {
 
 export const setupBonusOutroStory = () => {
 	resetSlot3x3StoryState();
-	stateGameDerived.settle(BONUS_BOARD);
+	boardGameDerived.settle(BONUS_BOARD);
 	stateGame.gameType = 'bonusgame';
-	stateGameDerived.completeBonus({ amount: 2500 });
+	bonusGameDerived.completeBonus({ amount: 2500 });
 };
 
 export const setupAutoSpinControlsStory = () => {

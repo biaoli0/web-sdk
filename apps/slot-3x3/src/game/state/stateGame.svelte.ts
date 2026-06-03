@@ -56,25 +56,41 @@ const clear = () => {
 	bonusState.resetBonus();
 };
 
-export const stateGameDerived = {
+export const boardGameDerived = {
 	enhancedBoard: reelController.enhancedBoard,
 	settle,
-	setWinInfo,
-	resetWinInfo,
-	clear,
 	isSpinning: boardSelectors.isSpinning,
-	canBonusSpin: bonusState.canBonusSpin,
 	visibleSymbolY: boardSelectors.visibleSymbolY,
 	boardRaw: boardSelectors.boardRaw,
 	sumCoinValues: boardSelectors.sumCoinValues,
+	spinBonusReveal: reelController.spinBonusReveal,
+};
+
+export const winGameDerived = {
+	setWinInfo,
+	resetWinInfo,
+	clear,
+};
+
+export const reelSpeedGameDerived = {
 	isTurbo: reelSpeed.isTurbo,
 	setReelSpeed: reelSpeed.setReelSpeed,
 	setTurbo: reelSpeed.setTurbo,
 	toggleTurbo: reelSpeed.toggleTurbo,
 	normalSpinOptions: reelSpeed.normalSpinOptions,
+};
+
+export const bonusGameDerived = {
+	canBonusSpin: bonusState.canBonusSpin,
 	isBonusNewCoinPosition: bonusState.isBonusNewCoinPosition,
 	startBonus: bonusState.startBonus,
 	updateBonus: bonusState.updateBonus,
 	completeBonus: bonusState.completeBonus,
-	spinBonusReveal: reelController.spinBonusReveal,
+};
+
+export const stateGameDerived = {
+	...boardGameDerived,
+	...winGameDerived,
+	...reelSpeedGameDerived,
+	...bonusGameDerived,
 };

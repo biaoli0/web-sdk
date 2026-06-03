@@ -4,6 +4,7 @@
 	import { OnHotkey } from 'components-shared';
 
 	import { getContext } from '../game/context';
+	import { boardGameDerived } from '../game/state/stateGame.svelte';
 	import { EVENT_BONUS_SPIN } from '../game/typesEmitterEvent';
 
 	type Props = {
@@ -19,7 +20,7 @@
 			context.stateGame.bonus.introVisible ||
 			context.stateGame.bonus.isSpinning ||
 			context.stateGame.bonus.respins <= 0 ||
-			context.stateGameDerived.isSpinning(),
+			boardGameDerived.isSpinning(),
 	);
 	const hotkeyDisabled = $derived(!context.stateXstateDerived.isIdle() || disabled);
 

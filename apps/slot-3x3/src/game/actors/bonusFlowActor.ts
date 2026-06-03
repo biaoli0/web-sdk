@@ -6,7 +6,7 @@ import { requestBet } from 'rgs-requests';
 
 import { playBookEvents } from '../bookPlayback';
 import { CENTRAL_REEL_INDEX } from '../constants';
-import { stateGame, stateGameDerived } from '../state/stateGame.svelte';
+import { bonusGameDerived, stateGame } from '../state/stateGame.svelte';
 import type { RawSymbol } from '../types';
 import type { Bet, BookEvent, BookEventOfType } from '../typesBookEvent';
 
@@ -93,7 +93,7 @@ const bonusFlowMachine = setup({
 		requestBonusSpin,
 	},
 	guards: {
-		canBonusSpin: () => stateGameDerived.canBonusSpin(),
+		canBonusSpin: () => bonusGameDerived.canBonusSpin(),
 	},
 	actions: {
 		markBonusSpinning: () => {
