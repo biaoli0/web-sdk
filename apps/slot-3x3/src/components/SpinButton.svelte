@@ -67,6 +67,7 @@
 	const mainDisabled = $derived(
 		isBonusActive ? bonusSpinUnavailable : DISABLED_BUTTON_KEYS.has(key),
 	);
+	const hotkeyDisabled = $derived(isBonusActive ? mainDisabled : !isIdle || mainDisabled);
 	const getMainContainerAlpha = (pressed: boolean, hovered: boolean) => {
 		if (mainDisabled) return 0.56;
 		if (pressed) return 0.84;
@@ -110,7 +111,7 @@
 	};
 </script>
 
-<OnHotkey hotkey="Space" disabled={!isIdle || mainDisabled} onpress={pressMain} />
+<OnHotkey hotkey="Space" disabled={hotkeyDisabled} onpress={pressMain} />
 
 <Container {...containerProps} pivot={anchorToPivot({ sizes, anchor })}>
 	<Container {...center}>
@@ -150,7 +151,7 @@
 			/>
 		</Container>
 	</Container>
-	
+
 	<Button {sizes} onpress={pressMain} disabled={mainDisabled} {debug}>
 		{#snippet children({ center, hovered, pressed })}
 			<Container {...center} alpha={getMainContainerAlpha(pressed, hovered)}>

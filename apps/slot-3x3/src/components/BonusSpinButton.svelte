@@ -22,8 +22,6 @@
 			context.stateGame.bonus.respins <= 0 ||
 			boardGameDerived.isSpinning(),
 	);
-	const hotkeyDisabled = $derived(!context.stateXstateDerived.isIdle() || disabled);
-
 	const press = () => {
 		if (disabled) return;
 
@@ -32,7 +30,7 @@
 	};
 </script>
 
-<OnHotkey hotkey="Space" disabled={hotkeyDisabled} onpress={press} />
+<OnHotkey hotkey="Space" {disabled} onpress={press} />
 
 <Button sizes={props.sizes} onpress={press} {disabled} debug={props.debug}>
 	{#snippet children({ center, hovered, pressed })}
