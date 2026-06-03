@@ -1,4 +1,4 @@
-import { SPIN_OPTIONS_DEFAULT, SPIN_OPTIONS_FAST } from './constants';
+import { SPIN_OPTIONS_DEFAULT, SPIN_OPTIONS_FAST } from '../constants';
 
 export type ReelSpeedState = {
 	reelSpeed: number;

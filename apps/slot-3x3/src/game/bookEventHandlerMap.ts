@@ -5,7 +5,7 @@ import { waitForTimeout } from 'utils-shared/wait';
 import { BOARD_REELS } from './constants';
 import config from './config';
 import { eventEmitter } from './eventEmitter';
-import { stateGame, stateGameDerived } from './stateGame.svelte';
+import { stateGame, stateGameDerived } from './state/stateGame.svelte';
 import type { BookEvent, BookEventContext, BookEventOfType } from './typesBookEvent';
 
 export const bookEventHandlerMap: BookEventHandlerMap<BookEvent, BookEventContext> = {

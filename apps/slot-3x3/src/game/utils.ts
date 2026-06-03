@@ -4,7 +4,7 @@ import { stateBet, stateModal, stateUrlDerived } from 'state-shared';
 import { requestBet } from 'rgs-requests';
 
 import { bookEventHandlerMap } from './bookEventHandlerMap';
-import { stateGame, stateGameDerived } from './stateGame.svelte';
+import { stateGame, stateGameDerived } from './state/stateGame.svelte';
 import type { Bet, BookEvent } from './typesBookEvent';
 
 export const { playBookEvent, playBookEvents } = createPlayBookUtils({ bookEventHandlerMap });

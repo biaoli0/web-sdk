@@ -18,7 +18,7 @@
 
 	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
-	import { stateGame, stateGameDerived } from '../game/stateGame.svelte';
+	import { stateGame, stateGameDerived } from '../game/state/stateGame.svelte';
 	import { playBookEvent, playBookEvents } from '../game/utils';
 	import type { BookEventOfType } from '../game/typesBookEvent';
 	import events from './data/bonus_events';

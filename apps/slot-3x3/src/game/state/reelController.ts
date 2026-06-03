@@ -7,9 +7,9 @@ import {
 	INITIAL_SYMBOL_STATE,
 	SPIN_OPTIONS_FAST,
 	SYMBOL_HEIGHT,
-} from './constants';
-import { eventEmitter } from './eventEmitter';
-import type { RawSymbol, SymbolState } from './types';
+} from '../constants';
+import { eventEmitter } from '../eventEmitter';
+import type { RawSymbol, SymbolState } from '../types';
 
 type ReelControllerOptions = {
 	isTurbo: () => boolean;

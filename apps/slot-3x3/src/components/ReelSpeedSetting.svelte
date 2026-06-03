@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { stateGame, stateGameDerived } from '../game/stateGame.svelte';
+	import { stateGame, stateGameDerived } from '../game/state/stateGame.svelte';
 	import { getContext } from '../game/context';
 
 	const context = getContext();

@@ -5,7 +5,7 @@
 	import { stateBet, stateBetDerived } from 'state-shared';
 	import { bookEventAmountToCurrencyString, numberToCurrencyString } from 'utils-shared/amount';
 
-	import { stateGame } from '../game/stateGame.svelte';
+	import { stateGame } from '../game/state/stateGame.svelte';
 
 	type AmountKind = 'win' | 'bet' | 'balance';
 
@@ -54,4 +54,4 @@
 	});
 </script>
 
-<UiLabel tiled {label} {value} stacked={props.stacked} />
+<UiLabel {label} {value} stacked={props.stacked} />

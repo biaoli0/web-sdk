@@ -1,5 +1,5 @@
-import { INITIAL_BOARD } from './constants';
-import type { GameType, LineWin, RawSymbol } from './types';
+import { INITIAL_BOARD } from '../constants';
+import type { GameType, LineWin, RawSymbol } from '../types';
 import { createBoardSelectors, type Reel, type ReelSymbol } from './boardSelectors';
 import { createBonusStateController, createInitialBonusState } from './bonusState';
 import { createReelController } from './reelController';

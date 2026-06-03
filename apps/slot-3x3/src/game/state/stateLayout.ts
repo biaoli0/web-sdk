@@ -1,6 +1,6 @@
 import { createLayout } from 'utils-layout';
 
-import { MAIN_SIZES } from './constants';
+import { MAIN_SIZES } from '../constants';
 
 export const { stateLayout, stateLayoutDerived } = createLayout({
 	backgroundRatio: {

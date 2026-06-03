@@ -2,8 +2,8 @@ import { stateBet, stateModal, stateSound } from 'state-shared';
 
 import { INITIAL_BOARD, PAYLINE_POSITIONS } from '../game/constants';
 import { SYMBOL_NAME } from '../game/symbols';
-import { stateGame, stateGameDerived } from '../game/stateGame.svelte';
-import { stateXstate } from '../game/stateXstate';
+import { stateGame, stateGameDerived } from '../game/state/stateGame.svelte';
+import { stateXstate } from '../game/state/stateXstate';
 import type { LineWin, RawSymbol, SymbolName } from '../game/types';
 
 export const resetSlot3x3StoryState = () => {

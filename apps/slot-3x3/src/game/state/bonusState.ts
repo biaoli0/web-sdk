@@ -1,7 +1,7 @@
 import { stateBet } from 'state-shared';
 
-import { BONUS_RESPINS_DEFAULT } from './constants';
-import type { BonusState, GameType, LineWin, Position, RawSymbol } from './types';
+import { BONUS_RESPINS_DEFAULT } from '../constants';
+import type { BonusState, GameType, LineWin, Position, RawSymbol } from '../types';
 
 type BonusStateContainer = {
 	gameType: GameType;

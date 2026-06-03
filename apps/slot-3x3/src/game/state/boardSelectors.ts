@@ -1,6 +1,6 @@
-import { BOARD_GAP, SYMBOL_HEIGHT } from './constants';
-import { SYMBOL_NAME } from './symbols';
-import type { RawSymbol } from './types';
+import { BOARD_GAP, SYMBOL_HEIGHT } from '../constants';
+import { SYMBOL_NAME } from '../symbols';
+import type { RawSymbol } from '../types';
 import type { createReelController } from './reelController';
 
 type Board = ReturnType<typeof createReelController>['board'];

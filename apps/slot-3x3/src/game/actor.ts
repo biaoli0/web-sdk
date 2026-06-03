@@ -2,9 +2,9 @@ import { createPrimaryMachines, createIntermediateMachines, createGameActor } fr
 import { stateBet } from 'state-shared';
 
 import type { Bet } from './typesBookEvent';
-import { stateXstateDerived } from './stateXstate';
+import { stateXstateDerived } from './state/stateXstate';
 import { playBet, playBonusSpin } from './utils';
-import { stateGame, stateGameDerived } from './stateGame.svelte';
+import { stateGame, stateGameDerived } from './state/stateGame.svelte';
 import config from './config';
 import type { RawSymbol } from './types';
 
