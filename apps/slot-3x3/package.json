@@ -27,6 +27,7 @@
 	"dependencies": {
 		"svelte": "5.20.5",
 		"vite": "6.2.0",
+		"xstate": "5.19.2",
 		"@sveltejs/kit": "2.17.3",
 		"@lingui/core": "5.2.0",
 		"envs": "workspace:*",

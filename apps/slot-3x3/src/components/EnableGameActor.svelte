@@ -3,7 +3,8 @@
 
 	import { Text } from 'pixi-svelte';
 
-	import { ACTOR_EVENT_BONUS_SPIN, gameActor, sendGameActorEvent } from '../game/actor';
+	import { bonusFlowActor } from '../game/actors/bonusFlowActor';
+	import { ACTOR_EVENT_BONUS_SPIN, gameActor, sendGameActorEvent } from '../game/actors/gameActor';
 	import { getContext } from '../game/context';
 	import { EVENT_BONUS_SPIN } from '../game/typesEmitterEvent';
 
@@ -19,12 +20,14 @@
 			context.stateXstate.value = snapshot.value;
 		});
 
+		bonusFlowActor.start();
 		gameActor.start();
 		gameActor.send({ type: 'RENDERED' });
 
 		return () => {
 			unsubscribe();
 			gameActor.stop();
+			bonusFlowActor.stop();
 		};
 	});
 

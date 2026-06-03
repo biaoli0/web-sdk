@@ -2,12 +2,12 @@ import { createEnhanceBoard, createReelForSpinning } from 'utils-slots';
 
 import {
 	BOARD_GAP,
-	CENTRAL_REEL_INDEX,
 	INITIAL_BOARD,
 	INITIAL_SYMBOL_STATE,
 	SPIN_OPTIONS_FAST,
 	SYMBOL_HEIGHT,
 } from '../constants';
+import { shouldHoldBonusRevealReel } from '../actors/bonusFlowActor';
 import { eventEmitter } from '../eventEmitter';
 import type { RawSymbol, SymbolState } from '../types';
 
@@ -56,7 +56,7 @@ export const createReelController = ({ isTurbo, normalSpinOptions }: ReelControl
 		let previousPaddingSize = 0;
 
 		board.forEach((reel, reelIndex) => {
-			if (reelIndex === CENTRAL_REEL_INDEX) {
+			if (shouldHoldBonusRevealReel(reelIndex)) {
 				return;
 			}
 
@@ -73,7 +73,7 @@ export const createReelController = ({ isTurbo, normalSpinOptions }: ReelControl
 
 		await Promise.all(
 			board.map((reel, reelIndex) =>
-				reelIndex === CENTRAL_REEL_INDEX ? Promise.resolve() : reel.spin(),
+				shouldHoldBonusRevealReel(reelIndex) ? Promise.resolve() : reel.spin(),
 			),
 		);
 	};

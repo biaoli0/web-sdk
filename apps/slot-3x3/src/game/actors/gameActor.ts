@@ -1,25 +1,12 @@
 import { createPrimaryMachines, createIntermediateMachines, createGameActor } from 'utils-xstate';
 import { stateBet } from 'state-shared';
 
-import type { Bet } from './typesBookEvent';
-import { stateXstateDerived } from './state/stateXstate';
-import { playBet, playBonusSpin } from './utils';
-import { stateGame, stateGameDerived } from './state/stateGame.svelte';
-import config from './config';
-import type { RawSymbol } from './types';
-
-const findLastRevealBoard = (bet: Bet) => {
-	const lastReveal = [...bet.state]
-		.reverse()
-		.find((bookEvent) => bookEvent.type === 'reveal' || bookEvent.type === 'bonusReveal');
-
-	return lastReveal && 'board' in lastReveal ? (lastReveal.board as RawSymbol[][]) : undefined;
-};
-
-const checkIsBonusGame = (bet: Bet) =>
-	bet.state.some(
-		(bookEvent) => bookEvent.type === 'bonusTrigger' || bookEvent.type === 'bonusReveal',
-	);
+import type { Bet } from '../typesBookEvent';
+import { findLastRevealBoard, isBonusBet, resetBonusFlow, sendBonusSpin } from './bonusFlowActor';
+import { stateXstateDerived } from '../state/stateXstate';
+import { playBet } from '../utils';
+import { stateGame, stateGameDerived } from '../state/stateGame.svelte';
+import config from '../config';
 
 const primaryMachines = createPrimaryMachines<Bet>({
 	onResumeGameActive: (betToResume) => betToResume,
@@ -29,6 +16,7 @@ const primaryMachines = createPrimaryMachines<Bet>({
 		if (lastRevealBoard) stateGameDerived.enhancedBoard.settle(lastRevealBoard);
 	},
 	onNewGameStart: async () => {
+		resetBonusFlow();
 		stateGameDerived.resetWinInfo();
 		stateGame.bonus.status = 'inactive';
 		stateGame.bonus.introVisible = false;
@@ -48,7 +36,7 @@ const primaryMachines = createPrimaryMachines<Bet>({
 	},
 	onNewGameError: () => stateGameDerived.enhancedBoard.settle(),
 	onPlayGame: async (bet) => await playBet(bet),
-	checkIsBonusGame,
+	checkIsBonusGame: isBonusBet,
 });
 
 const intermediateMachines = createIntermediateMachines(primaryMachines);
@@ -62,7 +50,7 @@ type GameActorEvent = Parameters<typeof gameActor.send>[0] | BonusSpinActorEvent
 
 export const sendGameActorEvent = (event: GameActorEvent) => {
 	if (event.type === ACTOR_EVENT_BONUS_SPIN) {
-		void playBonusSpin();
+		sendBonusSpin();
 		return;
 	}
 

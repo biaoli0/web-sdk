@@ -659,6 +659,9 @@ importers:
       vite:
         specifier: 6.2.0
         version: 6.2.0(@types/node@25.9.1)(jiti@1.21.7)(sass-embedded@1.89.2)(tsx@4.22.3)
+      xstate:
+        specifier: 5.19.2
+        version: 5.19.2
     devDependencies:
       '@storybook/addon-svelte-csf':
         specifier: 5.0.5
