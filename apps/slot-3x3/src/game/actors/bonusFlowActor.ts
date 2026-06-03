@@ -1,17 +1,17 @@
-import { setup, fromPromise, createActor } from 'xstate';
-
 import { API_AMOUNT_MULTIPLIER } from 'constants-shared/bet';
-import { stateBet, stateModal, stateUrlDerived } from 'state-shared';
 import { requestBet } from 'rgs-requests';
+import { stateBet, stateModal, stateUrlDerived } from 'state-shared';
 
 import { playBookEvents } from '../bookPlayback';
 import { bonusGameDerived, stateGame } from '../state/stateGame.svelte';
 import type { RawSymbol } from '../types';
 import type { Bet, BookEvent, BookEventOfType } from '../typesBookEvent';
-
-export const BONUS_PLAY_MODE = 'BONUS' as const;
-
-type BonusFlowEvent = { type: 'MANUAL_ROUND_STARTED' } | { type: 'BONUS_SPIN' } | { type: 'RESET' };
+import {
+	BONUS_PLAY_MODE,
+	createBonusFlowActor,
+	createBonusIntermediateMachines,
+	createBonusPrimaryMachines,
+} from './createBonusFlowActor';
 
 type RevealBoardEvent = BookEventOfType<'reveal'> | BookEventOfType<'bonusReveal'>;
 type BonusEntryEvent = BookEventOfType<'bonusTrigger'> | BookEventOfType<'bonusReveal'>;
@@ -36,9 +36,6 @@ export const isBonusBet = (bet: Bet) => bet.state.some(isBonusEntryEvent);
 export const isManualBonusRoundStart = (bookEvents: BookEvent[]) =>
 	hasBookEvent(bookEvents, 'bonusTrigger') && !hasBookEvent(bookEvents, 'bonusEnd');
 
-export const isManualBonusRoundComplete = (bookEvents: BookEvent[]) =>
-	hasBookEvent(bookEvents, 'bonusEnd');
-
 const startManualBonusRound = () => {
 	manualBonusRoundPromise ??= new Promise((resolve) => {
 		completeManualBonusRound = resolve;
@@ -55,7 +52,12 @@ const finishManualBonusRound = () => {
 	manualBonusRoundPromise = null;
 };
 
-const requestBonusSpin = fromPromise(async () => {
+const resetManualBonusRound = () => {
+	completeManualBonusRound = null;
+	manualBonusRoundPromise = null;
+};
+
+const requestBonusSpin = async () => {
 	const data = await requestBet({
 		rgsUrl: stateUrlDerived.rgsUrl(),
 		sessionID: stateUrlDerived.sessionID(),
@@ -80,86 +82,26 @@ const requestBonusSpin = fromPromise(async () => {
 	await playBookEvents(bookEvents);
 
 	return { bookEvents };
-});
+};
 
-const bonusFlowMachine = setup({
-	types: {} as {
-		events: BonusFlowEvent;
+const bonusPrimaryMachines = createBonusPrimaryMachines({ requestBonusSpin });
+const bonusIntermediateMachines = createBonusIntermediateMachines(bonusPrimaryMachines);
+
+export const bonusFlowActor = createBonusFlowActor(bonusIntermediateMachines, {
+	canBonusSpin: () => bonusGameDerived.canBonusSpin(),
+	markBonusSpinning: () => {
+		stateGame.bonus.isSpinning = true;
 	},
-	actors: {
-		requestBonusSpin,
+	clearBonusSpinning: () => {
+		stateGame.bonus.isSpinning = false;
 	},
-	guards: {
-		canBonusSpin: () => bonusGameDerived.canBonusSpin(),
-	},
-	actions: {
-		markBonusSpinning: () => {
-			stateGame.bonus.isSpinning = true;
-		},
-		clearBonusSpinning: () => {
-			stateGame.bonus.isSpinning = false;
-		},
-		finishManualBonusRound,
-		resetManualBonusRound: () => {
-			completeManualBonusRound = null;
-			manualBonusRoundPromise = null;
-		},
-		openBonusError: ({ event }) => {
-			const error = 'error' in event ? event.error : event;
-			stateModal.modal = { name: 'error', error };
-			console.error(error);
-		},
-	},
-}).createMachine({
-	id: 'slot3x3BonusFlow',
-	initial: 'idle',
-	on: {
-		RESET: {
-			target: '.idle',
-			actions: 'resetManualBonusRound',
-		},
-	},
-	states: {
-		idle: {
-			on: {
-				MANUAL_ROUND_STARTED: 'ready',
-			},
-		},
-		ready: {
-			on: {
-				MANUAL_ROUND_STARTED: 'ready',
-				BONUS_SPIN: {
-					guard: 'canBonusSpin',
-					target: 'spinning',
-					actions: 'markBonusSpinning',
-				},
-			},
-		},
-		spinning: {
-			invoke: {
-				id: 'requestBonusSpin',
-				src: 'requestBonusSpin',
-				onDone: [
-					{
-						guard: ({ event }) => isManualBonusRoundComplete(event.output.bookEvents),
-						target: 'idle',
-						actions: ['clearBonusSpinning', 'finishManualBonusRound'],
-					},
-					{
-						target: 'ready',
-						actions: 'clearBonusSpinning',
-					},
-				],
-				onError: {
-					target: 'ready',
-					actions: ['clearBonusSpinning', 'openBonusError'],
-				},
-			},
-		},
+	finishManualBonusRound,
+	resetManualBonusRound,
+	openBonusError: (error) => {
+		stateModal.modal = { name: 'error', error };
+		console.error(error);
 	},
 });
-
-export const bonusFlowActor = createActor(bonusFlowMachine);
 
 export const waitForManualBonusRound = (bookEvents: BookEvent[]) =>
 	isManualBonusRoundStart(bookEvents) ? startManualBonusRound() : Promise.resolve();
