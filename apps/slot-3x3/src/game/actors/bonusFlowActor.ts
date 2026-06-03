@@ -5,7 +5,6 @@ import { stateBet, stateModal, stateUrlDerived } from 'state-shared';
 import { requestBet } from 'rgs-requests';
 
 import { playBookEvents } from '../bookPlayback';
-import { CENTRAL_REEL_INDEX } from '../constants';
 import { bonusGameDerived, stateGame } from '../state/stateGame.svelte';
 import type { RawSymbol } from '../types';
 import type { Bet, BookEvent, BookEventOfType } from '../typesBookEvent';
@@ -39,8 +38,6 @@ export const isManualBonusRoundStart = (bookEvents: BookEvent[]) =>
 
 export const isManualBonusRoundComplete = (bookEvents: BookEvent[]) =>
 	hasBookEvent(bookEvents, 'bonusEnd');
-
-export const shouldHoldBonusRevealReel = (reelIndex: number) => reelIndex === CENTRAL_REEL_INDEX;
 
 const startManualBonusRound = () => {
 	manualBonusRoundPromise ??= new Promise((resolve) => {

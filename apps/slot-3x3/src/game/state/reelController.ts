@@ -7,7 +7,7 @@ import {
 	SPIN_OPTIONS_FAST,
 	SYMBOL_HEIGHT,
 } from '../constants';
-import { shouldHoldBonusRevealReel } from '../actors/bonusFlowActor';
+import { shouldHoldBonusRevealReel } from '../bonusRules';
 import { eventEmitter } from '../eventEmitter';
 import type { RawSymbol, SymbolState } from '../types';
 
