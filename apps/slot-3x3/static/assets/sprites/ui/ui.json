@@ -85,11 +85,14 @@
 			}
 		},
 		"settingsMenu": {
-			"frame": { "x": 535, "y": 535, "w": 150, "h": 150 },
+			"frame": {
+				"x": 535,
+				"y": 535,
+				"w": 150,
+				"h": 147
+			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": { "x": 0, "y": 0, "w": 150, "h": 150 },
-			"sourceSize": { "w": 150, "h": 150 },
 			"pivot": { "x": 0.5, "y": 0.5 }
 		}
 	},

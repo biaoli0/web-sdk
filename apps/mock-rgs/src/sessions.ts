@@ -105,17 +105,16 @@ export function authenticateSession(options: { sessionID: string; language?: str
 		balance: clone(session.balance),
 		round: session.activeRound ? clone(session.activeRound) : undefined,
 		config: {
-			betLevels: [100000, 200000, 500000, 1000000, 2000000, 5000000, 10000000],
+			betLevels: [
+				1000000, 2000000, 5000000, 10000000, 15000000, 25000000, 40000000, 50000000,
+				60000000, 75000000, 100000000, 125000000, 150000000, 200000000, 300000000,
+				500000000, 800000000, 900000000, 950000000, 975000000, 1000000000,
+			],
 			betModes: {
 				BASE: {
 					mode: 'BASE',
 					costMultiplier: 1,
 					feature: false,
-				},
-				BONUS: {
-					mode: 'BONUS',
-					costMultiplier: 100,
-					feature: true,
 				},
 			},
 			defaultBetLevel: 1000000,
