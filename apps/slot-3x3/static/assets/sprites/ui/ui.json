@@ -1,0 +1,107 @@
+{
+	"frames": {
+		"spinButtonArrow": {
+			"frame": {
+				"x": 315,
+				"y": 0,
+				"w": 220,
+				"h": 190
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"spinButtonStop": {
+			"frame": {
+				"x": 431,
+				"y": 382,
+				"w": 86,
+				"h": 86
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"spinButtonLightning": {
+			"frame": {
+				"x": 267,
+				"y": 740,
+				"w": 305,
+				"h": 264
+			},
+			"rotated": true,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"spinButtonLightningActive": {
+			"frame": {
+				"x": 530,
+				"y": 3,
+				"w": 305,
+				"h": 263
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"soundButton": {
+			"frame": {
+				"x": 700,
+				"y": 491,
+				"w": 135,
+				"h": 135
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"soundButtonMuted": {
+			"frame": {
+				"x": 310,
+				"y": 490,
+				"w": 135,
+				"h": 148
+			},
+			"rotated": true,
+			"trimmed": false,
+			"pivot": {
+				"x": 0.5,
+				"y": 0.5
+			}
+		},
+		"settingsMenu": {
+			"frame": {
+				"x": 535,
+				"y": 535,
+				"w": 150,
+				"h": 147
+			},
+			"rotated": false,
+			"trimmed": false,
+			"pivot": { "x": 0.5, "y": 0.5 }
+		}
+	},
+	"meta": {
+		"app": "manual",
+		"version": "1.0",
+		"image": "ui.png",
+		"format": "RGBA8888",
+		"size": { "w": 1046, "h": 1046 },
+		"scale": "1"
+	}
+}

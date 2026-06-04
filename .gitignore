@@ -11,6 +11,7 @@ coverage
 # misc
 .DS_Store
 *.pem
+.tmp-home/
 
 # debug
 npm-debug.log*
@@ -57,3 +58,5 @@ packages/e2e/math-testing/*/*.json
 packages/e2e/math-testing/*/*.png
 packages/e2e/math-testing/*/*.txt
 packages/e2e/math-testing/__pycache__/*
+
+.pnpm-store/

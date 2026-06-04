@@ -1,5 +1,7 @@
 import { DEFAULT_CURRENCY, STARTING_BALANCE } from './config';
 import { getBooks, type RawBook } from './books';
+import { getBookAdapter, type BookAdapter, type BonusSequence } from './books/adapters';
+import { calculateBookPayoutMultiplier } from './books/payout';
 
 type Balance = {
 	amount: number;
@@ -21,6 +23,7 @@ type Session = {
 	sessionID: string;
 	balance: Balance;
 	activeRound: ActiveRound | null;
+	activeBonusSequence: BonusSequence | null;
 	nextRoundID: number;
 	nextBookIndexByMode: Record<string, number>;
 };
@@ -44,6 +47,7 @@ function createSession(sessionID: string, currency = DEFAULT_CURRENCY): Session 
 			currency,
 		},
 		activeRound: null,
+		activeBonusSequence: null,
 		nextRoundID: 1,
 		nextBookIndexByMode: {},
 	};
@@ -59,9 +63,11 @@ export function getSession(sessionID: string, currency = DEFAULT_CURRENCY) {
 }
 
 function nextBook(session: Session, mode: string): RawBook {
-	const books = getBooks(mode);
+	const books = getBooks(mode, { sessionID: session.sessionID });
 	if (books.length === 0) {
-		throw new Error(`No mock books configured for mode ${mode}. Add books to apps/mock-rgs/src/books.`);
+		throw new Error(
+			`No mock books configured for mode ${mode}. Add books to apps/mock-rgs/src/books.`,
+		);
 	}
 
 	const modeKey = mode.toUpperCase();
@@ -72,6 +78,25 @@ function nextBook(session: Session, mode: string): RawBook {
 	return book;
 }
 
+function nextBonusSlice(session: Session, bookAdapter: BookAdapter) {
+	if (!session.activeRound || !session.activeBonusSequence) {
+		throw new Error('No active bonus round for this session.');
+	}
+
+	const bonusSlice = bookAdapter.nextBonusSlice(session.activeBonusSequence);
+	session.activeBonusSequence.nextEventIndex = bonusSlice.nextEventIndex;
+	session.activeRound.state = [...session.activeRound.state, ...clone(bonusSlice.events)];
+
+	if (bonusSlice.complete) {
+		session.activeBonusSequence = null;
+	}
+
+	return {
+		...session.activeRound,
+		state: clone(bonusSlice.events),
+	};
+}
+
 export function authenticateSession(options: { sessionID: string; language?: string }) {
 	const session = getSession(options.sessionID);
 
@@ -80,17 +105,16 @@ export function authenticateSession(options: { sessionID: string; language?: str
 		balance: clone(session.balance),
 		round: session.activeRound ? clone(session.activeRound) : undefined,
 		config: {
-			betLevels: [100000, 200000, 500000, 1000000, 2000000, 5000000, 10000000],
+			betLevels: [
+				1000000, 2000000, 5000000, 10000000, 15000000, 25000000, 40000000, 50000000,
+				60000000, 75000000, 100000000, 125000000, 150000000, 200000000, 300000000,
+				500000000, 800000000, 900000000, 950000000, 975000000, 1000000000,
+			],
 			betModes: {
 				BASE: {
 					mode: 'BASE',
 					costMultiplier: 1,
 					feature: false,
-				},
-				BONUS: {
-					mode: 'BONUS',
-					costMultiplier: 100,
-					feature: true,
 				},
 			},
 			defaultBetLevel: 1000000,
@@ -119,10 +143,27 @@ export function play(options: {
 	mode: string;
 }) {
 	const session = getSession(options.sessionID, options.currency);
-	const book = nextBook(session, options.mode);
-	const payoutMultiplier = book.payoutMultiplier ?? 0;
-	const payout = Math.round(options.amount * payoutMultiplier);
-	const active = payout > 0;
+	const bookAdapter = getBookAdapter(session.sessionID);
+	if (bookAdapter?.isBonusPlayMode(options.mode)) {
+		return {
+			status: statusSuccess,
+			balance: clone(session.balance),
+			round: clone(nextBonusSlice(session, bookAdapter)),
+		};
+	}
+
+	if (bookAdapter && session.activeRound) {
+		throw new Error('Cannot start a new base spin while a round is active.');
+	}
+
+	const rawBook = nextBook(session, options.mode);
+	const preparedPlay = bookAdapter?.preparePlay(rawBook, { apiBetAmount: options.amount }) ?? null;
+	const book = preparedPlay?.book ?? rawBook;
+	const payoutMultiplier = preparedPlay?.payoutMultiplier ?? calculateBookPayoutMultiplier(book);
+	const payout = preparedPlay?.payout ?? Math.round(options.amount * payoutMultiplier);
+	const state = preparedPlay?.state ?? book.events ?? [];
+	const bonusSequence = preparedPlay?.bonusSequence ?? null;
+	const active = payout > 0 || bonusSequence !== null;
 
 	session.balance.currency = options.currency;
 	session.balance.amount -= options.amount;
@@ -135,11 +176,12 @@ export function play(options: {
 		active,
 		mode: options.mode,
 		event: null,
-		state: clone(book.events ?? []),
+		state: clone(state),
 	};
 
 	session.nextRoundID += 1;
 	session.activeRound = active ? round : null;
+	session.activeBonusSequence = bonusSequence ? clone(bonusSequence) : null;
 
 	return {
 		status: statusSuccess,
@@ -154,6 +196,7 @@ export function endRound(options: { sessionID: string }) {
 	if (session.activeRound) {
 		session.balance.amount += session.activeRound.payout;
 		session.activeRound = null;
+		session.activeBonusSequence = null;
 	}
 
 	return {

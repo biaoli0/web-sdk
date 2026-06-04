@@ -760,6 +760,7 @@ root
   |  |_lines
   |  |_price
   |  |_scatter
+  |  |_slot-3x3
   |  |_ways
   |
   |_packages
@@ -776,6 +777,10 @@ root
 ## [/apps](/apps)
 
 For each game, it has an individual folder in the apps, for example [apps/lines](/apps/lines).
+
+- [apps/slot-3x3](/apps/slot-3x3): A small 3-reel, 3-row slot game. See
+  [apps/slot-3x3/README.md](/apps/slot-3x3/README.md) for local development,
+  Storybook, build, payline, paytable, and bonus-game details.
 
 - [apps/lines/package.json](/apps/lines/package.json): Find the module name of the app here.
 
