@@ -2,12 +2,12 @@ import { createEnhanceBoard, createReelForSpinning } from 'utils-slots';
 
 import {
 	BOARD_GAP,
+	CENTRAL_REEL_INDEX,
 	INITIAL_BOARD,
 	INITIAL_SYMBOL_STATE,
 	SPIN_OPTIONS_FAST,
 	SYMBOL_HEIGHT,
 } from '../constants';
-import { shouldHoldBonusRevealReel } from '../bonusRules';
 import { eventEmitter } from '../eventEmitter';
 import type { RawSymbol, SymbolState } from '../types';
 
@@ -17,6 +17,7 @@ type ReelControllerOptions = {
 };
 
 const symbolHeight = SYMBOL_HEIGHT + BOARD_GAP;
+const shouldHoldBonusRevealReel = (reelIndex: number) => reelIndex === CENTRAL_REEL_INDEX;
 
 export const createReelController = ({ isTurbo, normalSpinOptions }: ReelControllerOptions) => {
 	const board = INITIAL_BOARD.map((initialSymbols, reelIndex) => {
