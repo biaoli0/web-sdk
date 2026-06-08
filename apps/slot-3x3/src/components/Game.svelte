@@ -8,6 +8,7 @@
 	import Board from './Board.svelte';
 	import EnableSound from './EnableSound.svelte';
 	import EnableGameActor from './EnableGameActor.svelte';
+	import ResumeBet from './ResumeBet.svelte';
 	import Sound from './Sound.svelte';
 	import GameInterface from './GameInterface.svelte';
 	import Modals from './Modals.svelte';
@@ -23,6 +24,8 @@
 	<EnableGameActor />
 
 	{#if context.stateApp.loaded}
+		<ResumeBet />
+
 		{#if soundStarted}
 			<Sound />
 		{/if}

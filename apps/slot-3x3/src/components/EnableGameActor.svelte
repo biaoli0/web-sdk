@@ -34,6 +34,7 @@
 	context.eventEmitter.subscribeOnMount({
 		bet: () => gameActor.send({ type: 'BET' }),
 		autoBet: () => gameActor.send({ type: 'AUTO_BET' }),
+		resumeBet: () => gameActor.send({ type: 'RESUME_BET' }),
 		[EVENT_BONUS_SPIN]: () => sendGameActorEvent({ type: ACTOR_EVENT_BONUS_SPIN }),
 	});
 </script>

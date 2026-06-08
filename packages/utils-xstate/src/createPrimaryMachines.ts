@@ -40,7 +40,7 @@ const handleRequestBet = async ({ onError }: { onError: () => void }) => {
 };
 
 const handleRequestEndRound = async () => {
-	if(stateUrlDerived.replay()) return;
+	if (stateUrlDerived.replay()) return;
 
 	try {
 		const data = await requestEndRound({
@@ -70,7 +70,7 @@ const handleUpdateBalance = ({ balanceAmountFromApi }: { balanceAmountFromApi: n
 };
 
 type Options<TBet extends BaseBet> = {
-	onResumeGameActive: (betToResume: TBet) => TBet;
+	onResumeGameActive: (betToResume: TBet) => TBet | null;
 	onResumeGameInactive: (betToResume: TBet) => void;
 	onNewGameStart: () => Promise<void> | undefined;
 	onNewGameError: () => any;
