@@ -2,6 +2,7 @@ import { DEFAULT_CURRENCY, STARTING_BALANCE } from './config';
 import { getBooks, type RawBook } from './books';
 import { getBookAdapter, type BookAdapter, type BonusSequence } from './books/adapters';
 import { calculateBookPayoutMultiplier } from './books/payout';
+import { SessionRepository, defaultSessionStorePath } from './sessionRepository';
 
 type Balance = {
 	amount: number;
@@ -23,6 +24,7 @@ type Session = {
 	sessionID: string;
 	balance: Balance;
 	activeRound: ActiveRound | null;
+	lastRound: ActiveRound | null;
 	activeBonusSequence: BonusSequence | null;
 	nextRoundID: number;
 	nextBookIndexByMode: Record<string, number>;
@@ -33,7 +35,9 @@ export const statusSuccess = {
 	statusMessage: 'Operation Completed Successfully',
 } as const;
 
-const sessions = new Map<string, Session>();
+const sessionRepository = new SessionRepository<Session>({
+	filePath: defaultSessionStorePath(),
+});
 
 function clone<T>(value: T): T {
 	return structuredClone(value);
@@ -47,6 +51,7 @@ function createSession(sessionID: string, currency = DEFAULT_CURRENCY): Session 
 			currency,
 		},
 		activeRound: null,
+		lastRound: null,
 		activeBonusSequence: null,
 		nextRoundID: 1,
 		nextBookIndexByMode: {},
@@ -54,12 +59,7 @@ function createSession(sessionID: string, currency = DEFAULT_CURRENCY): Session 
 }
 
 export function getSession(sessionID: string, currency = DEFAULT_CURRENCY) {
-	const existingSession = sessions.get(sessionID);
-	if (existingSession) return existingSession;
-
-	const session = createSession(sessionID, currency);
-	sessions.set(sessionID, session);
-	return session;
+	return sessionRepository.getOrCreate(sessionID, () => createSession(sessionID, currency));
 }
 
 function nextBook(session: Session, mode: string): RawBook {
@@ -97,18 +97,27 @@ function nextBonusSlice(session: Session, bookAdapter: BookAdapter) {
 	};
 }
 
+function isBonusRound(round: ActiveRound) {
+	return round.state.some(
+		(event) =>
+			'type' in event &&
+			(event.type === 'bonusTrigger' || event.type === 'bonusReveal' || event.type === 'bonusEnd'),
+	);
+}
+
 export function authenticateSession(options: { sessionID: string; language?: string }) {
 	const session = getSession(options.sessionID);
+	const round = session.activeRound ?? session.lastRound;
 
 	return {
 		status: statusSuccess,
 		balance: clone(session.balance),
-		round: session.activeRound ? clone(session.activeRound) : undefined,
+		round: round ? clone(round) : undefined,
 		config: {
 			betLevels: [
-				1000000, 2000000, 5000000, 10000000, 15000000, 25000000, 40000000, 50000000,
-				60000000, 75000000, 100000000, 125000000, 150000000, 200000000, 300000000,
-				500000000, 800000000, 900000000, 950000000, 975000000, 1000000000,
+				1000000, 2000000, 5000000, 10000000, 15000000, 25000000, 40000000, 50000000, 60000000,
+				75000000, 100000000, 125000000, 150000000, 200000000, 300000000, 500000000, 800000000,
+				900000000, 950000000, 975000000, 1000000000,
 			],
 			betModes: {
 				BASE: {
@@ -145,10 +154,13 @@ export function play(options: {
 	const session = getSession(options.sessionID, options.currency);
 	const bookAdapter = getBookAdapter(session.sessionID);
 	if (bookAdapter?.isBonusPlayMode(options.mode)) {
+		const round = nextBonusSlice(session, bookAdapter);
+		sessionRepository.persist();
+
 		return {
 			status: statusSuccess,
 			balance: clone(session.balance),
-			round: clone(nextBonusSlice(session, bookAdapter)),
+			round: clone(round),
 		};
 	}
 
@@ -181,7 +193,13 @@ export function play(options: {
 
 	session.nextRoundID += 1;
 	session.activeRound = active ? round : null;
+	if (bonusSequence) {
+		session.lastRound = null;
+	} else if (!active) {
+		session.lastRound = clone(round);
+	}
 	session.activeBonusSequence = bonusSequence ? clone(bonusSequence) : null;
+	sessionRepository.persist();
 
 	return {
 		status: statusSuccess,
@@ -195,9 +213,16 @@ export function endRound(options: { sessionID: string }) {
 
 	if (session.activeRound) {
 		session.balance.amount += session.activeRound.payout;
+		session.lastRound = isBonusRound(session.activeRound)
+			? null
+			: {
+					...clone(session.activeRound),
+					active: false,
+				};
 		session.activeRound = null;
 		session.activeBonusSequence = null;
 	}
+	sessionRepository.persist();
 
 	return {
 		status: statusSuccess,
@@ -209,6 +234,7 @@ export function recordEvent(options: { sessionID: string; event?: string }) {
 	const session = getSession(options.sessionID);
 	if (session.activeRound) {
 		session.activeRound.event = options.event ?? null;
+		sessionRepository.persist();
 	}
 
 	return {

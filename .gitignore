@@ -12,6 +12,7 @@ coverage
 .DS_Store
 *.pem
 .tmp-home/
+apps/mock-rgs/.data/
 
 # debug
 npm-debug.log*

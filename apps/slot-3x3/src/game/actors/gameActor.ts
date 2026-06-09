@@ -5,6 +5,7 @@ import type { Bet } from '../typesBookEvent';
 import { findLastRevealBoard, isBonusBet, resetBonusFlow, sendBonusSpin } from './bonusFlowActor';
 import { stateXstateDerived } from '../state/stateXstate';
 import { playBet } from '../utils';
+import { createBaseGameResumeSnapshot } from '../resumeGame';
 import {
 	boardGameDerived,
 	reelSpeedGameDerived,
@@ -13,9 +14,28 @@ import {
 } from '../state/stateGame.svelte';
 import config from '../config';
 
+const restoreBaseGameResumeSnapshot = (betToResume: Bet) => {
+	const snapshot = createBaseGameResumeSnapshot(betToResume);
+	if (!snapshot) return false;
+
+	stateGame.gameType = snapshot.gameType;
+	stateGame.finalWin = snapshot.finalWin;
+	boardGameDerived.enhancedBoard.settle(snapshot.board);
+	winGameDerived.setWinInfo({
+		totalWin: snapshot.totalWin,
+		wins: snapshot.wins,
+	});
+	stateBet.winBookEventAmount = snapshot.finalWin;
+
+	return true;
+};
+
 const primaryMachines = createPrimaryMachines<Bet>({
-	onResumeGameActive: (betToResume) => betToResume,
+	onResumeGameActive: (betToResume) =>
+		restoreBaseGameResumeSnapshot(betToResume) ? null : betToResume,
 	onResumeGameInactive: (betToResume) => {
+		if (restoreBaseGameResumeSnapshot(betToResume)) return;
+
 		const lastRevealBoard = findLastRevealBoard(betToResume);
 
 		if (lastRevealBoard) boardGameDerived.enhancedBoard.settle(lastRevealBoard);
