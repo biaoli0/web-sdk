@@ -7,19 +7,13 @@
 </script>
 
 <script lang="ts">
-	import {
-		StoryGameTemplate,
-		StoryLocale,
-		type TemplateArgs,
-		templateArgs,
-	} from 'components-storybook';
 	import { onMount } from 'svelte';
 	import { stateBet } from 'state-shared';
 
-	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
 	import { winGameDerived } from '../game/state/stateGame.svelte';
 	import { playBookEvent } from '../game/utils';
+	import BookEventStory from './BookEventStory.svelte';
 	import events from './data/base_events';
 
 	const resetBookEventStory = () => {
@@ -31,55 +25,18 @@
 	onMount(resetBookEventStory);
 </script>
 
-{#snippet template(args: TemplateArgs<any>)}
-	<StoryGameTemplate
-		skipLoadingScreen={args.skipLoadingScreen}
-		action={async () => {
-			await args.action?.(args.data);
-		}}
-	>
-		<StoryLocale lang="en">
-			<Game />
-		</StoryLocale>
-	</StoryGameTemplate>
-{/snippet}
+<Story name="reveal">
+	<BookEventStory action={async () => await playBookEvent(events.reveal, { bookEvents: [] })} />
+</Story>
 
-<Story
-	name="reveal"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: events.reveal,
-		action: async (data) => await playBookEvent(data, { bookEvents: [] }),
-	})}
-	{template}
-/>
+<Story name="setTotalWin">
+	<BookEventStory action={async () => await playBookEvent(events.setTotalWin, { bookEvents: [] })} />
+</Story>
 
-<Story
-	name="setTotalWin"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: events.setTotalWin,
-		action: async (data) => await playBookEvent(data, { bookEvents: [] }),
-	})}
-	{template}
-/>
+<Story name="winInfo">
+	<BookEventStory action={async () => await playBookEvent(events.winInfo, { bookEvents: [] })} />
+</Story>
 
-<Story
-	name="winInfo"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: events.winInfo,
-		action: async (data) => await playBookEvent(data, { bookEvents: [] }),
-	})}
-	{template}
-/>
-
-<Story
-	name="finalWin"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: events.finalWin,
-		action: async (data) => await playBookEvent(data, { bookEvents: [] }),
-	})}
-	{template}
-/>
+<Story name="finalWin">
+	<BookEventStory action={async () => await playBookEvent(events.finalWin, { bookEvents: [] })} />
+</Story>

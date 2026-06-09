@@ -7,16 +7,9 @@
 </script>
 
 <script lang="ts">
-	import {
-		StoryGameTemplate,
-		StoryLocale,
-		type TemplateArgs,
-		templateArgs,
-	} from 'components-storybook';
 	import { onMount } from 'svelte';
 	import { stateBet } from 'state-shared';
 
-	import Game from '../components/Game.svelte';
 	import { setContext } from '../game/context';
 	import {
 		boardGameDerived,
@@ -25,7 +18,7 @@
 		winGameDerived,
 	} from '../game/state/stateGame.svelte';
 	import { playBookEvent, playBookEvents } from '../game/utils';
-	import type { BookEventOfType } from '../game/typesBookEvent';
+	import BookEventStory from './BookEventStory.svelte';
 	import events from './data/bonus_events';
 
 	let manualBonusSliceIndex = 0;
@@ -60,55 +53,28 @@
 	onMount(resetBookEventStory);
 </script>
 
-{#snippet template(args: TemplateArgs<any>)}
-	<StoryGameTemplate
-		skipLoadingScreen={args.skipLoadingScreen}
+<Story name="manual bonus flow">
+	<BookEventStory action={playManualBonusStep} />
+</Story>
+
+<Story name="bonusTrigger">
+	<BookEventStory
 		action={async () => {
-			await args.action?.(args.data);
-		}}
-	>
-		<StoryLocale lang="en">
-			<Game />
-		</StoryLocale>
-	</StoryGameTemplate>
-{/snippet}
-
-<Story
-	name="manual bonus flow"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: events.bonusSlices,
-		action: playManualBonusStep,
-	})}
-	{template}
-/>
-
-<Story
-	name="bonusTrigger"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: events.bonusTrigger,
-		action: async (data: BookEventOfType<'bonusTrigger'>) => {
 			boardGameDerived.settle(events.reveal.board);
-			await playBookEvent(data, { bookEvents: events.sequence });
-		},
-	})}
-	{template}
-/>
+			await playBookEvent(events.bonusTrigger, { bookEvents: events.sequence });
+		}}
+	/>
+</Story>
 
-<Story
-	name="bonusReveal"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: events.bonusReveal1,
-		action: async (data: BookEventOfType<'bonusReveal'>) => {
+<Story name="bonusReveal">
+	<BookEventStory
+		action={async () => {
 			boardGameDerived.settle(events.reveal.board);
 			bonusGameDerived.startBonus({
 				positions: events.bonusTrigger.positions,
 				respins: events.bonusTrigger.respins,
 			});
-			await playBookEvent(data, { bookEvents: events.sequence });
-		},
-	})}
-	{template}
-/>
+			await playBookEvent(events.bonusReveal1, { bookEvents: events.sequence });
+		}}
+	/>
+</Story>
