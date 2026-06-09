@@ -41,7 +41,7 @@
 	});
 </script>
 
-<Story name="soundButtonMuted crop">
+<Story name="Icon frame crop">
 	{#snippet template(args)}
 		<UiAtlasFramePreview {...args} />
 	{/snippet}
